@@ -1,15 +1,12 @@
 package com.aline.aline.payload;
 
-import com.aline.aline.entities.UserRole;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.aline.aline.enums.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import java.util.List;
 
 @Data

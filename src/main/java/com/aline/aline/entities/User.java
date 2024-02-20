@@ -1,5 +1,6 @@
 package com.aline.aline.entities;
 
+import com.aline.aline.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

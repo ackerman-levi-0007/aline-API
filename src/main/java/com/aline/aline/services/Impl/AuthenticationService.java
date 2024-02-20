@@ -26,8 +26,6 @@ public class AuthenticationService {
 
     private final ModelMapper modelMapper;
 
-    private final PasswordEncoder passwordEncoder;
-
     private final IUserDao userDao;
 
     public AuthenticationResponse register(AuthenticationRequest authenticationRequest) {

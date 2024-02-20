@@ -1,4 +1,4 @@
-package com.aline.aline.entities;
+package com.aline.aline.enums;
 
 public enum UserRole {
     ROLE_LAB,

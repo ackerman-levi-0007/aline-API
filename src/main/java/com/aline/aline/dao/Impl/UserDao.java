@@ -22,8 +22,7 @@ public class UserDao implements IUserDao {
 
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Override
     public UserDto createUser(User user) {

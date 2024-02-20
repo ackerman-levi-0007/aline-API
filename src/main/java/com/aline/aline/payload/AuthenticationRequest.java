@@ -1,6 +1,6 @@
 package com.aline.aline.payload;
 
-import com.aline.aline.entities.UserRole;
+import com.aline.aline.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
