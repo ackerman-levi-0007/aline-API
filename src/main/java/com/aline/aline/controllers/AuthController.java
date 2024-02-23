@@ -4,6 +4,8 @@ import com.aline.aline.payload.AuthenticationRequest;
 import com.aline.aline.payload.AuthenticationResponse;
 import com.aline.aline.services.IAuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +34,13 @@ public class AuthController {
         @RequestBody AuthenticationRequest authenticationRequest
     ){
         return new ResponseEntity<>(authenticationService.login(authenticationRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/refreshToken")
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ){
+        authenticationService.refreshToken(request, response);
     }
 }

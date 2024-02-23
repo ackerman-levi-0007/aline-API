@@ -10,36 +10,39 @@ import com.aline.aline.payload.AuthenticationResponse;
 import com.aline.aline.payload.UserDto;
 import com.aline.aline.security.JwtService;
 import com.aline.aline.services.IAuthenticationService;
+import com.aline.aline.services.ITokenService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService implements IAuthenticationService {
 
     private final JwtService jwtService;
-
     private final AuthenticationManager authenticationManager;
-
     private final ModelMapper modelMapper;
-
     private final IUserDao userDao;
-
     private final ITokenDao tokenDao;
+    private final ITokenService tokenService;
 
     public AuthenticationResponse register(AuthenticationRequest authenticationRequest) {
         User user = this.modelMapper.map(authenticationRequest, User.class);
         UserDto userDto = this.userDao.createUser(user);
         User savedUser = this.modelMapper.map(userDto, User.class);
-        String token = jwtService.generateToken(savedUser);
 
-        Token generatedToken = new Token(userDto.getId().toString(), token, TokenType.BEARER, false, false);
-        this.tokenDao.saveToken(generatedToken);
-
-        return new AuthenticationResponse(token);
+        return tokenService.generateToken(user.getEmail());
     }
 
     public AuthenticationResponse login(AuthenticationRequest authenticationRequest) {
@@ -49,12 +52,27 @@ public class AuthenticationService implements IAuthenticationService {
                         authenticationRequest.getPassword()
                 )
         );
-        User user = this.userDao.findByEmailForLogin(authenticationRequest.getEmail());
-        String token = jwtService.generateToken(user);
+        return tokenService.generateToken(authenticationRequest.getEmail());
+    }
 
-        Token generatedToken = new Token(user.getId().toString(), token, TokenType.BEARER, false, false);
-        this.tokenDao.saveToken(generatedToken);
-
-        return new AuthenticationResponse(token);
+    @Override
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return;
+        }
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUsername(refreshToken);
+        if(userEmail != null){
+            UserDetails userDetails = this.userDao.findByEmailForLogin(userEmail);
+            if(jwtService.isTokenValid(refreshToken, userDetails)){
+                new ObjectMapper().writeValue(response.getOutputStream(), tokenService.generateToken(userEmail));
+            }
+        }
     }
 }
