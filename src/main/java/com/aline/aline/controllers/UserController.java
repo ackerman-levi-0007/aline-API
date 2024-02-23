@@ -28,6 +28,12 @@ public class UserController {
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
+    @PostMapping("/createUser/{parentID}")
+    public ResponseEntity<UserDto> createUser(@RequestBody User user, @PathVariable String parentID){
+        UserDto savedUser = this.userService.createUser(user, parentID);
+        return new ResponseEntity<>(savedUser, HttpStatus.OK);
+    }
+
     @PutMapping("/updateUser/{userID}")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable String userID){
         UserDto updatedUser = this.userService.updateUser(userID, userDto);

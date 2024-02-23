@@ -8,8 +8,10 @@ import java.util.List;
 @Repository
 public interface IUserDao {
     UserDto createUser(User user);
+    UserDto createUser(User user, String parentID);
     UserDto updateUser(String userID, UserDto userDto);
     UserDto getUserByID(String userID);
     void deleteUserByID(String userID);
     List<UserDto> getAllUsers();
+    User findByEmailForLogin(String email);
 }

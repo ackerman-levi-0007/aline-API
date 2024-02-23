@@ -1,11 +1,13 @@
 package com.aline.aline.payload;
 
 import com.aline.aline.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -13,21 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private String id;
+    private ObjectId id;
 
-    private String firstName;
-
-    private String lastName;
+    private String name;
 
     @Email
     @NotEmpty
     private String email;
 
-    private String orgName;
-
-    private String parentID;
-
     private List<UserRole> role;
-
-    private Boolean status;
 }

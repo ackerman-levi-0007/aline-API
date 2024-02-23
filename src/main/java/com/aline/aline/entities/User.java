@@ -29,9 +29,7 @@ public class User implements UserDetails{
     @JsonIgnore
     private ObjectId id;
 
-    private String firstName;
-
-    private String lastName;
+    private String name;
 
     @Email
     @NotEmpty
@@ -40,13 +38,10 @@ public class User implements UserDetails{
     @NotEmpty
     private String password;
 
-    private String orgName;
-
-    private String orgID;
-
     private List<UserRole> role;
 
-    private Boolean status = false;
+    @JsonIgnore
+    private Boolean status = true;
 
     @CreatedDate
     @JsonIgnore

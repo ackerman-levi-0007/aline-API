@@ -9,6 +9,7 @@ import java.util.List;
 @Service
 public interface IUserService {
     UserDto createUser(User user);
+    UserDto createUser(User user, String parentID);
     UserDto updateUser(String userID, UserDto userDto);
     UserDto getUserByID(String userID);
     void deleteUserByID(String userID);

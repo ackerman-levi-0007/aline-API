@@ -2,7 +2,7 @@ package com.aline.aline.controllers;
 
 import com.aline.aline.payload.AuthenticationRequest;
 import com.aline.aline.payload.AuthenticationResponse;
-import com.aline.aline.services.Impl.AuthenticationService;
+import com.aline.aline.services.IAuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationService authenticationService;
+    private final IAuthenticationService authenticationService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(

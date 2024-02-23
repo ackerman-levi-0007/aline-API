@@ -1,9 +1,12 @@
 package com.aline.aline.dao.Impl;
 
 import com.aline.aline.dao.IUserDao;
+import com.aline.aline.entities.ClinicDoctorRelationship;
 import com.aline.aline.entities.User;
+import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.UserDto;
+import com.aline.aline.repositories.ClinicDoctorRelationshipRepo;
 import com.aline.aline.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -24,6 +27,8 @@ public class UserDao implements IUserDao {
 
     private final ModelMapper modelMapper;
 
+    private final ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo;
+
     @Override
     public UserDto createUser(User user) {
 
@@ -31,6 +36,37 @@ public class UserDao implements IUserDao {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         User savedUser = this.userRepo.save(user);
+
+        //Add clinic doctor relationship and status in ClinicDoctorRelationship
+        //If clinic is created it will also be the doctor so for clinic it will also be a doctor
+        if(user.getRole().contains(UserRole.ROLE_CLINIC)){
+            ClinicDoctorRelationship clinicDoctorRelationship = new ClinicDoctorRelationship();
+            clinicDoctorRelationship.setClinicID(savedUser.getId().toString());
+            clinicDoctorRelationship.setDoctorID(savedUser.getId().toString());
+            clinicDoctorRelationship.setStatus(true);
+            this.clinicDoctorRelationshipRepo.save(clinicDoctorRelationship);
+        }
+
+        return this.modelMapper.map(savedUser, UserDto.class);
+    }
+
+    @Override
+    public UserDto createUser(User user, String parentID) {
+
+        //Set encoded password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        User savedUser = this.userRepo.save(user);
+
+        //Add clinic doctor relationship and status in ClinicDoctorRelationship
+        if(user.getRole().contains(UserRole.ROLE_DOCTOR)){
+            ClinicDoctorRelationship clinicDoctorRelationship = new ClinicDoctorRelationship();
+            clinicDoctorRelationship.setClinicID(parentID);
+            clinicDoctorRelationship.setDoctorID(savedUser.getId().toString());
+            clinicDoctorRelationship.setStatus(true);
+            this.clinicDoctorRelationshipRepo.save(clinicDoctorRelationship);
+        }
+
         return this.modelMapper.map(savedUser, UserDto.class);
     }
 
@@ -39,13 +75,9 @@ public class UserDao implements IUserDao {
         User user = this.userRepo.findById(userID).orElseThrow(() ->
                 new ResourceNotFoundException("User", "userID", userID)
         );
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
+        user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-        user.setOrgName(userDto.getOrgName());
-        user.setOrgID(userDto.getParentID());
         user.setRole(userDto.getRole());
-        user.setStatus(userDto.getStatus());
 
         User updatedUser = this.userRepo.save(user);
 
@@ -72,5 +104,12 @@ public class UserDao implements IUserDao {
     public List<UserDto> getAllUsers() {
         List<User> userList = this.userRepo.findAll();
         return userList.stream().map(x -> this.modelMapper.map(x, UserDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public User findByEmailForLogin(String email) {
+        return userRepo.findByEmail(email).orElseThrow(() ->
+                new ResourceNotFoundException("User", "userID", email)
+        );
     }
 }

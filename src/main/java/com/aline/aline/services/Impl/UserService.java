@@ -20,6 +20,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public UserDto createUser(User user, String parentID) {
+        return this.userDao.createUser(user, parentID);
+    }
+
+    @Override
     public UserDto updateUser(String userID, UserDto userDto) {
         return this.userDao.updateUser(userID, userDto);
     }
