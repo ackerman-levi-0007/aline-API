@@ -69,8 +69,9 @@ public class AuthenticationService implements IAuthenticationService {
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
         if(userEmail != null){
-            UserDetails userDetails = this.userDao.findByEmailForLogin(userEmail);
-            if(jwtService.isTokenValid(refreshToken, userDetails)){
+            User user = this.userDao.findByEmailForLogin(userEmail);
+            if(jwtService.isTokenValid(refreshToken, user)){
+                tokenDao.revokeAllUserTokens(user.getId().toString());
                 new ObjectMapper().writeValue(response.getOutputStream(), tokenService.generateToken(userEmail));
             }
         }

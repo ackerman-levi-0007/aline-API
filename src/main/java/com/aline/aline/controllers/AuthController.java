@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api/v1/aline/auth")
 @Tag(name = "AuthController", description = "This API validate the login details and provides the login token for the user")
@@ -40,7 +42,7 @@ public class AuthController {
     public void refreshToken(
             HttpServletRequest request,
             HttpServletResponse response
-    ){
+    ) throws IOException {
         authenticationService.refreshToken(request, response);
     }
 }

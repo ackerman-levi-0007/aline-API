@@ -16,7 +16,6 @@ public class TokenDao implements ITokenDao {
 
     @Override
     public void saveToken(Token token) {
-        revokeAllUserTokens(token.getUserID());
         this.tokenRepo.save(token);
     }
 

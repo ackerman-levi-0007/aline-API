@@ -31,11 +31,11 @@ public class User implements UserDetails{
 
     private String name;
 
-    @Email
-    @NotEmpty
+    @Email(message = "Invalid emailID")
+    @NotEmpty(message = "email cannot be empty")
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "email cannot be empty")
     private String password;
 
     private List<UserRole> role;
