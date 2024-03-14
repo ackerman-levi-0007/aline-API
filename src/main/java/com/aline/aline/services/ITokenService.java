@@ -1,6 +1,6 @@
 package com.aline.aline.services;
 
-import com.aline.aline.payload.AuthenticationResponse;
+import com.aline.aline.payload.Authentication.AuthenticationResponse;
 import org.springframework.stereotype.Service;
 
 @Service

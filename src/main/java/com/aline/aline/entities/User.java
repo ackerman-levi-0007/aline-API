@@ -6,8 +6,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.bson.types.ObjectId;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -31,11 +33,14 @@ public class User implements UserDetails{
 
     private String name;
 
-    @Email(message = "Invalid emailID")
-    @NotEmpty(message = "email cannot be empty")
+    @Email(message = "Please enter a valid email address.")
+    @NotEmpty(message = "Email cannot be empty.")
+    @Indexed(unique = true)
     private String email;
 
-    @NotEmpty(message = "email cannot be empty")
+    @NotEmpty(message = "Password cannot be empty.")
+    @Length(max = 15, message = "Password should not exceed  15 characters long.")
+    @Length(min = 5, message = "Password must be at least 5 characters long.")
     private String password;
 
     private List<UserRole> role;
@@ -52,6 +57,7 @@ public class User implements UserDetails{
     private Date updatedOn;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.stream()
                 .map(x -> new SimpleGrantedAuthority(x.name()))
@@ -59,26 +65,31 @@ public class User implements UserDetails{
     }
 
     @Override
+    @JsonIgnore
     public String getUsername() {
         return email;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }

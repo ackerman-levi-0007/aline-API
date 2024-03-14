@@ -5,7 +5,7 @@ import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.Token;
 import com.aline.aline.entities.User;
 import com.aline.aline.enums.TokenType;
-import com.aline.aline.payload.AuthenticationResponse;
+import com.aline.aline.payload.Authentication.AuthenticationResponse;
 import com.aline.aline.security.JwtService;
 import com.aline.aline.services.ITokenService;
 import lombok.RequiredArgsConstructor;

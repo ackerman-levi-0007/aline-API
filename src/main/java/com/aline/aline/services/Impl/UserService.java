@@ -2,8 +2,11 @@ package com.aline.aline.services.Impl;
 
 import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.User;
-import com.aline.aline.payload.UserDto;
+import com.aline.aline.enums.UserRole;
+import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.services.IUserService;
+import com.aline.aline.utilities.CommonUtils;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +17,14 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserDao userDao;
-    @Override
-    public UserDto createUser(User user) {
-        return this.userDao.createUser(user);
-    }
 
     @Override
-    public UserDto createUser(User user, String parentID) {
+    public UserDto createUser(User user, String parentID) throws BadRequestException {
+
+        if(user.getRole().contains(UserRole.ROLE_DOCTOR) && CommonUtils.isNullOrEmpty(parentID)){
+            throw new BadRequestException("ROLE_DOCTOR must have parentID associated with it!!!");
+        }
+
         return this.userDao.createUser(user, parentID);
     }
 

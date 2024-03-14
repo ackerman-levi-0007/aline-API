@@ -5,16 +5,19 @@ import com.aline.aline.entities.ClinicDoctorRelationship;
 import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
-import com.aline.aline.payload.UserDto;
+import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.repositories.ClinicDoctorRelationshipRepo;
 import com.aline.aline.repositories.UserRepo;
+import com.aline.aline.utilities.CommonUtils;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -30,12 +33,16 @@ public class UserDao implements IUserDao {
     private final ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo;
 
     @Override
-    public UserDto createUser(User user) {
+    public UserDto createUser(User user, String parentID) {
+        //Validate if the user details are already present or not
+        if(checkEmailExists(user.getEmail())) throw new EntityExistsException("EmailID already exists!!!");
 
         //Set encoded password
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        //Save user
         User savedUser = this.userRepo.save(user);
+
 
         //Add clinic doctor relationship and status in ClinicDoctorRelationship
         //If clinic is created it will also be the doctor so for clinic it will also be a doctor
@@ -46,20 +53,8 @@ public class UserDao implements IUserDao {
             clinicDoctorRelationship.setStatus(true);
             this.clinicDoctorRelationshipRepo.save(clinicDoctorRelationship);
         }
-
-        return this.modelMapper.map(savedUser, UserDto.class);
-    }
-
-    @Override
-    public UserDto createUser(User user, String parentID) {
-
-        //Set encoded password
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        User savedUser = this.userRepo.save(user);
-
         //Add clinic doctor relationship and status in ClinicDoctorRelationship
-        if(user.getRole().contains(UserRole.ROLE_DOCTOR)){
+        else if(!CommonUtils.isNullOrEmpty(parentID) && user.getRole().contains(UserRole.ROLE_DOCTOR)){
             ClinicDoctorRelationship clinicDoctorRelationship = new ClinicDoctorRelationship();
             clinicDoctorRelationship.setClinicID(parentID);
             clinicDoctorRelationship.setDoctorID(savedUser.getId().toString());
@@ -75,6 +70,11 @@ public class UserDao implements IUserDao {
         User user = this.userRepo.findById(userID).orElseThrow(() ->
                 new ResourceNotFoundException("User", "userID", userID)
         );
+
+        if(!Objects.equals(user.getEmail(), userDto.getEmail()) && checkEmailExists(userDto.getEmail())){
+            throw new EntityExistsException("Updated emailID already associated to different user!!!");
+        }
+
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
         user.setRole(userDto.getRole());
@@ -111,5 +111,14 @@ public class UserDao implements IUserDao {
         return userRepo.findByEmail(email).orElseThrow(() ->
                 new ResourceNotFoundException("User", "userID", email)
         );
+    }
+
+    /*****************************************************************************************
+                                           Helpers
+     ****************************************************************************************/
+
+    public boolean checkEmailExists(String email){
+        Optional<User> fetchedUser = this.userRepo.findByEmail(email);
+        return fetchedUser.isPresent();
     }
 }

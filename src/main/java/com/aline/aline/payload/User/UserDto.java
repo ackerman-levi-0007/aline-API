@@ -1,4 +1,4 @@
-package com.aline.aline.payload;
+package com.aline.aline.payload.User;
 
 import com.aline.aline.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,4 +24,6 @@ public class UserDto {
     private String email;
 
     private List<UserRole> role;
+
+    private String mobileNo;
 }
