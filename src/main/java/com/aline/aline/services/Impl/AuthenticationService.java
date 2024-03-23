@@ -3,6 +3,9 @@ package com.aline.aline.services.Impl;
 import com.aline.aline.dao.ITokenDao;
 import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.User;
+import com.aline.aline.exceptionHandler.ForbiddenException;
+import com.aline.aline.exceptionHandler.ResourceNotFoundException;
+import com.aline.aline.exceptionHandler.UnauthorizedException;
 import com.aline.aline.payload.Authentication.AuthenticationLoginRequest;
 import com.aline.aline.payload.Authentication.AuthenticationRegisterRequest;
 import com.aline.aline.payload.Authentication.AuthenticationResponse;
@@ -17,7 +20,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -42,12 +47,17 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     public AuthenticationResponse login(AuthenticationLoginRequest authenticationLoginRequest) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationLoginRequest.getEmail(),
-                        authenticationLoginRequest.getPassword()
-                )
-        );
+        try{
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticationLoginRequest.getEmail(),
+                            authenticationLoginRequest.getPassword()
+                    )
+            );
+        }
+        catch (BadCredentialsException ex){
+            throw new BadCredentialsException("Invalid credentials provided. Please check your email and password and try again.");
+        }
         return tokenService.generateToken(authenticationLoginRequest.getEmail());
     }
 
@@ -65,11 +75,23 @@ public class AuthenticationService implements IAuthenticationService {
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
         if(userEmail != null){
-            User user = this.userDao.findByEmailForLogin(userEmail);
+            User user  = null;
+            try{
+                user = this.userDao.findByEmailForLogin(userEmail);
+            }
+            catch (ResourceNotFoundException ex){
+                throw new ForbiddenException("Invalid token provided");
+            }
             if(jwtService.isTokenValid(refreshToken, user)){
                 tokenDao.revokeAllUserTokens(user.getId().toString());
                 new ObjectMapper().writeValue(response.getOutputStream(), tokenService.generateToken(userEmail));
             }
+            else{
+                throw new ForbiddenException("Your session has expired. Please log in again to continue.");
+            }
+        }
+        else{
+            throw new ForbiddenException("Invalid token provided");
         }
     }
 }

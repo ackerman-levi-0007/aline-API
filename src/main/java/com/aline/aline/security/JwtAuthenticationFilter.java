@@ -1,12 +1,17 @@
 package com.aline.aline.security;
 
+import com.aline.aline.exceptionHandler.ForbiddenException;
+import com.aline.aline.exceptionHandler.ResourceNotFoundException;
+import com.aline.aline.exceptionHandler.UnauthorizedException;
 import com.aline.aline.services.ITokenService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -41,7 +46,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            UserDetails userDetails = null;
+            try{
+                userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            }
+            catch (ResourceNotFoundException ex){
+                throw new ForbiddenException("Invalid token provided");
+            }
             if(jwtService.isTokenValid(jwt, userDetails) && tokenService.isTokenValid(jwt)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
@@ -53,6 +64,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
+            else{
+                throw new UnauthorizedException("Your token has expired.");
+            }
+        }
+        else{
+            throw new ForbiddenException("Invalid token provided");
         }
  
         filterChain.doFilter(request, response);

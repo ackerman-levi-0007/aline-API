@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    private ObjectId id;
+    private String id;
 
     private String name;
 
@@ -24,6 +24,4 @@ public class UserDto {
     private String email;
 
     private List<UserRole> role;
-
-    private String mobileNo;
 }

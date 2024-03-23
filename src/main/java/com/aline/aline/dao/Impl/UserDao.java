@@ -109,7 +109,7 @@ public class UserDao implements IUserDao {
     @Override
     public User findByEmailForLogin(String email) {
         return userRepo.findByEmail(email).orElseThrow(() ->
-                new ResourceNotFoundException("User", "userID", email)
+                new ResourceNotFoundException("User", "emailID", email)
         );
     }
 
