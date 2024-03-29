@@ -2,7 +2,9 @@ package com.aline.aline.controllers;
 
 import com.aline.aline.entities.User;
 import com.aline.aline.payload.APIResponse;
+import com.aline.aline.payload.User.UserCreationDto;
 import com.aline.aline.payload.User.UserDto;
+import com.aline.aline.payload.User.UserWithDetailsDto;
 import com.aline.aline.services.IUserService;
 import com.aline.aline.utilities.SecurityUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,20 +26,20 @@ public class UserController {
 
     private final IUserService userService;
 
-    @PostMapping("/createUser")
-    public ResponseEntity<UserDto> createUser(
-            @RequestBody User user
+    @PostMapping("/createUserWithDetails")
+    public ResponseEntity<UserWithDetailsDto> createUserWithDetails(
+            @RequestBody UserCreationDto userCreationDto
     ) throws BadRequestException {
-        UserDto savedUser = this.userService.createUser(user, null);
+        UserWithDetailsDto savedUser = this.userService.createUserWithDetails(userCreationDto, null);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
-    @PostMapping("/createUser/{parentID}")
-    public ResponseEntity<UserDto> createUser(
-            @RequestBody User user,
+    @PostMapping("/createUserWithDetails/{parentID}")
+    public ResponseEntity<UserWithDetailsDto> createUserWithDetails(
+            @RequestBody UserCreationDto userCreationDto,
             @PathVariable String parentID
     ) throws BadRequestException {
-        UserDto savedUser = this.userService.createUser(user, parentID);
+        UserWithDetailsDto savedUser = this.userService.createUserWithDetails(userCreationDto, parentID);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
@@ -72,5 +74,11 @@ public class UserController {
         String userIDForLoggedInUser = Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString();
         UserDto userDto = this.userService.getUserByID(userIDForLoggedInUser);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllUsersWithDetails")
+    public ResponseEntity<List<UserWithDetailsDto>> getAllUsersWithDetails(){
+        List<UserWithDetailsDto> userDtoList = this.userService.getAllUsersWithDetails();
+        return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 }

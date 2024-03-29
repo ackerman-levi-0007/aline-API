@@ -22,7 +22,6 @@ public class UserDetails {
     @JsonIgnore
     private String userID;
 
-    @NotEmpty(message = "Mobile number cannot be empty.")
     @Length(max = 15, message = "Please enter a valid mobile number.")
     private String mobileNo;
 
