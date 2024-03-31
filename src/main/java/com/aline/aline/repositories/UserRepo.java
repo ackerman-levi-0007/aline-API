@@ -19,5 +19,5 @@ public interface UserRepo extends MongoRepository<User, String> {
 
     Page<User> findByRole(String role, Pageable pageable);
 
-    Page<User> findByRoleAndNameContaining(String role, String query, Pageable pageable);
+    Page<User> findByRoleAndNameContainingIgnoreCase(String role, String query, Pageable pageable);
 }

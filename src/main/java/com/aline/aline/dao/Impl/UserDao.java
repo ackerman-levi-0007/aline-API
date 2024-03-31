@@ -125,7 +125,13 @@ public class UserDao implements IUserDao {
 
     @Override
     public Page<UserDto> getAllUsersByRole(String role, String query, Pageable pageable) {
-        Page<User> userList = this.userRepo.findByRoleAndNameContaining(role, query, pageable);
+        Page<User> userList = null;
+        if(CommonUtils.isNullOrEmpty(query)){
+            userList = this.userRepo.findByRole(role, pageable);
+        }
+        else{
+            userList = this.userRepo.findByRoleAndNameContainingIgnoreCase(role, query, pageable);
+        }
         List<UserDto> userDtoList = userList.getContent().stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
         return new PageImpl<>(userDtoList, userList.getPageable(), userList.getTotalElements());
     }

@@ -5,28 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PageDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/CustomBasicAuthenticationEntryPoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/utilities/PageUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IUserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IUserDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/UserRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/UserRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/exceptionHandler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/exceptionHandler/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/User/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/User/UserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/UserRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/UserRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IUserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IUserDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/User/UserDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/User/UserDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/security/SecurityConfig$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/security/SecurityConfig$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/security/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/security/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IUserService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/UserService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +58,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.AlineApiApplication.executor": "Debug",
+    "Application.AlineApiApplication.executor": "Run",
     "Maven.aline [clean,validate,compile,test...].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -199,7 +181,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java</url>
-          <line>127</line>
+          <line>133</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>

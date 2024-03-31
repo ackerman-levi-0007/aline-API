@@ -78,10 +78,10 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllUsersWithDetails/{role}/{query}")
+    @GetMapping("/getAllUsersWithDetails/{role}")
     public ResponseEntity<Page<UserWithDetailsDto>> getAllUsersWithDetails(
             @PathVariable String role,
-            @PathVariable String query,
+            @RequestParam(value = "query", required = false) String query,
             PageDto pageDto
     ) throws BadRequestException {
         Page<UserWithDetailsDto> userDtoList = this.userService.getAllUsersWithDetails(role, query, pageDto);
