@@ -5,14 +5,19 @@ import com.aline.aline.dao.IUserDetailsDao;
 import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
+import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.User.UserCreationDto;
 import com.aline.aline.payload.User.UserDetailsDto;
 import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.payload.User.UserWithDetailsDto;
 import com.aline.aline.services.IUserService;
 import com.aline.aline.utilities.CommonUtils;
+import com.aline.aline.utilities.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,12 +57,23 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserWithDetailsDto> getAllUsersWithDetails() {
-        List<UserDto> userDtoList = this.userDao.getAllUsers();
-        List<String> userIDs = userDtoList.stream().map(UserDto::getId).toList();
-        List<UserDetailsDto> userDetailsDtoList = this.userDetailsDao.getUserDetailsByUserIDs(userIDs);
+    public Page<UserWithDetailsDto> getAllUsersWithDetails(String role, String query, PageDto pageDto) throws BadRequestException {
 
-        return userDtoList.stream().map(
+        Pageable pageable = PageUtils.getPageableFromPageDto(pageDto);
+        Page<UserDto> userDtoList = null;
+        if(CommonUtils.isNullOrEmpty(role)){
+            userDtoList = this.userDao.getAllUsers(pageable);
+        }
+        else{
+            if(UserRole.contains(role)){
+                userDtoList = this.userDao.getAllUsersByRole(role, query, pageable);
+            }
+            else{
+                throw new BadRequestException("Incorrect role provided.");
+            }
+        }
+
+        List<UserWithDetailsDto> userWithDetailsDtoList = userDtoList.stream().map(
                 userDto ->{
                     UserDetailsDto userDetailsDto =  null;
                     try{
@@ -69,6 +85,8 @@ public class UserService implements IUserService {
                     return new UserWithDetailsDto(userDto, userDetailsDto);
                 }
         ).toList();
+
+        return new PageImpl<>(userWithDetailsDtoList, userDtoList.getPageable(), userDtoList.getTotalElements());
     }
 
     @Override

@@ -12,6 +12,9 @@ import com.aline.aline.utilities.CommonUtils;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
@@ -107,10 +110,24 @@ public class UserDao implements IUserDao {
     }
 
     @Override
+    public Page<UserDto> getAllUsers(Pageable pageable) {
+        Page<User> userList = this.userRepo.findAll(pageable);
+        List<UserDto> userDtoList = userList.getContent().stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
+        return new PageImpl<>(userDtoList, userList.getPageable(), userList.getTotalElements());
+    }
+
+    @Override
     public User findByEmailForLogin(String email) {
         return userRepo.findByEmail(email).orElseThrow(() ->
                 new ResourceNotFoundException("User", "emailID", email)
         );
+    }
+
+    @Override
+    public Page<UserDto> getAllUsersByRole(String role, String query, Pageable pageable) {
+        Page<User> userList = this.userRepo.findByRoleAndNameContaining(role, query, pageable);
+        List<UserDto> userDtoList = userList.getContent().stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
+        return new PageImpl<>(userDtoList, userList.getPageable(), userList.getTotalElements());
     }
 
     /*****************************************************************************************

@@ -1,7 +1,7 @@
 package com.aline.aline.controllers;
 
-import com.aline.aline.entities.User;
 import com.aline.aline.payload.APIResponse;
+import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.User.UserCreationDto;
 import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.payload.User.UserWithDetailsDto;
@@ -10,6 +10,8 @@ import com.aline.aline.utilities.SecurityUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -76,9 +78,13 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllUsersWithDetails")
-    public ResponseEntity<List<UserWithDetailsDto>> getAllUsersWithDetails(){
-        List<UserWithDetailsDto> userDtoList = this.userService.getAllUsersWithDetails();
+    @GetMapping("/getAllUsersWithDetails/{role}/{query}")
+    public ResponseEntity<Page<UserWithDetailsDto>> getAllUsersWithDetails(
+            @PathVariable String role,
+            @PathVariable String query,
+            PageDto pageDto
+    ) throws BadRequestException {
+        Page<UserWithDetailsDto> userDtoList = this.userService.getAllUsersWithDetails(role, query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 }

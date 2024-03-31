@@ -40,4 +40,6 @@ public class GlobalExceptionHandler {
         APIResponse apiResponse = new APIResponse(message, false);
         return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
     }
+
+
 }
