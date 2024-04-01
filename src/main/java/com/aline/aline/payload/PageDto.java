@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PageDto {
     private int pageNumber = 0;
-    private int pageSize = 10;
+    private int pageSize = Integer.MAX_VALUE;
     private String sortBy = "id";
     private String sortDir = "DES";
 }

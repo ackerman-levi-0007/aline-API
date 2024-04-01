@@ -17,7 +17,9 @@ public interface IUserService {
     UserDto updateUser(String userID, UserDto userDto);
     UserDto getUserByID(String userID);
     void deleteUserByID(String userID);
-    List<UserDto> getAllUsers();
+    Page<UserDto> getAllUsers(String role, String query, PageDto pageDto) throws BadRequestException;
     Page<UserWithDetailsDto> getAllUsersWithDetails(String role, String query, PageDto pageDto) throws BadRequestException;
     UserWithDetailsDto createUserWithDetails(UserCreationDto userCreationDto, String parentID) throws BadRequestException;
+
+    UserWithDetailsDto updateUserWithDetails(UserWithDetailsDto userCreationDto, String userID);
 }

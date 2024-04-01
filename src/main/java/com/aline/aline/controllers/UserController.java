@@ -52,6 +52,15 @@ public class UserController {
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
+    @PutMapping("/updateUserWithDetails/{userID}")
+    public ResponseEntity<UserWithDetailsDto> updateUserWithDetails(
+            @RequestBody UserWithDetailsDto userCreationDto,
+            @PathVariable String userID
+    ){
+        UserWithDetailsDto savedUser = this.userService.updateUserWithDetails(userCreationDto, userID);
+        return new ResponseEntity<>(savedUser, HttpStatus.OK);
+    }
+
     @GetMapping("/getUserByID/{userID}")
     public ResponseEntity<UserDto> getUserByID(@PathVariable String userID){
         UserDto user = userService.getUserByID(userID);
@@ -66,8 +75,13 @@ public class UserController {
     }
 
     @GetMapping("/getAllUsers")
-    public ResponseEntity<List<UserDto>> getAllUsers(){
-        List<UserDto> userDtoList = this.userService.getAllUsers();
+    public ResponseEntity<Page<UserDto>> getAllUsers(
+            @RequestParam(value = "query", required = false) String query,
+            @RequestParam(value = "role", required = false) String role,
+            @RequestParam(value = "pageDto", required = false) PageDto pageDto
+    ) throws BadRequestException {
+        if(pageDto == null) pageDto = new PageDto();
+        Page<UserDto> userDtoList = this.userService.getAllUsers(role, query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 
@@ -78,12 +92,13 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllUsersWithDetails/{role}")
+    @GetMapping("/getAllUsersWithDetails")
     public ResponseEntity<Page<UserWithDetailsDto>> getAllUsersWithDetails(
-            @PathVariable String role,
+            @RequestParam(value = "role", required = false) String role,
             @RequestParam(value = "query", required = false) String query,
-            PageDto pageDto
+            @RequestParam(value = "pageDto", required = false) PageDto pageDto
     ) throws BadRequestException {
+        if(pageDto == null) pageDto = new PageDto();
         Page<UserWithDetailsDto> userDtoList = this.userService.getAllUsersWithDetails(role, query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }

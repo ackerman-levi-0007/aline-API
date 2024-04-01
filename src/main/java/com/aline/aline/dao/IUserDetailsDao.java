@@ -10,7 +10,8 @@ import java.util.List;
 public interface IUserDetailsDao {
     List<UserDetailsDto> getUserDetailsByUserIDs(List<String> userIDs);
 
-    UserDetailsDto getByUserID(String id);
-
+    UserDetailsDto getByUserID(String userID);
     UserDetailsDto createUserDetails(UserDetails userDetails);
+    UserDetailsDto updateUserDetailsByUserID(String userID, UserDetailsDto userDetailsDto);
+    void deleteUserDetailsByUserID(String userID);
 }

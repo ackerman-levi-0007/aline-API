@@ -49,11 +49,29 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void deleteUserByID(String userID) { this.userDao.deleteUserByID(userID); }
+    public void deleteUserByID(String userID) {
+        this.userDao.deleteUserByID(userID);
+        this.userDetailsDao.deleteUserDetailsByUserID(userID);
+    }
 
     @Override
-    public List<UserDto> getAllUsers() {
-        return this.userDao.getAllUsers();
+    public Page<UserDto> getAllUsers(String role, String query, PageDto pageDto) throws BadRequestException {
+        Pageable pageable = PageUtils.getPageableFromPageDto(pageDto);
+
+        Page<UserDto> userDtoList = null;
+        if(CommonUtils.isNullOrEmpty(role)){
+            userDtoList = this.userDao.getAllUsers(pageable);
+        }
+        else{
+            if(UserRole.contains(role)){
+                userDtoList = this.userDao.getAllUsersByRole(role, query, pageable);
+            }
+            else{
+                throw new BadRequestException("Incorrect role provided.");
+            }
+        }
+
+        return userDtoList;
     }
 
     @Override
@@ -94,6 +112,13 @@ public class UserService implements IUserService {
         UserDto userDto = createUser(userCreationDto.getUser(), parentID);
         userCreationDto.getUserDetails().setUserID(userDto.getId());
         UserDetailsDto userDetailsDto = this.userDetailsDao.createUserDetails(userCreationDto.getUserDetails());
+        return new UserWithDetailsDto(userDto, userDetailsDto);
+    }
+
+    @Override
+    public UserWithDetailsDto updateUserWithDetails(UserWithDetailsDto userCreationDto, String userID) {
+        UserDto userDto = this.userDao.updateUser(userID, userCreationDto.getUserDto());
+        UserDetailsDto userDetailsDto = this.userDetailsDao.updateUserDetailsByUserID(userID, userCreationDto.getUserDetailsDto());
         return new UserWithDetailsDto(userDto, userDetailsDto);
     }
 }
