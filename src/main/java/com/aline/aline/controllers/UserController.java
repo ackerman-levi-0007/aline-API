@@ -1,5 +1,6 @@
 package com.aline.aline.controllers;
 
+import com.aline.aline.entities.User;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.User.UserCreationDto;
@@ -28,23 +29,24 @@ public class UserController {
 
     private final IUserService userService;
 
+    @PostMapping("/createUser")
+    public ResponseEntity<UserDto> createUser(
+            @RequestBody User user,
+            @RequestParam(value = "parentID", required = false) String parentID
+
+    ) throws BadRequestException {
+        UserDto savedUser = this.userService.createUser(user, parentID);
+        return new ResponseEntity<>(savedUser, HttpStatus.OK);
+    }
+
     @PostMapping("/createUserWithDetails")
     public ResponseEntity<UserWithDetailsDto> createUserWithDetails(
-            @RequestBody UserCreationDto userCreationDto
+            @RequestBody UserCreationDto userCreationDto,
+            @RequestParam(value = "parentID", required = false) String parentID
     ) throws BadRequestException {
         UserWithDetailsDto savedUser = this.userService.createUserWithDetails(userCreationDto, null);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
-
-    @PostMapping("/createUserWithDetails/{parentID}")
-    public ResponseEntity<UserWithDetailsDto> createUserWithDetails(
-            @RequestBody UserCreationDto userCreationDto,
-            @PathVariable String parentID
-    ) throws BadRequestException {
-        UserWithDetailsDto savedUser = this.userService.createUserWithDetails(userCreationDto, parentID);
-        return new ResponseEntity<>(savedUser, HttpStatus.OK);
-    }
-
 
     @PutMapping("/updateUser/{userID}")
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable String userID){
