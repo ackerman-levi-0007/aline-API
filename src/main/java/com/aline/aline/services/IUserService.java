@@ -20,6 +20,7 @@ public interface IUserService {
     Page<UserDto> getAllUsers(String role, String query, PageDto pageDto) throws BadRequestException;
     Page<UserWithDetailsDto> getAllUsersWithDetails(String role, String query, PageDto pageDto) throws BadRequestException;
     UserWithDetailsDto createUserWithDetails(UserCreationDto userCreationDto, String parentID) throws BadRequestException;
-
     UserWithDetailsDto updateUserWithDetails(UserWithDetailsDto userCreationDto, String userID);
+    void activeDeActiveUser(String userID, boolean status);
+    void changePassword(String userID, String currentPassword, String newPassword, String reEnterNewPassword, String process) throws BadRequestException;
 }

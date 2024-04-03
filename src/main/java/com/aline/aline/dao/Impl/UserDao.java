@@ -11,6 +11,7 @@ import com.aline.aline.repositories.UserRepo;
 import com.aline.aline.utilities.CommonUtils;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -70,9 +71,7 @@ public class UserDao implements IUserDao {
 
     @Override
     public UserDto updateUser(String userID, UserDto userDto) {
-        User user = this.userRepo.findById(userID).orElseThrow(() ->
-                new ResourceNotFoundException("User", "userID", userID)
-        );
+        User user = getUser(userID);
 
         if(!Objects.equals(user.getEmail(), userDto.getEmail()) && checkEmailExists(userDto.getEmail())){
             throw new EntityExistsException("Updated emailID already associated to different user!!!");
@@ -89,17 +88,13 @@ public class UserDao implements IUserDao {
 
     @Override
     public UserDto getUserByID(String userID) {
-        User user = this.userRepo.findById(userID).orElseThrow(() ->
-                new ResourceNotFoundException("User", "userID", userID)
-        );
+        User user = getUser(userID);
         return this.modelMapper.map(user, UserDto.class);
     }
 
     @Override
     public void deleteUserByID(String userID) {
-        User user = this.userRepo.findById(userID).orElseThrow(() ->
-                new ResourceNotFoundException("User", "userID", userID)
-        );
+        User user = getUser(userID);
         this.userRepo.delete(user);
     }
 
@@ -136,6 +131,32 @@ public class UserDao implements IUserDao {
         return new PageImpl<>(userDtoList, userList.getPageable(), userList.getTotalElements());
     }
 
+    @Override
+    public void activeDeActiveUser(String userID, boolean status) {
+        User user = getUser(userID);
+        user.setStatus(status);
+        this.userRepo.save(user);
+    }
+
+    @Override
+    public void resetPassword(String userID, String currentPassword, String newPassword) throws BadRequestException {
+        User user = getUser(userID);
+        if(user.getPassword().equals(passwordEncoder.encode(currentPassword))){
+            user.setPassword(passwordEncoder.encode(newPassword));
+            this.userRepo.save(user);
+        }
+        else{
+            throw new BadRequestException("current password is not correct");
+        }
+    }
+
+    @Override
+    public void forgotPassword(String userID, String newPassword) {
+        User user = getUser(userID);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        this.userRepo.save(user);
+    }
+
     /*****************************************************************************************
                                            Helpers
      ****************************************************************************************/
@@ -143,5 +164,11 @@ public class UserDao implements IUserDao {
     public boolean checkEmailExists(String email){
         Optional<User> fetchedUser = this.userRepo.findByEmail(email);
         return fetchedUser.isPresent();
+    }
+
+    public User getUser(String userID){
+        return this.userRepo.findById(userID).orElseThrow(() ->
+                new ResourceNotFoundException("User", "userID", userID)
+        );
     }
 }

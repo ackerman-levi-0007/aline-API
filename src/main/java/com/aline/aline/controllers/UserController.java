@@ -12,12 +12,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -72,7 +70,7 @@ public class UserController {
     @DeleteMapping("/deleteUserByID/{userID}")
     public ResponseEntity<APIResponse> deleteUserByID(@PathVariable String userID){
         this.userService.deleteUserByID(userID);
-        return new ResponseEntity<>(new APIResponse("User Deleted Successfully!!" ,true)
+        return new ResponseEntity<>(new APIResponse("User deleted successfully!!" ,true)
                                                 , HttpStatus.OK);  
     }
 
@@ -83,7 +81,7 @@ public class UserController {
             @RequestParam(value = "pageDto", required = false) PageDto pageDto
     ) throws BadRequestException {
         if(pageDto == null) pageDto = new PageDto();
-        Page<UserDto> userDtoList = this.userService.getAllUsers(role, query, pageDto);
+        Page<UserDto> userDtoList = this.userService.getAllUsers(role.toUpperCase(), query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 
@@ -101,7 +99,40 @@ public class UserController {
             @RequestParam(value = "pageDto", required = false) PageDto pageDto
     ) throws BadRequestException {
         if(pageDto == null) pageDto = new PageDto();
-        Page<UserWithDetailsDto> userDtoList = this.userService.getAllUsersWithDetails(role, query, pageDto);
+        Page<UserWithDetailsDto> userDtoList = this.userService.getAllUsersWithDetails(role.toUpperCase(), query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
+    }
+
+    @PutMapping("/activeDeActiveUser")
+    public ResponseEntity<APIResponse> activeDeActiveUser(
+            @RequestParam(value = "userID") String userID,
+            @RequestParam(value = "active") boolean status
+    ) {
+        this.userService.activeDeActiveUser(userID, status);
+        return new ResponseEntity<>(new APIResponse("User de-activated successfully!!" ,true)
+                , HttpStatus.OK);
+    }
+
+    @PutMapping("/resetPassword/{userID}")
+    public ResponseEntity<APIResponse> resetPassword(
+            @PathVariable String userID,
+            @RequestParam(value = "currentPassword") String currentPassword,
+            @RequestParam(value = "newPassword") String newPassword,
+            @RequestParam(value = "reEnterNewPassword") String reEnterNewPassword
+    ) throws BadRequestException {
+        this.userService.changePassword(userID, currentPassword, newPassword, reEnterNewPassword, "reset");
+        return new ResponseEntity<>(new APIResponse("User password changed successfully" ,true)
+                , HttpStatus.OK);
+    }
+
+    @PutMapping("/forgotPassword/{userID}")
+    public ResponseEntity<APIResponse> forgotPassword(
+            @PathVariable String userID,
+            @RequestParam(value = "newPassword") String newPassword,
+            @RequestParam(value = "reEnterNewPassword") String reEnterNewPassword
+    ) throws BadRequestException {
+        this.userService.changePassword(userID, null, newPassword, reEnterNewPassword, "forgot");
+        return new ResponseEntity<>(new APIResponse("User password changed successfully" ,true)
+                , HttpStatus.OK);
     }
 }

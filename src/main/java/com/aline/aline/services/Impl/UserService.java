@@ -12,6 +12,7 @@ import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.payload.User.UserWithDetailsDto;
 import com.aline.aline.services.IUserService;
 import com.aline.aline.utilities.CommonUtils;
+import com.aline.aline.utilities.EnumUtils;
 import com.aline.aline.utilities.PageUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -21,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +65,7 @@ public class UserService implements IUserService {
             userDtoList = this.userDao.getAllUsers(pageable);
         }
         else{
-            if(UserRole.contains(role)){
+            if(EnumUtils.contains(UserRole.class, role)){
                 userDtoList = this.userDao.getAllUsersByRole(role, query, pageable);
             }
             else{
@@ -77,19 +79,7 @@ public class UserService implements IUserService {
     @Override
     public Page<UserWithDetailsDto> getAllUsersWithDetails(String role, String query, PageDto pageDto) throws BadRequestException {
 
-        Pageable pageable = PageUtils.getPageableFromPageDto(pageDto);
-        Page<UserDto> userDtoList = null;
-        if(CommonUtils.isNullOrEmpty(role)){
-            userDtoList = this.userDao.getAllUsers(pageable);
-        }
-        else{
-            if(UserRole.contains(role)){
-                userDtoList = this.userDao.getAllUsersByRole(role, query, pageable);
-            }
-            else{
-                throw new BadRequestException("Incorrect role provided.");
-            }
-        }
+        Page<UserDto> userDtoList = getAllUsers(role, query, pageDto);
 
         List<UserWithDetailsDto> userWithDetailsDtoList = userDtoList.stream().map(
                 userDto ->{
@@ -120,5 +110,25 @@ public class UserService implements IUserService {
         UserDto userDto = this.userDao.updateUser(userID, userCreationDto.getUserDto());
         UserDetailsDto userDetailsDto = this.userDetailsDao.updateUserDetailsByUserID(userID, userCreationDto.getUserDetailsDto());
         return new UserWithDetailsDto(userDto, userDetailsDto);
+    }
+
+    @Override
+    public void activeDeActiveUser(String userID, boolean status) { this.userDao.activeDeActiveUser(userID, status); }
+
+    @Override
+    public void changePassword(String userID, String currentPassword, String newPassword, String reEnterNewPassword, String process) throws BadRequestException {
+        if(Objects.equals(newPassword, reEnterNewPassword)){
+            if(Objects.equals(process, "reset")){
+                this.userDao.resetPassword(userID, currentPassword, newPassword);
+            } else if (Objects.equals(process, "forgot")) {
+                this.userDao.forgotPassword(userID, newPassword);
+            }
+            else{
+                throw new RuntimeException("Wrong process mentioned");
+            }
+        }
+        else{
+            throw new BadRequestException("New password does not matches the re-entered new password");
+        }
     }
 }

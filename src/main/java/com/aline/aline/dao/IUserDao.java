@@ -2,6 +2,7 @@ package com.aline.aline.dao;
 
 import com.aline.aline.entities.User;
 import com.aline.aline.payload.User.UserDto;
+import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -17,4 +18,7 @@ public interface IUserDao {
     Page<UserDto> getAllUsers(Pageable pageRequest);
     User findByEmailForLogin(String email);
     Page<UserDto> getAllUsersByRole(String role, String query, Pageable pageable);
+    void activeDeActiveUser(String userID, boolean status);
+    void resetPassword(String userID, String currentPassword, String newPassword) throws BadRequestException;
+    void forgotPassword(String userID, String newPassword);
 }
