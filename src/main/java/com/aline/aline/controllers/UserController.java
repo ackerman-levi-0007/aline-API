@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/aline/user")
@@ -42,7 +42,7 @@ public class UserController {
             @RequestBody UserCreationDto userCreationDto,
             @RequestParam(value = "parentID", required = false) String parentID
     ) throws BadRequestException {
-        UserWithDetailsDto savedUser = this.userService.createUserWithDetails(userCreationDto, null);
+        UserWithDetailsDto savedUser = this.userService.createUserWithDetails(userCreationDto, parentID);
         return new ResponseEntity<>(savedUser, HttpStatus.OK);
     }
 
@@ -74,14 +74,14 @@ public class UserController {
                                                 , HttpStatus.OK);  
     }
 
-    @GetMapping("/getAllUsers")
-    public ResponseEntity<Page<UserDto>> getAllUsers(
+    @GetMapping("/getUsers")
+    public ResponseEntity<Page<UserDto>> getUsers(
+            @RequestParam(value = "userID", required = false) String userID,
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "role", required = false) String role,
-            @RequestParam(value = "pageDto", required = false) PageDto pageDto
+            PageDto pageDto
     ) throws BadRequestException {
-        if(pageDto == null) pageDto = new PageDto();
-        Page<UserDto> userDtoList = this.userService.getAllUsers(role.toUpperCase(), query, pageDto);
+        Page<UserDto> userDtoList = this.userService.getUsers(userID, role, query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 
@@ -92,14 +92,14 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllUsersWithDetails")
-    public ResponseEntity<Page<UserWithDetailsDto>> getAllUsersWithDetails(
+    @GetMapping("/getUsersWithDetails")
+    public ResponseEntity<Page<UserWithDetailsDto>> getUsersWithDetails(
+            @RequestParam(value = "userID", required = false) String userID,
             @RequestParam(value = "role", required = false) String role,
             @RequestParam(value = "query", required = false) String query,
-            @RequestParam(value = "pageDto", required = false) PageDto pageDto
+            PageDto pageDto
     ) throws BadRequestException {
-        if(pageDto == null) pageDto = new PageDto();
-        Page<UserWithDetailsDto> userDtoList = this.userService.getAllUsersWithDetails(role.toUpperCase(), query, pageDto);
+        Page<UserWithDetailsDto> userDtoList = this.userService.getUsersWithDetails(userID, role, query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 

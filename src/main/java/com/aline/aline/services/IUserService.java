@@ -9,16 +9,14 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public interface IUserService {
     UserDto createUser(User user, String parentID) throws BadRequestException;
     UserDto updateUser(String userID, UserDto userDto);
     UserDto getUserByID(String userID);
     void deleteUserByID(String userID);
-    Page<UserDto> getAllUsers(String role, String query, PageDto pageDto) throws BadRequestException;
-    Page<UserWithDetailsDto> getAllUsersWithDetails(String role, String query, PageDto pageDto) throws BadRequestException;
+    Page<UserDto> getUsers(String userID, String role, String query, PageDto pageDto) throws BadRequestException;
+    Page<UserWithDetailsDto> getUsersWithDetails(String userID, String role, String query, PageDto pageDto) throws BadRequestException;
     UserWithDetailsDto createUserWithDetails(UserCreationDto userCreationDto, String parentID) throws BadRequestException;
     UserWithDetailsDto updateUserWithDetails(UserWithDetailsDto userCreationDto, String userID);
     void activeDeActiveUser(String userID, boolean status);

@@ -16,13 +16,16 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -35,6 +38,8 @@ public class UserDao implements IUserDao {
     private final ModelMapper modelMapper;
 
     private final ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo;
+
+    private final MongoTemplate mongoTemplate;
 
     @Override
     public UserDto createUser(User user, String parentID) {
@@ -98,37 +103,13 @@ public class UserDao implements IUserDao {
         this.userRepo.delete(user);
     }
 
-    @Override
-    public List<UserDto> getAllUsers() {
-        List<User> userList = this.userRepo.findAll();
-        return userList.stream().map(x -> this.modelMapper.map(x, UserDto.class)).collect(Collectors.toList());
-    }
 
-    @Override
-    public Page<UserDto> getAllUsers(Pageable pageable) {
-        Page<User> userList = this.userRepo.findAll(pageable);
-        List<UserDto> userDtoList = userList.getContent().stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
-        return new PageImpl<>(userDtoList, userList.getPageable(), userList.getTotalElements());
-    }
 
     @Override
     public User findByEmailForLogin(String email) {
         return userRepo.findByEmail(email).orElseThrow(() ->
                 new ResourceNotFoundException("User", "emailID", email)
         );
-    }
-
-    @Override
-    public Page<UserDto> getAllUsersByRole(String role, String query, Pageable pageable) {
-        Page<User> userList = null;
-        if(CommonUtils.isNullOrEmpty(query)){
-            userList = this.userRepo.findByRole(role, pageable);
-        }
-        else{
-            userList = this.userRepo.findByRoleAndNameContainingIgnoreCase(role, query, pageable);
-        }
-        List<UserDto> userDtoList = userList.getContent().stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
-        return new PageImpl<>(userDtoList, userList.getPageable(), userList.getTotalElements());
     }
 
     @Override
@@ -155,6 +136,24 @@ public class UserDao implements IUserDao {
         User user = getUser(userID);
         user.setPassword(passwordEncoder.encode(newPassword));
         this.userRepo.save(user);
+    }
+
+    @Override
+    public Page<UserDto> findUsersByFilter(String userID, String role, String filter, Pageable pageable) {
+        Query query = new Query();
+
+        if(!CommonUtils.isNullOrEmpty(userID)) query.addCriteria(Criteria.where("userID").is(userID));
+        if(!CommonUtils.isNullOrEmpty(role)) query.addCriteria(Criteria.where("role").is(role));
+        if(!CommonUtils.isNullOrEmpty(filter)) query.addCriteria(Criteria.where("name").regex(filter, "i"));// i denotes case insensitive);
+        query.with(pageable);
+
+        List<User> userList = this.mongoTemplate.find(query, User.class);
+        List<UserDto> userDtoList = userList.stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
+
+        return PageableExecutionUtils.getPage(
+                userDtoList,
+                pageable,
+                () -> this.mongoTemplate.count(query, User.class));
     }
 
     /*****************************************************************************************

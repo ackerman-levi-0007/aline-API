@@ -57,29 +57,24 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Page<UserDto> getAllUsers(String role, String query, PageDto pageDto) throws BadRequestException {
+    public Page<UserDto> getUsers(String userID, String role, String query, PageDto pageDto) throws BadRequestException {
         Pageable pageable = PageUtils.getPageableFromPageDto(pageDto);
 
         Page<UserDto> userDtoList = null;
-        if(CommonUtils.isNullOrEmpty(role)){
-            userDtoList = this.userDao.getAllUsers(pageable);
+        if(CommonUtils.isNullOrEmpty(role) || EnumUtils.contains(UserRole.class, role)){
+            userDtoList = this.userDao.findUsersByFilter(userID, role, query, pageable);
         }
         else{
-            if(EnumUtils.contains(UserRole.class, role)){
-                userDtoList = this.userDao.getAllUsersByRole(role, query, pageable);
-            }
-            else{
-                throw new BadRequestException("Incorrect role provided.");
-            }
+            throw new BadRequestException("Incorrect role provided.");
         }
 
         return userDtoList;
     }
 
     @Override
-    public Page<UserWithDetailsDto> getAllUsersWithDetails(String role, String query, PageDto pageDto) throws BadRequestException {
+    public Page<UserWithDetailsDto> getUsersWithDetails(String userID, String role, String query, PageDto pageDto) throws BadRequestException {
 
-        Page<UserDto> userDtoList = getAllUsers(role, query, pageDto);
+        Page<UserDto> userDtoList = getUsers(userID, role, query, pageDto);
 
         List<UserWithDetailsDto> userWithDetailsDtoList = userDtoList.stream().map(
                 userDto ->{
