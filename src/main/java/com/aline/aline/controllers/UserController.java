@@ -74,8 +74,8 @@ public class UserController {
                                                 , HttpStatus.OK);  
     }
 
-    @GetMapping("/getUsers")
-    public ResponseEntity<Page<UserDto>> getUsers(
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<Page<UserDto>> getAllUsers(
             @RequestParam(value = "userID", required = false) String userID,
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "role", required = false) String role,
@@ -92,8 +92,8 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getUsersWithDetails")
-    public ResponseEntity<Page<UserWithDetailsDto>> getUsersWithDetails(
+    @GetMapping("/getAllUsersWithDetails")
+    public ResponseEntity<Page<UserWithDetailsDto>> getAllUsersWithDetails(
             @RequestParam(value = "userID", required = false) String userID,
             @RequestParam(value = "role", required = false) String role,
             @RequestParam(value = "query", required = false) String query,

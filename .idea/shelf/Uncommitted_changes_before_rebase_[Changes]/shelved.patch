@@ -1,0 +1,135 @@
+Index: src/main/java/com/aline/aline/dao/Impl/UserDetailsDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.aline.aline.dao.Impl;\r\n\r\nimport com.aline.aline.dao.IUserDetailsDao;\r\nimport com.aline.aline.entities.UserDetails;\r\nimport com.aline.aline.exceptionHandler.ResourceNotFoundException;\r\nimport com.aline.aline.payload.User.UserDetailsDto;\r\nimport com.aline.aline.repositories.UserDetailsRepo;\r\nimport lombok.RequiredArgsConstructor;\r\nimport org.modelmapper.ModelMapper;\r\nimport org.springframework.stereotype.Repository;\r\n\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n@Repository\r\n@RequiredArgsConstructor\r\npublic class UserDetailsDao implements IUserDetailsDao {\r\n    private final UserDetailsRepo userDetailsRepo;\r\n    private final ModelMapper modelMapper;\r\n    @Override\r\n    public List<UserDetailsDto> getUserDetailsByUserIDs(List<String> userIDs) {\r\n        List<UserDetails> userDetails = this.userDetailsRepo.findByUserID(userIDs);\r\n        return userDetails.stream().map(x -> this.modelMapper.map(x, UserDetailsDto.class)).toList();\r\n    }\r\n\r\n    @Override\r\n    public UserDetailsDto getByUserID(String userID) {\r\n        UserDetails userDetails = this.userDetailsRepo.findByUserID(userID).orElseThrow(() ->\r\n                new ResourceNotFoundException(\"UserDetails\", \"userID\", userID)\r\n        );\r\n        return this.modelMapper.map(userDetails, UserDetailsDto.class);\r\n    }\r\n\r\n    @Override\r\n    public UserDetailsDto createUserDetails(UserDetails userDetails) {\r\n        UserDetails savedUserDetails = this.userDetailsRepo.save(userDetails);\r\n        return this.modelMapper.map(savedUserDetails, UserDetailsDto.class);\r\n    }\r\n\r\n    @Override\r\n    public UserDetailsDto updateUserDetailsByUserID(String userID, UserDetailsDto userDetailsDto) {\r\n        Optional<UserDetails> fetchedUserDetails = this.userDetailsRepo.findByUserID(userID);\r\n\r\n        if(fetchedUserDetails.isPresent()){\r\n            UserDetails userDetails = fetchedUserDetails.get();\r\n\r\n            userDetails.setUserAddress(userDetailsDto.getUserAddress());\r\n            userDetails.setUserCity(userDetailsDto.getUserCity());\r\n            userDetails.setUserCountry(userDetailsDto.getUserCountry());\r\n            userDetails.setMobileNo(userDetailsDto.getMobileNo());\r\n\r\n            UserDetails savedUserDetails = this.userDetailsRepo.save(userDetails);\r\n\r\n            return this.modelMapper.map(savedUserDetails, UserDetailsDto.class);\r\n        }\r\n        else {\r\n            //If no user details are found for the user create the details object\r\n            return createUserDetails(this.modelMapper.map(userDetailsDto, UserDetails.class));\r\n        }\r\n    }\r\n\r\n    @Override\r\n    public void deleteUserDetailsByUserID(String userID) {\r\n        Optional<UserDetails> userDetails = this.userDetailsRepo.findByUserID(userID);\r\n        userDetails.ifPresent(this.userDetailsRepo::delete);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/com/aline/aline/dao/Impl/UserDetailsDao.java b/src/main/java/com/aline/aline/dao/Impl/UserDetailsDao.java
+--- a/src/main/java/com/aline/aline/dao/Impl/UserDetailsDao.java	(revision d1f05e27ca365e256c9f78c7ce3402317647c6f6)
++++ b/src/main/java/com/aline/aline/dao/Impl/UserDetailsDao.java	(date 1712390504296)
+@@ -30,7 +30,7 @@
+         );
+         return this.modelMapper.map(userDetails, UserDetailsDto.class);
+     }
+-
++x
+     @Override
+     public UserDetailsDto createUserDetails(UserDetails userDetails) {
+         UserDetails savedUserDetails = this.userDetailsRepo.save(userDetails);
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"588a6160-bb4a-48e8-bebe-29cc2a438a1e\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IUserDao.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IUserDao.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/services/IUserService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/services/IUserService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/com/aline/aline/controllers/UserController.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/com/aline/aline/controllers/UserController.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/com/aline/aline/dao/IUserDao.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/com/aline/aline/dao/IUserDao.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/com/aline/aline/services/IUserService.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/com/aline/aline/services/IUserService.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/UserService.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/UserService.class\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Enum\" />\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/ApplicationConfig.java\" root0=\"FORCE_HIGHLIGHTING\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"MavenImportPreferences\">\r\n    <option name=\"generalSettings\">\r\n      <MavenGeneralSettings>\r\n        <option name=\"mavenHomeTypeForPersistence\" value=\"WRAPPER\" />\r\n      </MavenGeneralSettings>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 1\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2ba93hLuoNXDaSWHWM3FL2MrI2W\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.AlineApiApplication.executor\": \"Debug\",\r\n    \"Maven.aline [clean,validate,compile,test...].executor\": \"Run\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"D:/aline-API\",\r\n    \"project.structure.last.edited\": \"Libraries\",\r\n    \"project.structure.proportion\": \"0.15\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"settings.editor.selected.configurable\": \"settings.qodana\"\r\n  }\r\n}]]></component>\r\n  <component name=\"QodanaHighlightedReportService\">\r\n    <option name=\"localRunNotPublishedPersistedInfo\">\r\n      <LocalReportPersistedInfo>\r\n        <option name=\"path\" value=\"C:\\Users\\user\\AppData\\Local\\Temp\\qodana_output\\qodana.sarif.json\" />\r\n        <option name=\"reportGuid\" value=\"72044419-f583-43a3-b632-2d99a6045b78\" />\r\n        <option name=\"reportName\" value=\"aline-API/qodana/2024-02-23\" />\r\n      </LocalReportPersistedInfo>\r\n    </option>\r\n  </component>\r\n  <component name=\"QodanaIsSelectedPersistenceService\">\r\n    <option name=\"selectedOrLoading\" value=\"true\" />\r\n  </component>\r\n  <component name=\"QodanaReportsService\">\r\n    <option name=\"descriptions\">\r\n      <ReportDescription localRun=\"true\" path=\"C:\\Users\\user\\AppData\\Local\\Temp\\qodana_output\\qodana.sarif.json\" reportGuid=\"72044419-f583-43a3-b632-2d99a6045b78\" reportId=\"aline-API/qodana/2024-02-23\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateClassDialog.RecentsKey\">\r\n      <recent name=\"com.aline.aline.entities\" />\r\n      <recent name=\"com.aline.aline.payload\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-20.0.2-azul-20.0.2-8336523bb0d9-ce1e98ff\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"588a6160-bb4a-48e8-bebe-29cc2a438a1e\" name=\"Changes\" comment=\"\" />\r\n      <created>1706442125175</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1706442125175</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"pagination\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/AuthController.java</url>\r\n          <line>29</line>\r\n          <option name=\"timeStamp\" value=\"8\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java</url>\r\n          <line>46</line>\r\n          <option name=\"timeStamp\" value=\"10\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>\r\n          <line>90</line>\r\n          <option name=\"timeStamp\" value=\"11\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java</url>\r\n          <line>48</line>\r\n          <option name=\"timeStamp\" value=\"15\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>\r\n          <line>44</line>\r\n          <option name=\"timeStamp\" value=\"17\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java</url>\r\n          <line>37</line>\r\n          <option name=\"timeStamp\" value=\"19\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>\r\n          <line>101</line>\r\n          <option name=\"timeStamp\" value=\"20\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>\r\n          <line>59</line>\r\n          <option name=\"timeStamp\" value=\"22\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>\r\n          <line>83</line>\r\n          <option name=\"timeStamp\" value=\"26\" />\r\n        </line-breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>\r\n          <line>100</line>\r\n          <option name=\"timeStamp\" value=\"27\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n    <watches-manager>\r\n      <inline-watch fileUrl=\"file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java\" line=\"52\">\r\n        <watch expression=\"SecurityContextHolder.getContext().getAuthentication() \" />\r\n      </inline-watch>\r\n      <inline-watch fileUrl=\"file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java\" line=\"64\">\r\n        <watch expression=\"userDetails.getAuthorities()\" />\r\n      </inline-watch>\r\n    </watches-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision d1f05e27ca365e256c9f78c7ce3402317647c6f6)
++++ b/.idea/workspace.xml	(date 1712390504349)
+@@ -6,16 +6,7 @@
+   <component name="ChangeListManager">
+     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IUserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IUserDao.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IUserService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/UserController.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IUserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IUserDao.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IUserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IUserService.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/UserService.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDetailsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDetailsDao.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -34,7 +25,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="main" />
++        <entry key="$PROJECT_DIR$" value="authenticationEntryPoint" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -67,9 +58,11 @@
+   "keyToString": {
+     "Application.AlineApiApplication.executor": "Debug",
+     "Maven.aline [clean,validate,compile,test...].executor": "Run",
++    "Notification.DisplayName-DoNotAsk-Branch Context group": "Branch context switched",
++    "Notification.DoNotAsk-Branch Context group": "true",
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "git-widget-placeholder": "main",
++    "git-widget-placeholder": "dummy",
+     "ignore.virus.scanning.warn.message": "true",
+     "kotlin-language-version-configured": "true",
+     "last_opened_file_path": "D:/aline-API",
+@@ -142,6 +135,9 @@
+         </entry>
+       </map>
+     </option>
++  </component>
++  <component name="VcsManagerConfiguration">
++    <option name="RELOAD_CONTEXT" value="false" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+@@ -153,22 +149,27 @@
+         </line-breakpoint>
+         <line-breakpoint enabled="true" type="java-line">
+           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java</url>
+-          <line>46</line>
++          <line>37</line>
+           <option name="timeStamp" value="10" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" type="java-line">
+           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+-          <line>90</line>
++          <line>74</line>
+           <option name="timeStamp" value="11" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" type="java-line">
+           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java</url>
++          <line>60</line>
++          <option name="timeStamp" value="13" />
++        </line-breakpoint>
++        <line-breakpoint enabled="true" type="java-line">
++          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java</url>
+           <line>48</line>
+           <option name="timeStamp" value="15" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" type="java-line">
+           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+-          <line>44</line>
++          <line>32</line>
+           <option name="timeStamp" value="17" />
+         </line-breakpoint>
+         <line-breakpoint enabled="true" type="java-line">
+@@ -178,23 +179,8 @@
+         </line-breakpoint>
+         <line-breakpoint enabled="true" type="java-line">
+           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+-          <line>101</line>
++          <line>80</line>
+           <option name="timeStamp" value="20" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+-          <line>59</line>
+-          <option name="timeStamp" value="22" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+-          <line>83</line>
+-          <option name="timeStamp" value="26" />
+-        </line-breakpoint>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+-          <line>100</line>
+-          <option name="timeStamp" value="27" />
+         </line-breakpoint>
+       </breakpoints>
+     </breakpoint-manager>
