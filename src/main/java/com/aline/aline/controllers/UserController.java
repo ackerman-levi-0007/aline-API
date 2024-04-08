@@ -3,6 +3,7 @@ package com.aline.aline.controllers;
 import com.aline.aline.entities.User;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PageDto;
+import com.aline.aline.payload.User.PasswordChangeDto;
 import com.aline.aline.payload.User.UserCreationDto;
 import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.payload.User.UserWithDetailsDto;
@@ -79,8 +80,12 @@ public class UserController {
             @RequestParam(value = "userID", required = false) String userID,
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "role", required = false) String role,
-            PageDto pageDto
+            @RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(value = "pageSize", required = false, defaultValue = Integer.MAX_VALUE+"") int pageSize,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
+            @RequestParam(value = "sortDir", required = false, defaultValue = "DESC") String sortDir
     ) throws BadRequestException {
+        PageDto pageDto = new PageDto(pageNumber, pageSize, sortBy, sortDir);
         Page<UserDto> userDtoList = this.userService.getUsers(userID, role, query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
@@ -97,8 +102,12 @@ public class UserController {
             @RequestParam(value = "userID", required = false) String userID,
             @RequestParam(value = "role", required = false) String role,
             @RequestParam(value = "query", required = false) String query,
-            PageDto pageDto
+            @RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(value = "pageSize", required = false, defaultValue = Integer.MAX_VALUE+"") int pageSize,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
+            @RequestParam(value = "sortDir", required = false, defaultValue = "DESC") String sortDir
     ) throws BadRequestException {
+        PageDto pageDto = new PageDto(pageNumber, pageSize, sortBy, sortDir);
         Page<UserWithDetailsDto> userDtoList = this.userService.getUsersWithDetails(userID, role, query, pageDto);
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
@@ -116,11 +125,9 @@ public class UserController {
     @PutMapping("/resetPassword/{userID}")
     public ResponseEntity<APIResponse> resetPassword(
             @PathVariable String userID,
-            @RequestParam(value = "currentPassword") String currentPassword,
-            @RequestParam(value = "newPassword") String newPassword,
-            @RequestParam(value = "reEnterNewPassword") String reEnterNewPassword
+            PasswordChangeDto passwordChange
     ) throws BadRequestException {
-        this.userService.changePassword(userID, currentPassword, newPassword, reEnterNewPassword, "reset");
+        this.userService.changePassword(userID, passwordChange, "reset");
         return new ResponseEntity<>(new APIResponse("User password changed successfully" ,true)
                 , HttpStatus.OK);
     }
@@ -128,10 +135,9 @@ public class UserController {
     @PutMapping("/forgotPassword/{userID}")
     public ResponseEntity<APIResponse> forgotPassword(
             @PathVariable String userID,
-            @RequestParam(value = "newPassword") String newPassword,
-            @RequestParam(value = "reEnterNewPassword") String reEnterNewPassword
+            PasswordChangeDto passwordChange
     ) throws BadRequestException {
-        this.userService.changePassword(userID, null, newPassword, reEnterNewPassword, "forgot");
+        this.userService.changePassword(userID, passwordChange, "forgot");
         return new ResponseEntity<>(new APIResponse("User password changed successfully" ,true)
                 , HttpStatus.OK);
     }

@@ -6,10 +6,7 @@ import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PageDto;
-import com.aline.aline.payload.User.UserCreationDto;
-import com.aline.aline.payload.User.UserDetailsDto;
-import com.aline.aline.payload.User.UserDto;
-import com.aline.aline.payload.User.UserWithDetailsDto;
+import com.aline.aline.payload.User.*;
 import com.aline.aline.services.IUserService;
 import com.aline.aline.utilities.CommonUtils;
 import com.aline.aline.utilities.EnumUtils;
@@ -111,15 +108,15 @@ public class UserService implements IUserService {
     public void activeDeActiveUser(String userID, boolean status) { this.userDao.activeDeActiveUser(userID, status); }
 
     @Override
-    public void changePassword(String userID, String currentPassword, String newPassword, String reEnterNewPassword, String process) throws BadRequestException {
-        if(Objects.equals(newPassword, reEnterNewPassword)){
+    public void changePassword(String userID, PasswordChangeDto passwordChange, String process) throws BadRequestException {
+        if(Objects.equals(passwordChange.getNewPassword(), passwordChange.getReEnterNewPassword())){
             if(Objects.equals(process, "reset")){
-                this.userDao.resetPassword(userID, currentPassword, newPassword);
+                this.userDao.resetPassword(userID, passwordChange.getCurrentPassword(), passwordChange.getNewPassword());
             } else if (Objects.equals(process, "forgot")) {
-                this.userDao.forgotPassword(userID, newPassword);
+                this.userDao.forgotPassword(userID, passwordChange.getNewPassword());
             }
             else{
-                throw new RuntimeException("Wrong process mentioned");
+                throw new RuntimeException("Internal server error : wrong process mentioned. Please contact administrator.");
             }
         }
         else{

@@ -52,7 +52,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authenticationProvider(authenticationProvider)
-                //.httpBasic(httpBasic -> httpBasic.authenticationEntryPoint(this.cutomBasicAuthenticationEntryPoint))
+                //.httpBasic(httpBasic -> httpBasic.authenticationEntryPoint(this.cutomBasicAuthenticationEntryPoi nt))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .logout(logout ->
                         logout.logoutUrl("/api/v1/aline/auth/logout")

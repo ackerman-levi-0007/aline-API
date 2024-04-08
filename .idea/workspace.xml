@@ -5,8 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/ClinicDoctorRelationshipController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/ClinicDoctorRelationShip/PostDto/CreateClinicDoctorRelationShip.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/User/PasswordChangeDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IClinicDoctorRelationshipService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/ClinicDoctorRelationshipService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/AuthController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IClinicDoctorRelationshipDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IClinicDoctorRelationshipDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/ClinicDoctoRelationshipDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/ClinicDoctoRelationshipDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/ClinicDoctorRelationship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/ClinicDoctorRelationship.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/exceptionHandler/ResourceNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/exceptionHandler/ResourceNotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/ClinicDoctorRelationshipRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/ClinicDoctorRelationshipRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +45,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ackerman-levi-0007&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ackerman-levi-0007/aline-API.git&quot;,
+    &quot;accountId&quot;: &quot;d1b2a736-fde5-4ede-abcd-9074366b15ac&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/ApplicationConfig.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -95,13 +122,6 @@
       <recent name="com.aline.aline.payload" />
     </key>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-20.0.2-azul-20.0.2-8336523bb0d9-ce1e98ff" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -148,13 +168,8 @@
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
-          <line>74</line>
+          <line>75</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -169,7 +184,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
-          <line>32</line>
+          <line>33</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -179,17 +194,43 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
-          <line>80</line>
+          <line>81</line>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/AuthController.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/AuthenticationService.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/ClinicDoctorRelationshipController.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/ClinicDoctorRelationshipController.java</url>
+          <line>19</line>
+          <properties field="clinicDoctorRelationshipService" class="com.aline.aline.controllers.ClinicDoctorRelationshipController" />
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" line="64">
-        <watch expression="userDetails.getAuthorities()" />
-      </inline-watch>
       <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" line="52">
         <watch expression="SecurityContextHolder.getContext().getAuthentication() " />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" line="64">
+        <watch expression="userDetails.getAuthorities()" />
       </inline-watch>
     </watches-manager>
   </component>

@@ -30,6 +30,17 @@ public class AuthController {
         return new ResponseEntity<>(authenticationService.register(authenticationRequest), HttpStatus.OK);
     }
 
+    /**
+     * Generate a JSON web token if username and password has been authenticated by the BasicAuthenticationFilter.
+     * In summary, this filter is responsible for processing any request that has an HTTP request header of Authorization
+     * with an authentication scheme of Basic and a Base64-encoded username:password token.
+     * <p>
+     * BasicAuthenticationFilter will prepare the Authentication object for this login method.
+     * Note: before this login method gets called, Spring Security already authenticated the username and password through Basic Auth.
+     * Only successful authentication can make it to this method.
+     *
+     * @return JSON web access token and refresh token
+     */
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
         @RequestBody AuthenticationLoginRequest authenticationLoginRequest

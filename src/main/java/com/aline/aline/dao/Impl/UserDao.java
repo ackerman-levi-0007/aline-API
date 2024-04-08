@@ -1,20 +1,19 @@
 package com.aline.aline.dao.Impl;
 
+import com.aline.aline.dao.IClinicDoctorRelationshipDao;
 import com.aline.aline.dao.IUserDao;
-import com.aline.aline.entities.ClinicDoctorRelationship;
 import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.User.UserDto;
-import com.aline.aline.repositories.ClinicDoctorRelationshipRepo;
 import com.aline.aline.repositories.UserRepo;
 import com.aline.aline.utilities.CommonUtils;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -32,13 +31,9 @@ import java.util.Optional;
 public class UserDao implements IUserDao {
 
     private final UserRepo userRepo;
-
     private final PasswordEncoder passwordEncoder;
-
     private final ModelMapper modelMapper;
-
-    private final ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo;
-
+    private final IClinicDoctorRelationshipDao clinicDoctorRelationshipDao;
     private final MongoTemplate mongoTemplate;
 
     @Override
@@ -56,19 +51,15 @@ public class UserDao implements IUserDao {
         //Add clinic doctor relationship and status in ClinicDoctorRelationship
         //If clinic is created it will also be the doctor so for clinic it will also be a doctor
         if(user.getRole().contains(UserRole.ROLE_CLINIC)){
-            ClinicDoctorRelationship clinicDoctorRelationship = new ClinicDoctorRelationship();
-            clinicDoctorRelationship.setClinicID(savedUser.getId().toString());
-            clinicDoctorRelationship.setDoctorID(savedUser.getId().toString());
-            clinicDoctorRelationship.setStatus(true);
-            this.clinicDoctorRelationshipRepo.save(clinicDoctorRelationship);
+            this.clinicDoctorRelationshipDao.create(
+                    savedUser.getId().toString(), savedUser.getId().toString(), true
+            );
         }
         //Add clinic doctor relationship and status in ClinicDoctorRelationship
         else if(!CommonUtils.isNullOrEmpty(parentID) && user.getRole().contains(UserRole.ROLE_DOCTOR)){
-            ClinicDoctorRelationship clinicDoctorRelationship = new ClinicDoctorRelationship();
-            clinicDoctorRelationship.setClinicID(parentID);
-            clinicDoctorRelationship.setDoctorID(savedUser.getId().toString());
-            clinicDoctorRelationship.setStatus(true);
-            this.clinicDoctorRelationshipRepo.save(clinicDoctorRelationship);
+            this.clinicDoctorRelationshipDao.create(
+                    parentID, savedUser.getId().toString(), true
+            );
         }
 
         return this.modelMapper.map(savedUser, UserDto.class);
