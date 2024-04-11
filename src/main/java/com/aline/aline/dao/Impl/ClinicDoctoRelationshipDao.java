@@ -23,6 +23,7 @@ public class ClinicDoctoRelationshipDao implements IClinicDoctorRelationshipDao 
     private ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo;
     private IUserDao userDao;
 
+    @Autowired
     public ClinicDoctoRelationshipDao(ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo){
         super();
         this.clinicDoctorRelationshipRepo = clinicDoctorRelationshipRepo;

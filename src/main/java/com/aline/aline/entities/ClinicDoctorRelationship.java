@@ -24,7 +24,7 @@ public class ClinicDoctorRelationship {
 
     private boolean status;
 
-    public ClinicDoctorRelationship (String clinicID, String doctorID, boolean status){
+    public ClinicDoctorRelationship (String doctorID, String clinicID, boolean status){
         this.setDoctorID(doctorID);
         this.setClinicID(clinicID);
         this.setStatus(status);

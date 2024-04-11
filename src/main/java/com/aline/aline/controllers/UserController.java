@@ -125,7 +125,7 @@ public class UserController {
     @PutMapping("/resetPassword/{userID}")
     public ResponseEntity<APIResponse> resetPassword(
             @PathVariable String userID,
-            PasswordChangeDto passwordChange
+            @RequestBody PasswordChangeDto passwordChange
     ) throws BadRequestException {
         this.userService.changePassword(userID, passwordChange, "reset");
         return new ResponseEntity<>(new APIResponse("User password changed successfully" ,true)
@@ -135,7 +135,7 @@ public class UserController {
     @PutMapping("/forgotPassword/{userID}")
     public ResponseEntity<APIResponse> forgotPassword(
             @PathVariable String userID,
-            PasswordChangeDto passwordChange
+            @RequestBody PasswordChangeDto passwordChange
     ) throws BadRequestException {
         this.userService.changePassword(userID, passwordChange, "forgot");
         return new ResponseEntity<>(new APIResponse("User password changed successfully" ,true)
