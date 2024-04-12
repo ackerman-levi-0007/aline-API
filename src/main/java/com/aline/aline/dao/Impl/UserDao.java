@@ -14,6 +14,7 @@ import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -136,18 +137,17 @@ public class UserDao implements IUserDao {
         if(!CommonUtils.isNullOrEmpty(userID)) query.addCriteria(Criteria.where("userID").is(userID));
         if(!CommonUtils.isNullOrEmpty(role)) query.addCriteria(Criteria.where("role").is(role));
         if(!CommonUtils.isNullOrEmpty(filter)) query.addCriteria(Criteria.where("name").regex(filter, "i"));// i denotes case insensitive);
-        //query.with(pageable);
 
-        query.with(pageable.getSort()); // Example sorting, adjust as needed
-        query.skip(pageable.getPageNumber()*pageable.getPageSize()).limit(pageable.getPageSize());
+        long totalCount = this.mongoTemplate.count(query, User.class);
+        query.with(pageable);
 
         List<User> userList = this.mongoTemplate.find(query, User.class);
         List<UserDto> userDtoList = userList.stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
 
-        return PageableExecutionUtils.getPage(
+        return new PageImpl<>(
                 userDtoList,
                 pageable,
-                () -> this.mongoTemplate.count(query, User.class));
+                totalCount);
     }
 
     /*****************************************************************************************
