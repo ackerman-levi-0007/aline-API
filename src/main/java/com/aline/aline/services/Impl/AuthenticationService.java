@@ -82,8 +82,8 @@ public class AuthenticationService implements IAuthenticationService {
             catch (ResourceNotFoundException ex){
                 throw new ForbiddenException("Invalid token provided");
             }
-            if(jwtService.isTokenValid(refreshToken, user)){
-                tokenDao.revokeAllUserTokens(user.getId().toString());
+            if(jwtService.isTokenValid(refreshToken, user) && tokenService.isTokenValid(null, refreshToken)){
+                tokenDao.revokeToken(refreshToken);
                 new ObjectMapper().writeValue(response.getOutputStream(), tokenService.generateToken(userEmail));
             }
             else{

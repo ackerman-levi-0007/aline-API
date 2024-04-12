@@ -6,7 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/ITokenDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/ITokenDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TokenDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TokenDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/Token.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/TokenRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/TokenRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/ITokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/ITokenService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/AuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/TokenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/TokenService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -210,7 +218,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java</url>
-          <line>142</line>
+          <line>141</line>
           <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>

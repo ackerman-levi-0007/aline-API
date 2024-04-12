@@ -20,8 +20,8 @@ public class TokenService implements ITokenService {
     private final JwtService jwtService;
     private final IUserDao userDao;
     @Override
-    public boolean isTokenValid(String token) {
-       Optional<Token> fetchedTokenDetails = this.tokenDao.getTokenDetailsByToken(token);
+    public boolean isTokenValid(String accessToken, String refreshToken) {
+       Optional<Token> fetchedTokenDetails = this.tokenDao.getTokenDetailsByToken(accessToken, refreshToken);
         return fetchedTokenDetails.map(value -> !value.isExpired() && !value.isRevoked()).orElse(true);
     }
 
@@ -29,13 +29,13 @@ public class TokenService implements ITokenService {
     public AuthenticationResponse generateToken(String email) {
         User user = userDao.findByEmailForLogin(email);
 
-        String token = jwtService.generateToken(user);
+        String accessToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
 
-        Token generatedToken = new Token(user.getId().toString(), token, TokenType.BEARER, false, false);
+        Token generatedToken = new Token(user.getId().toString(), accessToken, refreshToken, TokenType.BEARER, false, false);
         this.tokenDao.saveToken(generatedToken);
 
-        return new AuthenticationResponse(token, refreshToken);
+        return new AuthenticationResponse(accessToken, refreshToken);
     }
 
 

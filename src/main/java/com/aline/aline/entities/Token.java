@@ -23,7 +23,9 @@ public class Token {
 
     private String userID;
 
-    private String token;
+    private String accessToken;
+
+    private String refreshToken;
 
     private TokenType tokenType;
 
@@ -34,9 +36,10 @@ public class Token {
     @CreatedDate
     private Date createdOn;
 
-    public Token(String userID, String token, TokenType tokenType, boolean expired, boolean revoked) {
+    public Token(String userID, String accessToken, String refreshToken, TokenType tokenType, boolean expired, boolean revoked) {
         this.userID = userID;
-        this.token = token;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         this.tokenType = tokenType;
         this.expired = expired;
         this.revoked = revoked;

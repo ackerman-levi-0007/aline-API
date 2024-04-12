@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ITokenService {
-    boolean isTokenValid(String token);
+    boolean isTokenValid(String accessToken, String refreshToken);
 
     AuthenticationResponse generateToken(String email);
 }

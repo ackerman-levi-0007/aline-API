@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             catch (ResourceNotFoundException ex){
                 throw new ForbiddenException("Invalid token provided");
             }
-            if(jwtService.isTokenValid(jwt, userDetails) && tokenService.isTokenValid(jwt)){
+            if(jwtService.isTokenValid(jwt, userDetails) && tokenService.isTokenValid(jwt, null)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

@@ -10,5 +10,5 @@ public interface ITokenDao {
     void saveToken(Token token);
     void revokeAllUserTokens(String userID);
     void revokeToken(String token);
-    Optional<Token> getTokenDetailsByToken(String token);
+    Optional<Token> getTokenDetailsByToken(String accessToken, String refreshToken);
 }
