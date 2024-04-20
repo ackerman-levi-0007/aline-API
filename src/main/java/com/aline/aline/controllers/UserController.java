@@ -79,7 +79,7 @@ public class UserController {
     public ResponseEntity<Page<UserDto>> getAllUsers(
             @RequestParam(value = "userID", required = false) String userID,
             @RequestParam(value = "query", required = false) String query,
-            @RequestParam(value = "role", required = false) String role,
+            @RequestParam(value = "role") String role,
             @RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
             @RequestParam(value = "pageSize", required = false, defaultValue = Integer.MAX_VALUE+"") int pageSize,
             @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
@@ -100,7 +100,7 @@ public class UserController {
     @GetMapping("/getAllUsersWithDetails")
     public ResponseEntity<Page<UserWithDetailsDto>> getAllUsersWithDetails(
             @RequestParam(value = "userID", required = false) String userID,
-            @RequestParam(value = "role", required = false) String role,
+            @RequestParam(value = "role") String role,
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
             @RequestParam(value = "pageSize", required = false, defaultValue = Integer.MAX_VALUE+"") int pageSize,

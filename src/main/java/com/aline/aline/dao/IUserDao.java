@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IUserDao {
     UserDto createUser(User user, String parentID);
@@ -17,5 +19,5 @@ public interface IUserDao {
     void activeDeActiveUser(String userID, boolean status);
     void resetPassword(String userID, String currentPassword, String newPassword) throws BadRequestException;
     void forgotPassword(String userID, String newPassword);
-    Page<UserDto> findUsersByFilter(String userID, String role, String query, Pageable pageable);
+    Page<UserDto> findUsersByFilter(List<String> userIDs, String role, String query, Pageable pageable);
 }

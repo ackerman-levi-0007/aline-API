@@ -1,9 +1,7 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.dao.IClinicDoctorRelationshipDao;
 import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.User;
-import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.repositories.UserRepo;
@@ -32,7 +30,6 @@ public class UserDao implements IUserDao {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
-    private final IClinicDoctorRelationshipDao clinicDoctorRelationshipDao;
     private final MongoTemplate mongoTemplate;
 
     @Override
@@ -46,21 +43,6 @@ public class UserDao implements IUserDao {
         //Save user
         User savedUser = this.userRepo.save(user);
 
-
-        //Add clinic doctor relationship and status in ClinicDoctorRelationship
-        //If clinic is created it will also be the doctor so for clinic it will also be a doctor
-        if(user.getRole().contains(UserRole.ROLE_CLINIC)){
-            this.clinicDoctorRelationshipDao.create(
-                    savedUser.getId().toString(), savedUser.getId().toString(), true
-            );
-        }
-        //Add clinic doctor relationship and status in ClinicDoctorRelationship
-        else if(!CommonUtils.isNullOrEmpty(parentID) && user.getRole().contains(UserRole.ROLE_DOCTOR)){
-            this.clinicDoctorRelationshipDao.create(
-                    parentID, savedUser.getId().toString(), true
-            );
-        }
-
         return this.modelMapper.map(savedUser, UserDto.class);
     }
 
@@ -72,9 +54,9 @@ public class UserDao implements IUserDao {
             throw new EntityExistsException("Updated emailID already associated to different user!!!");
         }
 
+        //User can only update name and email
         user.setName(userDto.getName());
         user.setEmail(userDto.getEmail());
-        user.setRole(userDto.getRole());
 
         User updatedUser = this.userRepo.save(user);
 
@@ -129,10 +111,10 @@ public class UserDao implements IUserDao {
     }
 
     @Override
-    public Page<UserDto> findUsersByFilter(String userID, String role, String filter, Pageable pageable) {
+    public Page<UserDto> findUsersByFilter(List<String> userIDs, String role, String filter, Pageable pageable) {
         Query query = new Query();
 
-        if(!CommonUtils.isNullOrEmpty(userID)) query.addCriteria(Criteria.where("userID").is(userID));
+         if(!userIDs.isEmpty()) query.addCriteria(Criteria.where("id").in(userIDs));
         if(!CommonUtils.isNullOrEmpty(role)) query.addCriteria(Criteria.where("role").is(role));
         if(!CommonUtils.isNullOrEmpty(filter)) query.addCriteria(Criteria.where("name").regex(filter, "i"));// i denotes case insensitive);
 
@@ -140,7 +122,7 @@ public class UserDao implements IUserDao {
         query.with(pageable);
 
         List<User> userList = this.mongoTemplate.find(query, User.class);
-        List<UserDto> userDtoList = userList.stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
+         List<UserDto> userDtoList = userList.stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
 
         return new PageImpl<>(
                 userDtoList,

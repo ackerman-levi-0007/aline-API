@@ -1,7 +1,6 @@
 package com.aline.aline.dao.Impl;
 
 import com.aline.aline.dao.IClinicDoctorRelationshipDao;
-import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.ClinicDoctorRelationship;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -10,29 +9,16 @@ import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.repositories.ClinicDoctorRelationshipRepo;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class ClinicDoctoRelationshipDao implements IClinicDoctorRelationshipDao {
+public class ClinicDoctorRelationshipDao implements IClinicDoctorRelationshipDao {
 
-    private ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo;
-    private IUserDao userDao;
-
-    @Autowired
-    public ClinicDoctoRelationshipDao(ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo){
-        super();
-        this.clinicDoctorRelationshipRepo = clinicDoctorRelationshipRepo;
-    }
-
-    @Autowired
-    public void setUserDao(@Lazy IUserDao userDao){
-        this.userDao = userDao;
-    }
+    private final ClinicDoctorRelationshipRepo clinicDoctorRelationshipRepo;
 
     @Override
     public void create(String doctorID, String clinicID, boolean status) {
@@ -49,10 +35,7 @@ public class ClinicDoctoRelationshipDao implements IClinicDoctorRelationshipDao 
     }
 
     @Override
-    public void addExistingDoctorToClinic(CreateClinicDoctorRelationShip clinicDoctorRelationShip) throws BadRequestException {
-        UserDto doctor = this.userDao.getUserByID(clinicDoctorRelationShip.getDoctorID());
-        UserDto clinic = this.userDao.getUserByID(clinicDoctorRelationShip.getClinicID());
-
+    public void addExistingDoctorToClinic(UserDto doctor, UserDto clinic, CreateClinicDoctorRelationShip clinicDoctorRelationShip) throws BadRequestException {
         if(doctor.getRole().contains(UserRole.ROLE_DOCTOR) && clinic.getRole().contains(UserRole.ROLE_CLINIC)){
             if(!checkClinicDoctorRelationshipExists(clinicDoctorRelationShip.getDoctorID(), clinicDoctorRelationShip.getClinicID())){
                 ClinicDoctorRelationship clinicDoctorRelationship = new ClinicDoctorRelationship(
@@ -72,6 +55,27 @@ public class ClinicDoctoRelationshipDao implements IClinicDoctorRelationshipDao 
         else{
             throw new BadRequestException("The user provided has not the mentioned role. Please check!!!");
         }
+    }
+
+    @Override
+    public List<String> getDoctorIdsForClinicId(String clinicID) {
+        List<ClinicDoctorRelationship> clinicDoctorRelationshipList = this.clinicDoctorRelationshipRepo.findAllByClinicID(clinicID);
+        return clinicDoctorRelationshipList.stream().map(
+                ClinicDoctorRelationship::getDoctorID
+        ).toList();
+    }
+
+    @Override
+    public boolean checkDoctorIDRelationshipToClinicID(String doctorID, String clinicID) {
+        return checkClinicDoctorRelationshipExists(doctorID, clinicID);
+    }
+
+    @Override
+    public List<String> getClinicIdsForDoctorID(String doctorID) {
+        List<ClinicDoctorRelationship> clinicDoctorRelationshipList = this.clinicDoctorRelationshipRepo.findAllByDoctorID(doctorID);
+        return clinicDoctorRelationshipList.stream().map(
+                ClinicDoctorRelationship::getClinicID
+        ).toList();
     }
 
     /*****************************************************************************************
