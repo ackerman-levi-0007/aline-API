@@ -51,7 +51,7 @@ public class UserService implements IUserService {
         //Add clinic doctor relationship and status in ClinicDoctorRelationship
         else if(!CommonUtils.isNullOrEmpty(parentID) && user.getRole().contains(UserRole.ROLE_DOCTOR)){
             this.clinicDoctorRelationshipDao.create(
-                    parentID, savedUser.getId(), true
+                    savedUser.getId(), parentID, true
             );
         }
 

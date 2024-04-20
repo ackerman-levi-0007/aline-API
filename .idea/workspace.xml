@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IClinicDoctorRelationshipDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IClinicDoctorRelationshipDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IUserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IUserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/ClinicDoctoRelationshipDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/ClinicDoctorRelationshipDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/ClinicDoctorRelationshipRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/ClinicDoctorRelationshipRepo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/ClinicDoctorRelationshipService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/ClinicDoctorRelationshipService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -172,11 +163,6 @@
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java</url>
           <line>37</line>
           <option name="timeStamp" value="19" />
@@ -230,6 +216,31 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/UserDao.java</url>
           <line>116</line>
           <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/ClinicDoctorRelationshipDao.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
