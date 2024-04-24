@@ -16,8 +16,4 @@ public interface UserRepo extends MongoRepository<User, String> {
      * Find User based on the Email
      */
     Optional<User> findByEmail(String email);
-
-    Page<User> findByRole(String role, Pageable pageable);
-
-    Page<User> findByRoleAndNameContainingIgnoreCase(String role, String query, Pageable pageable);
 }
