@@ -10,15 +10,10 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetPatientDto {
-
+public class UpdatePatientDto {
     private String id;
 
     private String name;
-
-    private String clinicID;
-
-    private String doctorID;
 
     private PatientStatus status;
 
@@ -31,8 +26,4 @@ public class GetPatientDto {
     private String nationality;
 
     private String chiefComplaint;
-
-    private Date createdOn;
-
-    private Date updatedOn;
 }
