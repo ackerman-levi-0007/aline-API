@@ -78,11 +78,11 @@ public class PatientController {
         return new ResponseEntity<>(new APIResponse("Patient deleted successfully!!!", true), HttpStatus.OK);
     }
 
-//    @PutMapping("/changeDoctorAllocationForPatient")
-//    public ResponseEntity<APIResponse> changeDoctorAllocationForPatient(
-//            @RequestBody UpdateDoctorAllocationDto doctorAllocationDto
-//    ){
-//        this.patientService.changeDoctorAllocationForPatient(doctorAllocationDto);
-//        return new ResponseEntity<>(new APIResponse("Doctor changed successfully for the patient!!!", true), HttpStatus.OK);
-//    }
+    @PutMapping("/changeDoctorAllocationForPatient")
+    public ResponseEntity<APIResponse> changeDoctorAllocationForPatient(
+            @RequestBody UpdateDoctorAllocationDto doctorAllocationDto
+    ){
+        this.patientService.changeDoctorAllocationForPatient(doctorAllocationDto);
+        return new ResponseEntity<>(new APIResponse("Doctor changed successfully for the patient!!!", true), HttpStatus.OK);
+    }
 }

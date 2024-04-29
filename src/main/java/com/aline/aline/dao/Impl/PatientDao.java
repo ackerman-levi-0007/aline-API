@@ -69,6 +69,13 @@ public class PatientDao implements IPatientDao {
         this.patientRepo.delete(patient);
     }
 
+    @Override
+    public void changeDoctorAllocationForPatient(String patientID, String doctorID) {
+        Patient patient = getPatient(patientID);
+        patient.setDoctorID(doctorID);
+        this.patientRepo.save(patient);
+    }
+
     /*****************************************************************************************
                                              Helpers
      *****************************************************************************************/

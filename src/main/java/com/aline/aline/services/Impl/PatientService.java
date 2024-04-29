@@ -1,6 +1,7 @@
 package com.aline.aline.services.Impl;
 
 import com.aline.aline.dao.IPatientDao;
+import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.Patient;
 import com.aline.aline.payload.Patient.GetPatientDto;
 import com.aline.aline.payload.Patient.UpdateDoctorAllocationDto;
@@ -19,6 +20,7 @@ public class PatientService implements IPatientService {
 
     private final IPatientDao patientDao;
     private final ModelMapper modelMapper;
+    private final IUserDao userDao;
 
     @Override
     public GetPatientDto createPatient(Patient patient) {
@@ -53,6 +55,6 @@ public class PatientService implements IPatientService {
 
     @Override
     public void changeDoctorAllocationForPatient(UpdateDoctorAllocationDto doctorAllocationDto) {
-
+         this.patientDao.changeDoctorAllocationForPatient(doctorAllocationDto.getPatientID(), doctorAllocationDto.getNewDoctorID());
     }
 }

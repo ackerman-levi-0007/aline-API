@@ -15,4 +15,5 @@ public interface IPatientDao {
     GetPatientDto updatePatient(Patient updatedPatient);
     void updatePatientStatus(UpdatePatientStatusDto patientStatus);
     void deletePatient(String patientID);
+    void changeDoctorAllocationForPatient(String patientID, String doctorID);
 }
