@@ -30,8 +30,6 @@ public class GetPatientDto {
 
     private String nationality;
 
-    private String chiefComplaint;
-
     private Date createdOn;
 
     private Date updatedOn;

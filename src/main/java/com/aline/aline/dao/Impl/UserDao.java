@@ -114,7 +114,7 @@ public class UserDao implements IUserDao {
     public Page<UserDto> findUsersByFilter(List<String> userIDs, String role, String filter, Pageable pageable) {
         Query query = new Query();
 
-         if(!userIDs.isEmpty()) query.addCriteria(Criteria.where("id").in(userIDs));
+        if(!userIDs.isEmpty()) query.addCriteria(Criteria.where("id").in(userIDs));
         if(!CommonUtils.isNullOrEmpty(role)) query.addCriteria(Criteria.where("role").is(role));
         if(!CommonUtils.isNullOrEmpty(filter)) query.addCriteria(Criteria.where("name").regex(filter, "i"));// i denotes case insensitive);
 
@@ -122,7 +122,7 @@ public class UserDao implements IUserDao {
         query.with(pageable);
 
         List<User> userList = this.mongoTemplate.find(query, User.class);
-         List<UserDto> userDtoList = userList.stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
+        List<UserDto> userDtoList = userList.stream().map(x -> this.modelMapper.map(x, UserDto.class)).toList();
 
         return new PageImpl<>(
                 userDtoList,

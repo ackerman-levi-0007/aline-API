@@ -40,8 +40,6 @@ public class Patient {
 
     private String nationality;
 
-    private String chiefComplaint;
-
     @CreatedDate
     @JsonIgnore
     private Date createdOn;

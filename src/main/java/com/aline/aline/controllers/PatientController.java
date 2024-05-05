@@ -3,13 +3,13 @@ package com.aline.aline.controllers;
 import com.aline.aline.entities.Patient;
 import com.aline.aline.enums.PatientStatus;
 import com.aline.aline.payload.APIResponse;
-import com.aline.aline.payload.Patient.GetPatientDto;
-import com.aline.aline.payload.Patient.UpdateDoctorAllocationDto;
-import com.aline.aline.payload.Patient.UpdatePatientDto;
-import com.aline.aline.payload.Patient.UpdatePatientStatusDto;
+import com.aline.aline.payload.PageDto;
+import com.aline.aline.payload.Patient.*;
 import com.aline.aline.services.IPatientService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +29,21 @@ public class PatientController {
     @PostMapping("/createPatient")
     public ResponseEntity<GetPatientDto> createPatient(
             @RequestBody Patient patient
-    ){
+    ) throws BadRequestException {
         GetPatientDto getPatientDto = this.patientService.createPatient(patient);
         return new ResponseEntity<>(getPatientDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllPatients")
-    public ResponseEntity<List<GetPatientDto>> getAllPatients(){
-        List<GetPatientDto> getPatientDtoList = this.patientService.getAllPatients();
+    @PostMapping("/getAllPatients")
+    public ResponseEntity<Page<GetPatientDto>> getAllPatients(
+            @RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(value = "pageSize", required = false, defaultValue = Integer.MAX_VALUE+"") int pageSize,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
+            @RequestParam(value = "sortDir", required = false, defaultValue = "DESC") String sortDir,
+            @RequestBody FilterPatientDto filterPatientDto
+            ){
+        PageDto pageDto = new PageDto(pageNumber, pageSize, sortBy, sortDir);
+        Page<GetPatientDto> getPatientDtoList = this.patientService.getAllPatients(pageDto, filterPatientDto);
         return new ResponseEntity<>(getPatientDtoList, HttpStatus.OK);
     }
 
@@ -51,7 +58,7 @@ public class PatientController {
     @PutMapping("/updatePatient")
     public ResponseEntity<GetPatientDto> updatePatient(
             @RequestBody UpdatePatientDto patient
-    ){
+    ) throws BadRequestException {
         GetPatientDto updatedPatient = this.patientService.updatePatient(patient);
         return new ResponseEntity<>(updatedPatient, HttpStatus.OK);
     }
@@ -76,13 +83,5 @@ public class PatientController {
     ){
         this.patientService.deletePatient(patientID);
         return new ResponseEntity<>(new APIResponse("Patient deleted successfully!!!", true), HttpStatus.OK);
-    }
-
-    @PutMapping("/changeDoctorAllocationForPatient")
-    public ResponseEntity<APIResponse> changeDoctorAllocationForPatient(
-            @RequestBody UpdateDoctorAllocationDto doctorAllocationDto
-    ){
-        this.patientService.changeDoctorAllocationForPatient(doctorAllocationDto);
-        return new ResponseEntity<>(new APIResponse("Doctor changed successfully for the patient!!!", true), HttpStatus.OK);
     }
 }

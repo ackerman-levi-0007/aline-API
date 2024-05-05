@@ -1,20 +1,18 @@
 package com.aline.aline.services;
 
 import com.aline.aline.entities.Patient;
-import com.aline.aline.payload.Patient.GetPatientDto;
-import com.aline.aline.payload.Patient.UpdateDoctorAllocationDto;
-import com.aline.aline.payload.Patient.UpdatePatientDto;
-import com.aline.aline.payload.Patient.UpdatePatientStatusDto;
+import com.aline.aline.payload.PageDto;
+import com.aline.aline.payload.Patient.*;
+import org.apache.coyote.BadRequestException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public interface IPatientService {
-    GetPatientDto createPatient(Patient patient);
-    List<GetPatientDto> getAllPatients();
+    GetPatientDto createPatient(Patient patient) throws BadRequestException;
+    Page<GetPatientDto> getAllPatients(PageDto pageDto, FilterPatientDto filterPatientDto);
     GetPatientDto getPatientByID(String patientID);
-    GetPatientDto updatePatient(UpdatePatientDto patient);
+    GetPatientDto updatePatient(UpdatePatientDto patient) throws BadRequestException;
     void updatePatientStatus(UpdatePatientStatusDto patientStatus);
     void deletePatient(String patientID);
     void changeDoctorAllocationForPatient(UpdateDoctorAllocationDto doctorAllocationDto);
