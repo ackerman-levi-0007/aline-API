@@ -78,6 +78,11 @@ public class ClinicDoctorRelationshipDao implements IClinicDoctorRelationshipDao
         ).toList();
     }
 
+    @Override
+    public boolean checkStatusForDoctorIDRelationshipToClinicID(String doctorID, String clinicID) {
+        return checkClinicDoctorRelationshipStatus(doctorID, clinicID);
+    }
+
     /*****************************************************************************************
                                                 Helpers
      ****************************************************************************************/

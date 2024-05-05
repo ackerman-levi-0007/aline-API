@@ -7,8 +7,8 @@ public enum UserRole {
     ROLE_ADMIN;
 
     public static boolean contains(String value) {
-        for (UserRole day : values()) {
-            if (day.name().equalsIgnoreCase(value)) {
+        for (UserRole role : values()) {
+            if (role.name().equalsIgnoreCase(value)) {
                 return true;
             }
         }

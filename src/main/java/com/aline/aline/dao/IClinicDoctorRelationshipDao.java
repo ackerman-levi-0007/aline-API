@@ -16,4 +16,5 @@ public interface IClinicDoctorRelationshipDao {
     List<String> getDoctorIdsForClinicId(String clinicID);
     boolean checkDoctorIDRelationshipToClinicID(String doctorID, String clinicID);
     List<String> getClinicIdsForDoctorID(String doctorID);
+    boolean checkStatusForDoctorIDRelationshipToClinicID(String doctorID, String clinicID);
 }
