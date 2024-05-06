@@ -40,8 +40,9 @@ public class PatientController {
             @RequestParam(value = "pageSize", required = false, defaultValue = Integer.MAX_VALUE+"") int pageSize,
             @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
             @RequestParam(value = "sortDir", required = false, defaultValue = "DESC") String sortDir,
-            @RequestBody FilterPatientDto filterPatientDto
-            ){
+            @RequestBody(required = false) FilterPatientDto filterPatientDto
+    ){
+        if(filterPatientDto == null) filterPatientDto = new FilterPatientDto();
         PageDto pageDto = new PageDto(pageNumber, pageSize, sortBy, sortDir);
         Page<GetPatientDto> getPatientDtoList = this.patientService.getAllPatients(pageDto, filterPatientDto);
         return new ResponseEntity<>(getPatientDtoList, HttpStatus.OK);
