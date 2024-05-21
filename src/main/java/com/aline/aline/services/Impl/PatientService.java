@@ -8,6 +8,7 @@ import com.aline.aline.enums.UserRole;
 import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.Patient.*;
 import com.aline.aline.payload.User.UserDto;
+import com.aline.aline.payload.User.UserIdAndNameDto;
 import com.aline.aline.services.IPatientService;
 import com.aline.aline.utilities.PageUtils;
 import com.aline.aline.utilities.SecurityUtils;
@@ -73,6 +74,22 @@ public class PatientService implements IPatientService {
          this.patientDao.changeDoctorAllocationForPatient(
                  doctorAllocationDto.getPatientID(), doctorAllocationDto.getNewDoctorID()
          );
+    }
+
+    @Override
+    public GetUserDetailsForPatientDto getUserDetailsForPatientID(String patientID) {
+        GetPatientDto getPatientDto = getPatientByID(patientID);
+
+        UserDto clinicDto = this.userDao.getUserByID(getPatientDto.getClinicID());
+        UserDto doctorDto = this.userDao.getUserByID(getPatientDto.getDoctorID());
+
+        GetUserDetailsForPatientDto getUserDetailsForPatientDto = new GetUserDetailsForPatientDto();
+
+        getUserDetailsForPatientDto.setPatient(new UserIdAndNameDto(getPatientDto.getId(), getPatientDto.getName()));
+        getUserDetailsForPatientDto.setDoctor(new UserIdAndNameDto(doctorDto.getId(), doctorDto.getName()));
+        getUserDetailsForPatientDto.setClinic(new UserIdAndNameDto(clinicDto.getId(), clinicDto.getName()));
+
+        return getUserDetailsForPatientDto;
     }
 
     /*****************************************************************************************

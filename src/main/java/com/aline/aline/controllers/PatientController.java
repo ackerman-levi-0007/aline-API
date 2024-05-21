@@ -85,4 +85,12 @@ public class PatientController {
         this.patientService.deletePatient(patientID);
         return new ResponseEntity<>(new APIResponse("Patient deleted successfully!!!", true), HttpStatus.OK);
     }
+
+    @GetMapping("/getUserDetailsForPatientID/{patientID}")
+    public ResponseEntity<GetUserDetailsForPatientDto> getUserDetailsForPatientID(
+            @PathVariable String patientID
+    ){
+        GetUserDetailsForPatientDto patientDto = this.patientService.getUserDetailsForPatientID(patientID);
+        return new ResponseEntity<>(patientDto, HttpStatus.OK);
+    }
 }

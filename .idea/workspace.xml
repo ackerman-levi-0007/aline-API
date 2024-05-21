@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientDentalDetails.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/GetUserDetailsForPatientDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientDentalDetails/TreatmentRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientDentalDetails/TreatmentTypeRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/User/UserIdAndNameDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/Patient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/Patient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,24 +74,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AlineApiApplication.executor": "Debug",
-    "Maven.aline [clean,validate,compile,test...].executor": "Run",
-    "Notification.DisplayName-DoNotAsk-Branch Context group": "Branch context switched",
-    "Notification.DoNotAsk-Branch Context group": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/patientController",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/aline-API",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "settings.qodana"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AlineApiApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Maven.aline [clean,validate,compile,test...].executor&quot;: &quot;Run&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-Branch Context group&quot;: &quot;Branch context switched&quot;,
+    &quot;Notification.DoNotAsk-Branch Context group&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/patientDetails&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/aline-API&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.qodana&quot;
   }
-}]]></component>
+}</component>
   <component name="QodanaHighlightedReportService">
     <option name="localRunNotPublishedPersistedInfo">
       <LocalReportPersistedInfo>
@@ -156,16 +164,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
           <line>75</line>
           <option name="timeStamp" value="11" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
@@ -254,13 +252,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" line="52">
-        <watch expression="SecurityContextHolder.getContext().getAuthentication() " />
-      </inline-watch>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" line="64">
-        <watch expression="userDetails.getAuthorities()" />
-      </inline-watch>
-    </watches-manager>
   </component>
 </project>
