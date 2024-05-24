@@ -13,4 +13,6 @@ public class GetUserDetailsForPatientDto {
     private UserIdAndNameDto patient;
     private UserIdAndNameDto doctor;
     private UserIdAndNameDto clinic;
+    private String patientStatus;
+    private String patientProfilePhoto;
 }

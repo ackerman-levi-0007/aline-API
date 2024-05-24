@@ -2,11 +2,15 @@ package com.aline.aline.services.Impl;
 
 import com.aline.aline.dao.IClinicDoctorRelationshipDao;
 import com.aline.aline.dao.IPatientDao;
+import com.aline.aline.dao.IPatientDentalDetailsDao;
 import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.Patient;
+import com.aline.aline.entities.PatientPreviousDentalHistory;
+import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.Patient.*;
+import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.payload.User.UserIdAndNameDto;
 import com.aline.aline.services.IPatientService;
@@ -29,6 +33,7 @@ public class PatientService implements IPatientService {
     private final ModelMapper modelMapper;
     private final IUserDao userDao;
     private final IClinicDoctorRelationshipDao clinicDoctorRelationshipDao;
+    private final IPatientDentalDetailsDao patientDentalDetailsDao;
 
     @Override
     public GetPatientDto createPatient(Patient patient) throws BadRequestException {
@@ -88,6 +93,7 @@ public class PatientService implements IPatientService {
         getUserDetailsForPatientDto.setPatient(new UserIdAndNameDto(getPatientDto.getId(), getPatientDto.getName()));
         getUserDetailsForPatientDto.setDoctor(new UserIdAndNameDto(doctorDto.getId(), doctorDto.getName()));
         getUserDetailsForPatientDto.setClinic(new UserIdAndNameDto(clinicDto.getId(), clinicDto.getName()));
+        getUserDetailsForPatientDto.setPatientStatus(getUserDetailsForPatientDto.getPatientStatus());
 
         return getUserDetailsForPatientDto;
     }

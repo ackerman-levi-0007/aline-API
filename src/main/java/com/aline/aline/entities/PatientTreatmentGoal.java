@@ -1,6 +1,8 @@
 package com.aline.aline.entities;
 
-import com.aline.aline.payload.PatientDentalDetails.TreatmentRequest;
+import com.aline.aline.enums.ArchOptions;
+import com.aline.aline.enums.DentalAttachmentsOptions;
+import com.aline.aline.enums.IPROptions;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,28 +12,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
-@Document(collection = "PatientDentalDetails")
-public class PatientDentalDetails {
+@Document(collection = "PatientTreatmentGoal")
+public class PatientTreatmentGoal {
     @MongoId(value = FieldType.OBJECT_ID)
     @JsonIgnore
     private ObjectId id;
 
     private String patientID;
 
-    private String chiefComplaint;
-
-    private TreatmentRequest crownsBridges;
-
-    private TreatmentRequest implants;
-
-    private TreatmentRequest veneers;
-
-    private TreatmentRequest previousOrthodonticTreatment;
-
-    private TreatmentRequest compositesBuildup;
-
-    private String otherDetails;
+    private String correction;
+    private ArchOptions arches;
+    private IPROptions ipr;
+    private String iprDetails;
+    private DentalAttachmentsOptions attachments;
+    private String attachmentsDetails;
+    private String treatmentGoalOthers;
 }
