@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/config/S3StorageConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDentalDetailsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDentalDetailsDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDentalDetailsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDentalDetailsDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientDentalDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientDentalDetailsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/aline-0.0.1-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/aline-0.0.1-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/aline-0.0.1-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/target/aline-0.0.1-SNAPSHOT.jar.original" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/PatientDentalDetailsDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/PatientDentalDetailsDao.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/PatientService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/PatientService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2024-02-01T22-18-16_152.dumpstream" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.aline.aline.AlineApiApplicationTests.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.aline.aline.AlineApiApplicationTests.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.aline.aline.AlineApiApplicationTests.txt" beforeDir="false" afterPath="$PROJECT_DIR$/target/surefire-reports/com.aline.aline.AlineApiApplicationTests.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="dummy" />
+        <entry key="$PROJECT_DIR$" value="feature/patientDetails" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,24 +79,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.AlineApiApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.aline [clean,validate,compile,test...].executor&quot;: &quot;Run&quot;,
-    &quot;Notification.DisplayName-DoNotAsk-Branch Context group&quot;: &quot;Branch context switched&quot;,
-    &quot;Notification.DoNotAsk-Branch Context group&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/patientDetails&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/aline-API&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.qodana&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.AlineApiApplication.executor": "Debug",
+    "Maven.aline [clean,validate,compile,test...].executor": "Run",
+    "Notification.DisplayName-DoNotAsk-Branch Context group": "Branch context switched",
+    "Notification.DoNotAsk-Branch Context group": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/fileService",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/aline-API",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "settings.qodana"
   }
-}</component>
+}]]></component>
   <component name="QodanaHighlightedReportService">
     <option name="localRunNotPublishedPersistedInfo">
       <LocalReportPersistedInfo>
@@ -251,6 +259,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java</url>
           <line>79</line>
           <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java</url>
+          <line>70</line>
+          <option name="timeStamp" value="44" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

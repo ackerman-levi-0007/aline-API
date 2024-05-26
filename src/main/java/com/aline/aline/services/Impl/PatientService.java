@@ -71,8 +71,8 @@ public class PatientService implements IPatientService {
     @Override
     public void deletePatient(String patientID) {
         UserDto loggedInUser = this.userDao.getUserByID(Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString());
-        this.patientDao.deletePatient(patientID, loggedInUser);
         this.patientDentalDetailsDao.deletePatientDentalDetailByPatientID(patientID);
+        this.patientDao.deletePatient(patientID, loggedInUser);
     }
 
     @Override
