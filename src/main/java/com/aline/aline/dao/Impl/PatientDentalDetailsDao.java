@@ -7,8 +7,12 @@ import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.repositories.PatientPreviousDentalHistoryRepo;
 import com.aline.aline.repositories.PatientTreatmentGoalRepo;
+import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,11 +23,17 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
     @Override
     public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
+        if(checkPreviousDentalHistoryExistsForPatientID(patientPreviousDentalHistoryDetails.getPatientID())){
+            throw new EntityExistsException("Previous dental history already exists for the patient!!!");
+        }
         return this.patientPreviousDentalHistoryRepo.save(patientPreviousDentalHistoryDetails);
     }
 
     @Override
     public PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
+        if(checkTreatmentGoalExistsForPatientID(patientTreatmentGoal.getPatientID())){
+            throw new EntityExistsException("Treatment goal already exists for the patient!!!");
+        }
         return this.patientTreatmentGoalRepo.save(patientTreatmentGoal);
     }
 
@@ -95,7 +105,36 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
         return new PatientDentalDetail(patientPreviousDentalHistory, patientTreatmentGoal);
     }
 
+    @Override
+    public void deletePreviousDentalHistoryDetailsByPatientID(String patientID) {
+        PatientPreviousDentalHistory patientPreviousDentalHistory = getPreviousDentalHistoryDetailsByPatientID(patientID);
+        this.patientPreviousDentalHistoryRepo.delete(patientPreviousDentalHistory);
+    }
+
+    @Override
+    public void deletePatientTreatmentGoalByPatientID(String patientID) {
+        PatientTreatmentGoal patientTreatmentGoal = getPatientTreatmentGoalByPatientID(patientID);
+        this.patientTreatmentGoalRepo.delete(patientTreatmentGoal);
+    }
+
+    @Override
+    public void deletePatientDentalDetailByPatientID(String patientID) {
+        deletePreviousDentalHistoryDetailsByPatientID(patientID);
+        deletePatientTreatmentGoalByPatientID(patientID);
+    }
+
     /*****************************************************************************************
                                             Helpers
      *****************************************************************************************/
+    public boolean checkPreviousDentalHistoryExistsForPatientID(String patientID){
+        Optional<PatientPreviousDentalHistory> patientPreviousDentalHistory =
+                this.patientPreviousDentalHistoryRepo.findByPatientID(patientID);
+        return patientPreviousDentalHistory.isPresent();
+    }
+
+    public boolean checkTreatmentGoalExistsForPatientID(String patientID){
+        Optional<PatientTreatmentGoal> patientTreatmentGoal =
+                this.patientTreatmentGoalRepo.findByPatientID(patientID);
+        return patientTreatmentGoal.isPresent();
+    }
 }

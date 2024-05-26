@@ -95,6 +95,24 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
         }
     }
 
+    @Override
+    public void deletePreviousDentalHistoryDetailsByPatientID(String patientID) {
+        checkLoggedInUserPermissionForPatientID(patientID);
+        this.patientDentalDetailsDao.deletePreviousDentalHistoryDetailsByPatientID(patientID);
+    }
+
+    @Override
+    public void deletePatientTreatmentGoalByPatientID(String patientID) {
+        checkLoggedInUserPermissionForPatientID(patientID);
+        this.patientDentalDetailsDao.deletePatientTreatmentGoalByPatientID(patientID);
+    }
+
+    @Override
+    public void deletePatientDentalDetailByPatientID(String patientID) {
+        checkLoggedInUserPermissionForPatientID(patientID);
+        this.patientDentalDetailsDao.deletePatientDentalDetailByPatientID(patientID);
+    }
+
     /*****************************************************************************************
                                             Helpers
      ****************************************************************************************/

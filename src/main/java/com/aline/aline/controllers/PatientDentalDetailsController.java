@@ -1,6 +1,7 @@
 package com.aline.aline.controllers;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
+import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.services.IPatientDentalDetailsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,7 +22,7 @@ public class PatientDentalDetailsController {
     @PostMapping("/createPreviousDentalHistoryDetails")
     public ResponseEntity<PatientPreviousDentalHistory> createPreviousDentalHistoryDetails(
             @RequestBody PatientPreviousDentalHistory patientPreviousDentalHistoryDetails
-    ) throws BadRequestException {
+    ) {
         PatientPreviousDentalHistory savedPatientPreviousDentalHistoryDetails =
                 this.patientDentalDetailsService.createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
@@ -30,7 +31,7 @@ public class PatientDentalDetailsController {
     @PostMapping("/createPatientTreatmentGoal")
     public ResponseEntity<PatientTreatmentGoal> createPatientTreatmentGoal(
             @RequestBody PatientTreatmentGoal patientTreatmentGoal
-    ) throws BadRequestException {
+    ) {
         PatientTreatmentGoal savedPatientTreatmentGoal =
                 this.patientDentalDetailsService.createPatientTreatmentGoal(patientTreatmentGoal);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
@@ -48,7 +49,7 @@ public class PatientDentalDetailsController {
     @PutMapping("/updatePreviousDentalHistoryDetails")
     public ResponseEntity<PatientPreviousDentalHistory> updatePreviousDentalHistoryDetails(
             @RequestBody PatientPreviousDentalHistory patientPreviousDentalHistoryDetails
-    ) throws BadRequestException {
+    ) {
         PatientPreviousDentalHistory savedPatientPreviousDentalHistoryDetails =
                 this.patientDentalDetailsService.updatePreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
@@ -57,7 +58,7 @@ public class PatientDentalDetailsController {
     @PutMapping("/updatePatientTreatmentGoal")
     public ResponseEntity<PatientTreatmentGoal> updatePatientTreatmentGoal(
             @RequestBody PatientTreatmentGoal patientTreatmentGoal
-    ) throws BadRequestException {
+    ) {
         PatientTreatmentGoal savedPatientTreatmentGoal =
                 this.patientDentalDetailsService.updatePatientTreatmentGoal(patientTreatmentGoal);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
@@ -75,7 +76,7 @@ public class PatientDentalDetailsController {
     @GetMapping("/getPreviousDentalHistoryDetailsByPatientID/{patientID}")
     public ResponseEntity<Object> getPreviousDentalHistoryDetailsByPatientID(
             @PathVariable String patientID
-    ) throws BadRequestException {
+    ) {
         Object savedPatientPreviousDentalHistoryDetails =
                 this.patientDentalDetailsService.getPreviousDentalHistoryDetailsByPatientID(patientID);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
@@ -84,7 +85,7 @@ public class PatientDentalDetailsController {
     @GetMapping("/getPatientTreatmentGoalByPatientID/{patientID}")
     public ResponseEntity<Object> getPatientTreatmentGoalByPatientID(
             @PathVariable String patientID
-    ) throws BadRequestException {
+    ) {
         Object savedPatientTreatmentGoal =
                 this.patientDentalDetailsService.getPatientTreatmentGoalByPatientID(patientID);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
@@ -93,10 +94,33 @@ public class PatientDentalDetailsController {
     @GetMapping("/getPatientDentalDetailByPatientID/{patientID}")
     public ResponseEntity<Object> getPatientDentalDetailByPatientID(
             @PathVariable String patientID
-    ) throws BadRequestException {
+    ) {
         Object savedPatientDentalDetail =
                 this.patientDentalDetailsService.getPatientDentalDetailByPatientID(patientID );
         return new ResponseEntity<>(savedPatientDentalDetail, HttpStatus.OK);
     }
 
+    @DeleteMapping("/deletePreviousDentalHistoryDetailsByPatientID/{patientID}")
+    public ResponseEntity<APIResponse> deletePreviousDentalHistoryDetailsByPatientID(
+            @PathVariable String patientID
+    ) {
+        this.patientDentalDetailsService.deletePreviousDentalHistoryDetailsByPatientID(patientID);
+        return new ResponseEntity<>(new APIResponse("Previous dental history details successfully deleted for the patient !!!", true), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deletePatientTreatmentGoalByPatientID/{patientID}")
+    public ResponseEntity<APIResponse> deletePatientTreatmentGoalByPatientID(
+            @PathVariable String patientID
+    ) {
+        this.patientDentalDetailsService.deletePatientTreatmentGoalByPatientID(patientID);
+        return new ResponseEntity<>(new APIResponse("Patient treatment goal successfully deleted for the patient !!!", true), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deletePatientDentalDetailByPatientID/{patientID}")
+    public ResponseEntity<APIResponse> deletePatientDentalDetailByPatientID(
+            @PathVariable String patientID
+    ) {
+        this.patientDentalDetailsService.deletePatientDentalDetailByPatientID(patientID );
+        return new ResponseEntity<>(new APIResponse("Patient dental details successfully deleted for the patient !!!", true), HttpStatus.OK);
+    }
 }

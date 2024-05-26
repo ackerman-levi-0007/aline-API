@@ -19,4 +19,8 @@ public interface IPatientDentalDetailsService {
     Object getPreviousDentalHistoryDetailsByPatientID(String patientID);
     Object getPatientTreatmentGoalByPatientID(String patientID);
     Object getPatientDentalDetailByPatientID(String patientID);
+
+    void deletePreviousDentalHistoryDetailsByPatientID(String patientID);
+    void deletePatientTreatmentGoalByPatientID(String patientID);
+    void deletePatientDentalDetailByPatientID(String patientID);
 }
