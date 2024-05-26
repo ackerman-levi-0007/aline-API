@@ -163,7 +163,21 @@ public class UserService implements IUserService {
         /* throw forbidden exception if role is ROLE_ADMIN and currentLoggedInUser role is not ROLE_ADMIN */
         if(Objects.equals(role, UserRole.ROLE_ADMIN.toString())) throw new ForbiddenException("User does not have access to view the requested data!!!");
 
-        if(currentUserDetails.getRole().contains(UserRole.ROLE_LAB)) return userIDs;
+        if(currentUserDetails.getRole().contains(UserRole.ROLE_LAB)){
+            if(Objects.equals(role, UserRole.ROLE_LAB.toString())){
+                if(CommonUtils.isNullOrEmpty(userID)){
+                    userIDs.add(currentLoggedInUserID);
+                    return userIDs;
+                }
+                else if(Objects.equals(userID, currentUserDetails.getId())){
+                    return userIDs;
+                }
+                else{
+                    throw new BadRequestException("The provided details are not correct. Please check !!!");
+                }
+            }
+            return userIDs;
+        }
 
         if(currentUserDetails.getRole().contains(UserRole.ROLE_CLINIC)){
             if(Objects.equals(role, UserRole.ROLE_LAB.toString())) return userIDs;

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "Patient")
 public class Patient {
     @MongoId(value = FieldType.OBJECT_ID)
     @JsonIgnore

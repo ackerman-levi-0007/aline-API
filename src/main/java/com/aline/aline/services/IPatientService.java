@@ -16,4 +16,5 @@ public interface IPatientService {
     void updatePatientStatus(UpdatePatientStatusDto patientStatus);
     void deletePatient(String patientID);
     void changeDoctorAllocationForPatient(UpdateDoctorAllocationDto doctorAllocationDto);
+    GetUserDetailsForPatientDto getUserDetailsForPatientID(String patientID);
 }
