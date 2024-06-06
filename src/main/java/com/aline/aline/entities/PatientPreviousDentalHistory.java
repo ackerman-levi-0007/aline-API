@@ -34,7 +34,4 @@ public class PatientPreviousDentalHistory {
     private ExistingConditionDetails composites;
 
     private String historyOthers;
-
-    public PatientPreviousDentalHistory(String nullObject) {
-    }
 }

@@ -1,13 +1,17 @@
 package com.aline.aline.exceptionHandler;
 
 import com.aline.aline.payload.APIResponse;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import jakarta.persistence.EntityExistsException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Arrays;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -41,5 +45,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<APIResponse> httpMessageNotReadableException(HttpMessageNotReadableException ex){
+
+        Throwable mostSpecificCause = ex.getMostSpecificCause();
+        if (mostSpecificCause instanceof InvalidFormatException invalidFormatException) {
+            String targetType = invalidFormatException.getTargetType().getSimpleName();
+            String value = invalidFormatException.getValue().toString();
+            String enumValues = Arrays.toString(invalidFormatException.getTargetType().getEnumConstants());
+            String message = String.format("Invalid value '%s' for %s. Accepted values are: %s", value, targetType, enumValues);
+
+            APIResponse apiResponse = new APIResponse(message, false);
+            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+        }
+
+        APIResponse apiResponse = new APIResponse(ex.getMessage(), false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
 
 }
