@@ -48,32 +48,46 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
     @Override
     public PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
-        PatientPreviousDentalHistory fetchedPatientPreviousDentalHistory = getPreviousDentalHistoryDetailsByPatientID(patientPreviousDentalHistoryDetails.getPatientID());
+        Optional<PatientPreviousDentalHistory> fetchedPatientPreviousDentalHistoryOptional =
+                this.patientPreviousDentalHistoryRepo.findByPatientID(patientPreviousDentalHistoryDetails.getPatientID());
 
-        fetchedPatientPreviousDentalHistory.setChiefComplaint(patientPreviousDentalHistoryDetails.getChiefComplaint());
-        fetchedPatientPreviousDentalHistory.setCrownsBridges(patientPreviousDentalHistoryDetails.getCrownsBridges());
-        fetchedPatientPreviousDentalHistory.setImplants(patientPreviousDentalHistoryDetails.getImplants());
-        fetchedPatientPreviousDentalHistory.setVeneers(patientPreviousDentalHistoryDetails.getVeneers());
-        fetchedPatientPreviousDentalHistory.setPreviousTreatment(patientPreviousDentalHistoryDetails.getPreviousTreatment());
-        fetchedPatientPreviousDentalHistory.setComposites(patientPreviousDentalHistoryDetails.getComposites());
-        fetchedPatientPreviousDentalHistory.setHistoryOthers(patientPreviousDentalHistoryDetails.getHistoryOthers());
+        if(fetchedPatientPreviousDentalHistoryOptional.isPresent()){
+            PatientPreviousDentalHistory fetchedPatientPreviousDentalHistory = fetchedPatientPreviousDentalHistoryOptional.get();
 
-        return this.patientPreviousDentalHistoryRepo.save(fetchedPatientPreviousDentalHistory);
+            fetchedPatientPreviousDentalHistory.setChiefComplaint(patientPreviousDentalHistoryDetails.getChiefComplaint());
+            fetchedPatientPreviousDentalHistory.setCrownsBridges(patientPreviousDentalHistoryDetails.getCrownsBridges());
+            fetchedPatientPreviousDentalHistory.setImplants(patientPreviousDentalHistoryDetails.getImplants());
+            fetchedPatientPreviousDentalHistory.setVeneers(patientPreviousDentalHistoryDetails.getVeneers());
+            fetchedPatientPreviousDentalHistory.setPreviousTreatment(patientPreviousDentalHistoryDetails.getPreviousTreatment());
+            fetchedPatientPreviousDentalHistory.setComposites(patientPreviousDentalHistoryDetails.getComposites());
+            fetchedPatientPreviousDentalHistory.setHistoryOthers(patientPreviousDentalHistoryDetails.getHistoryOthers());
+
+            return this.patientPreviousDentalHistoryRepo.save(fetchedPatientPreviousDentalHistory);
+        }else{
+            return createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
+        }
     }
 
     @Override
     public PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
-        PatientTreatmentGoal fetchedPatientTreatmentGoal = getPatientTreatmentGoalByPatientID(patientTreatmentGoal.getPatientID());
+        Optional<PatientTreatmentGoal> fetchedPatientTreatmentGoalOptional =
+                this.patientTreatmentGoalRepo.findByPatientID(patientTreatmentGoal.getPatientID());
 
-        fetchedPatientTreatmentGoal.setCorrection(patientTreatmentGoal.getCorrection());
-        fetchedPatientTreatmentGoal.setArches(patientTreatmentGoal.getArches());
-        fetchedPatientTreatmentGoal.setIpr(patientTreatmentGoal.getIpr());
-        fetchedPatientTreatmentGoal.setIprDetails(patientTreatmentGoal.getIprDetails());
-        fetchedPatientTreatmentGoal.setAttachments(patientTreatmentGoal.getAttachments());
-        fetchedPatientTreatmentGoal.setAttachmentsDetails(patientTreatmentGoal.getAttachmentsDetails());
-        fetchedPatientTreatmentGoal.setTreatmentGoalOthers(patientTreatmentGoal.getTreatmentGoalOthers());
+        if(fetchedPatientTreatmentGoalOptional.isPresent()) {
+            PatientTreatmentGoal fetchedPatientTreatmentGoal = fetchedPatientTreatmentGoalOptional.get();
 
-        return this.patientTreatmentGoalRepo.save(fetchedPatientTreatmentGoal);
+            fetchedPatientTreatmentGoal.setCorrection(patientTreatmentGoal.getCorrection());
+            fetchedPatientTreatmentGoal.setArches(patientTreatmentGoal.getArches());
+            fetchedPatientTreatmentGoal.setIpr(patientTreatmentGoal.getIpr());
+            fetchedPatientTreatmentGoal.setIprDetails(patientTreatmentGoal.getIprDetails());
+            fetchedPatientTreatmentGoal.setAttachments(patientTreatmentGoal.getAttachments());
+            fetchedPatientTreatmentGoal.setAttachmentsDetails(patientTreatmentGoal.getAttachmentsDetails());
+            fetchedPatientTreatmentGoal.setTreatmentGoalOthers(patientTreatmentGoal.getTreatmentGoalOthers());
+
+            return this.patientTreatmentGoalRepo.save(fetchedPatientTreatmentGoal);
+        }else{
+            return createPatientTreatmentGoal(patientTreatmentGoal);
+        }
     }
 
     @Override
@@ -107,14 +121,16 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
     @Override
     public void deletePreviousDentalHistoryDetailsByPatientID(String patientID) {
-        PatientPreviousDentalHistory patientPreviousDentalHistory = getPreviousDentalHistoryDetailsByPatientID(patientID);
-        this.patientPreviousDentalHistoryRepo.delete(patientPreviousDentalHistory);
+        Optional<PatientPreviousDentalHistory> patientPreviousDentalHistory =
+                this.patientPreviousDentalHistoryRepo.findByPatientID(patientID);
+        patientPreviousDentalHistory.ifPresent(this.patientPreviousDentalHistoryRepo::delete);
     }
 
     @Override
     public void deletePatientTreatmentGoalByPatientID(String patientID) {
-        PatientTreatmentGoal patientTreatmentGoal = getPatientTreatmentGoalByPatientID(patientID);
-        this.patientTreatmentGoalRepo.delete(patientTreatmentGoal);
+        Optional<PatientTreatmentGoal> patientTreatmentGoal =
+                this.patientTreatmentGoalRepo.findByPatientID(patientID);
+        patientTreatmentGoal.ifPresent(this.patientTreatmentGoalRepo::delete);
     }
 
     @Override
