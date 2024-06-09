@@ -5,28 +5,22 @@ import com.aline.aline.dao.IPatientDentalDetailsDao;
 import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
-import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
-import com.aline.aline.payload.Patient.GetPatientDto;
-import com.aline.aline.payload.Patient.GetUserDetailsForPatientDto;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
-import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.services.IPatientDentalDetailsService;
-import com.aline.aline.utilities.SecurityUtils;
+import com.aline.aline.services.helpers.PatientHelperService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class PatientDentalDetailsService implements IPatientDentalDetailsService {
 
     private final IPatientDentalDetailsDao patientDentalDetailsDao;
-    private final IUserDao userDao;
-    private final IPatientDao patientDao;
+    private final PatientHelperService patientHelperService;
 
     @Override
     public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
@@ -46,26 +40,26 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
 
     @Override
     public PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
-        checkLoggedInUserPermissionForPatientID(patientPreviousDentalHistoryDetails.getPatientID());
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientPreviousDentalHistoryDetails.getPatientID());
         return this.patientDentalDetailsDao.updatePreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
     }
 
     @Override
     public PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
-        checkLoggedInUserPermissionForPatientID(patientTreatmentGoal.getPatientID());
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientTreatmentGoal.getPatientID());
         return this.patientDentalDetailsDao.updatePatientTreatmentGoal(patientTreatmentGoal);
     }
 
     @Override
     public PatientDentalDetail updatePatientDentalDetail(PatientDentalDetail patientDentalDetail) throws BadRequestException {
         validatePatientDentalDetail(patientDentalDetail);
-        checkLoggedInUserPermissionForPatientID(patientDentalDetail.getPatientTreatmentGoal().getPatientID());
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientDentalDetail.getPatientTreatmentGoal().getPatientID());
         return this.patientDentalDetailsDao.updatePatientDentalDetail(patientDentalDetail);
     }
 
     @Override
     public Object getPreviousDentalHistoryDetailsByPatientID(String patientID) {
-        checkLoggedInUserPermissionForPatientID(patientID);
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
         try{
             return this.patientDentalDetailsDao.getPreviousDentalHistoryDetailsByPatientID(patientID);
         }
@@ -77,7 +71,7 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
 
     @Override
     public Object getPatientTreatmentGoalByPatientID(String patientID) {
-        checkLoggedInUserPermissionForPatientID(patientID);
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
         try{
             return this.patientDentalDetailsDao.getPatientTreatmentGoalByPatientID(patientID);
         }catch (ResourceNotFoundException ex){
@@ -87,7 +81,7 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
 
     @Override
     public Object getPatientDentalDetailByPatientID(String patientID) {
-        checkLoggedInUserPermissionForPatientID(patientID);
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
         try {
             return this.patientDentalDetailsDao.getPatientDentalDetailByPatientID(patientID);
         }catch (ResourceNotFoundException ex){
@@ -97,19 +91,19 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
 
     @Override
     public void deletePreviousDentalHistoryDetailsByPatientID(String patientID) {
-        checkLoggedInUserPermissionForPatientID(patientID);
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
         this.patientDentalDetailsDao.deletePreviousDentalHistoryDetailsByPatientID(patientID);
     }
 
     @Override
     public void deletePatientTreatmentGoalByPatientID(String patientID) {
-        checkLoggedInUserPermissionForPatientID(patientID);
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
         this.patientDentalDetailsDao.deletePatientTreatmentGoalByPatientID(patientID);
     }
 
     @Override
     public void deletePatientDentalDetailByPatientID(String patientID) {
-        checkLoggedInUserPermissionForPatientID(patientID);
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
         this.patientDentalDetailsDao.deletePatientDentalDetailByPatientID(patientID);
     }
 
@@ -125,11 +119,5 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
         else if(!patientDentalDetail.getPatientPreviousDentalHistoryDetails().getPatientID().equals(patientDentalDetail.getPatientTreatmentGoal().getPatientID())) {
             throw new BadRequestException("The patientID is not similar in all the patient details object.Please check !!!");
         }
-    }
-
-    public void checkLoggedInUserPermissionForPatientID(String patientID){
-        String loggedInUserID = Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString();
-        UserDto loggedInUser = this.userDao.getUserByID(loggedInUserID);
-        GetPatientDto patientDto = this.patientDao.getPatientByID(patientID, loggedInUser);
     }
 }

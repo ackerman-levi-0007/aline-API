@@ -5,7 +5,6 @@ import com.aline.aline.entities.Patient;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ForbiddenException;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
-import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.Patient.FilterPatientDto;
 import com.aline.aline.payload.Patient.GetPatientDto;
 import com.aline.aline.payload.Patient.UpdatePatientStatusDto;
@@ -21,7 +20,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,7 +40,7 @@ public class PatientDao implements IPatientDao {
 
     @Override
     public Page<GetPatientDto> getAllPatients(Pageable pageable, FilterPatientDto filterPatientDto, UserDto loggedInUser) {
-        Query query = new Query();
+         Query query = new Query();
 
         if(loggedInUser.getRole().contains(UserRole.ROLE_DOCTOR)) filterPatientDto.setDoctorID(Collections.singletonList(loggedInUser.getId()));
         if(loggedInUser.getRole().contains(UserRole.ROLE_CLINIC)) filterPatientDto.setClinicID(Collections.singletonList(loggedInUser.getId()));

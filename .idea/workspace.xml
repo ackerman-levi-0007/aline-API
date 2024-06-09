@@ -5,14 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/CommonEntitiesObjects/S3ImageObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/PatientPhotoScansMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientPhotoScansController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientPhotoScansDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientPhotoScansDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPhotoScans.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientPhotoScans/GetPatientPhotoScansDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/IPatientPhotoScansRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientPhotoScansService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientPhotoScansService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/helpers/PatientHelperService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/config/S3StorageConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPreviousDentalHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPreviousDentalHistory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/PatientStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/PatientStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/config/ModelMapperConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/config/ModelMapperConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/exceptionHandler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/exceptionHandler/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/config/S3StorageConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/PatientPreviousDentalHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/PatientPreviousDentalHistory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/utilities/CommonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/utilities/CommonUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/config/ModelMapperConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/config/ModelMapperConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/PatientDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/PatientDao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/exceptionHandler/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/exceptionHandler/GlobalExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/utilities/CommonUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/utilities/CommonUtils.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,13 +87,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.AlineApiApplication.executor": "Run",
+    "Application.AlineApiApplication.executor": "Debug",
     "Maven.aline [clean,validate,compile,test...].executor": "Run",
     "Notification.DisplayName-DoNotAsk-Branch Context group": "Branch context switched",
     "Notification.DoNotAsk-Branch Context group": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/fileService",
+    "git-widget-placeholder": "feature/patientPhotoScans",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/aline-API",
@@ -172,11 +185,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/AuthenticationService.java</url>
           <line>41</line>
           <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/ClinicDoctorRelationshipDao.java</url>
