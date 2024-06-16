@@ -1,6 +1,6 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.CustomMapper.PatientPhotoScansMapper;
+import com.aline.aline.CustomMapper.GetPatientPhotoScansDtoMapper;
 import com.aline.aline.dao.IPatientPhotoScansDao;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -8,7 +8,6 @@ import com.aline.aline.payload.PatientPhotoScans.GetPatientPhotoScansDto;
 import com.aline.aline.repositories.IPatientPhotoScansRepo;
 import com.aline.aline.utilities.CommonUtils;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -18,11 +17,10 @@ import java.util.Optional;
 public class PatientPhotoScansDao implements IPatientPhotoScansDao {
 
     private final IPatientPhotoScansRepo patientPhotoScansRepo;
-    private final ModelMapper modelMapper;
-    private final PatientPhotoScansMapper patientPhotoScansMapper;
+    private final GetPatientPhotoScansDtoMapper getPatientPhotoScansDtoMapper;
 
     @Override
-    public GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
+    public  GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
         Optional<PatientPhotoScans> fetchedPatientPhotoScansOptional =
                 this.patientPhotoScansRepo.findByPatientID(patientPhotoScans.getPatientID());
 
@@ -57,7 +55,7 @@ public class PatientPhotoScansDao implements IPatientPhotoScansDao {
             PatientPhotoScans savedPatientPhotoScans =
                     this.patientPhotoScansRepo.save(fetchedPatientPhotoScans);
 
-            return this.patientPhotoScansMapper.apply(savedPatientPhotoScans);
+            return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScans);
         }else{
             return savePatientPhotoScans(patientPhotoScans);
         }
@@ -66,13 +64,13 @@ public class PatientPhotoScansDao implements IPatientPhotoScansDao {
     @Override
     public GetPatientPhotoScansDto getPatientPhotoScansByPatientID(String patientID) {
         return this.patientPhotoScansRepo.findByPatientID(patientID)
-                .map(patientPhotoScansMapper)
+                .map(getPatientPhotoScansDtoMapper)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient photo scans", "patientID", patientID));
     }
 
     @Override
     public GetPatientPhotoScansDto savePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
         PatientPhotoScans savedPatientPhotoScan = this.patientPhotoScansRepo.save(patientPhotoScans);
-        return this.patientPhotoScansMapper.apply(savedPatientPhotoScan);
+        return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScan);
     }
 }
