@@ -5,14 +5,125 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/config/S3StorageConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPreviousDentalHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPreviousDentalHistory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/PatientStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/PatientStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/exceptionHandler/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/exceptionHandler/GlobalExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/config/S3StorageConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/PatientPreviousDentalHistory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/PatientPreviousDentalHistory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/exceptionHandler/GlobalExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/aline/aline/exceptionHandler/GlobalExceptionHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/PatientPhotoScansMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/GetPatientPhotoScansDtoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientPhotoScansDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientPhotoScansDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/aline-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/aline-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/AlineApiApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/CommonEntitiesObjects/S3ImageObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/CustomMapper/PatientPhotoScansMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/config/ModelMapperConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/config/MongoConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/config/PreAuthorizeConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/config/SwaggerDocumentationConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/AuthController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/ClinicDoctorRelationshipController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/PatientController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/PatientDentalDetailsController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/PatientPhotoScansController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/controllers/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IClinicDoctorRelationshipDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IPatientDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IPatientDentalDetailsDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IPatientPhotoScansDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/ITokenDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IUserDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/IUserDetailsDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/ClinicDoctorRelationshipDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/PatientDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/PatientDentalDetailsDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/PatientPhotoScansDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/TokenDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/Impl/UserDetailsDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/dao/helpers/DaoHelper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/ClinicDoctorRelationship.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/Patient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/PatientPhotoScans.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/PatientPreviousDentalHistory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/PatientTreatmentGoal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/Token.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/entities/UserDetails.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/enums/ArchOptions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/enums/DentalAttachmentsOptions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/enums/IPROptions.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/enums/PatientStatus.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/enums/TokenType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/enums/UserRole.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/exceptionHandler/ForbiddenException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/exceptionHandler/GlobalExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/exceptionHandler/ResourceNotFoundException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/exceptionHandler/UnauthorizedException.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/APIResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Authentication/AuthenticationLoginRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Authentication/AuthenticationRegisterRequest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Authentication/AuthenticationResponse$AuthenticationResponseBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Authentication/AuthenticationResponse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/ClinicDoctorRelationShip/PostDto/CreateClinicDoctorRelationShip.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/PageDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Patient/FilterPatientDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Patient/GetPatientDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Patient/GetUserDetailsForPatientDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Patient/UpdateDoctorAllocationDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Patient/UpdatePatientDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/Patient/UpdatePatientStatusDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/PatientDentalDetails/ExistingConditionDetails.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/PatientDentalDetails/PatientDentalDetail.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/PatientPhotoScans/GetPatientPhotoScansDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/User/PasswordChangeDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/User/UserCreationDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/User/UserDetailsDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/User/UserDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/User/UserIdAndNameDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/payload/User/UserWithDetailsDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/repositories/ClinicDoctorRelationshipRepo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/repositories/IPatientPhotoScansRepo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/repositories/PatientPreviousDentalHistoryRepo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/repositories/PatientRepo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/repositories/PatientTreatmentGoalRepo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/repositories/TokenRepo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/repositories/UserDetailsRepo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/repositories/UserRepo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/security/CustomBasicAuthenticationEntryPoint.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/security/JwtAuthenticationFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/security/JwtService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/security/SecurityApplicationConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/security/SecurityConfig$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/security/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IAuthenticationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IClinicDoctorRelationshipService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IFileService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IPatientDentalDetailsService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IPatientPhotoScansService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IPatientService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/ITokenService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/IUserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/AuthenticationService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/ClinicDoctorRelationshipService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/LogoutService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/PatientDentalDetailsService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/PatientPhotoScansService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/PatientService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/TokenService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/Impl/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/services/helpers/PatientHelperService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/utilities/CommonUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/utilities/EnumUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/utilities/PageUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/aline/aline/utilities/SecurityUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/2024-05-26T15-48-47_976.dumpstream" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.aline.aline.AlineApiApplicationTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.aline.aline.AlineApiApplicationTests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/aline/aline/AlineApiApplicationTests.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,24 +183,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AlineApiApplication.executor": "Run",
-    "Maven.aline [clean,validate,compile,test...].executor": "Run",
-    "Notification.DisplayName-DoNotAsk-Branch Context group": "Branch context switched",
-    "Notification.DoNotAsk-Branch Context group": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/fileService",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/aline-API",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "settings.qodana"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AlineApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.aline [clean,validate,compile,test...].executor&quot;: &quot;Run&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-Branch Context group&quot;: &quot;Branch context switched&quot;,
+    &quot;Notification.DoNotAsk-Branch Context group&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/patientPhotoScans&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/aline-API&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.qodana&quot;
   }
-}]]></component>
+}</component>
   <component name="QodanaHighlightedReportService">
     <option name="localRunNotPublishedPersistedInfo">
       <LocalReportPersistedInfo>
@@ -172,11 +283,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/AuthenticationService.java</url>
           <line>41</line>
           <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/UserController.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/ClinicDoctorRelationshipDao.java</url>

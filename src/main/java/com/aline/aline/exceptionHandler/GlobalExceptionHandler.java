@@ -49,17 +49,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<APIResponse> httpMessageNotReadableException(HttpMessageNotReadableException ex){
 
         Throwable mostSpecificCause = ex.getMostSpecificCause();
+        String message = ex.getMessage();
         if (mostSpecificCause instanceof InvalidFormatException invalidFormatException) {
             String targetType = invalidFormatException.getTargetType().getSimpleName();
             String value = invalidFormatException.getValue().toString();
             String enumValues = Arrays.toString(invalidFormatException.getTargetType().getEnumConstants());
-            String message = String.format("Invalid value '%s' for %s. Accepted values are: %s", value, targetType, enumValues);
 
-            APIResponse apiResponse = new APIResponse(message, false);
-            return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+            message = String.format("Invalid value '%s' for %s. Accepted values are: %s", value, targetType, enumValues);
         }
 
-        APIResponse apiResponse = new APIResponse(ex.getMessage(), false);
+        APIResponse apiResponse = new APIResponse(message, false);
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 
