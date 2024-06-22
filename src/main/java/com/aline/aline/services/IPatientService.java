@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface IPatientService {
     GetPatientDto createPatient(Patient patient) throws BadRequestException;
-    Page<GetPatientDto> getAllPatients(PageDto pageDto, FilterPatientDto filterPatientDto);
+    Page<GetPatientWithProfileDto> getAllPatients(PageDto pageDto, FilterPatientDto filterPatientDto);
     GetPatientDto getPatientByID(String patientID);
     GetPatientDto updatePatient(UpdatePatientDto patient) throws BadRequestException;
     void updatePatientStatus(UpdatePatientStatusDto patientStatus);

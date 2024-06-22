@@ -35,7 +35,7 @@ public class PatientController {
     }
 
     @PostMapping("/getAllPatients")
-    public ResponseEntity<Page<GetPatientDto>> getAllPatients(
+    public ResponseEntity<Page<GetPatientWithProfileDto>> getAllPatients(
             @RequestParam(value = "pageNumber", required = false, defaultValue = "0") int pageNumber,
             @RequestParam(value = "pageSize", required = false, defaultValue = Integer.MAX_VALUE+"") int pageSize,
             @RequestParam(value = "sortBy", required = false, defaultValue = "id") String sortBy,
@@ -44,7 +44,7 @@ public class PatientController {
     ){
         if(filterPatientDto == null) filterPatientDto = new FilterPatientDto();
         PageDto pageDto = new PageDto(pageNumber, pageSize, sortBy, sortDir);
-        Page<GetPatientDto> getPatientDtoList = this.patientService.getAllPatients(pageDto, filterPatientDto);
+        Page<GetPatientWithProfileDto> getPatientDtoList = this.patientService.getAllPatients(pageDto, filterPatientDto);
         return new ResponseEntity<>(getPatientDtoList, HttpStatus.OK);
     }
 
