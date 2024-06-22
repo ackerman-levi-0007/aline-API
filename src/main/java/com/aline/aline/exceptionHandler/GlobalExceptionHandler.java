@@ -2,6 +2,7 @@ package com.aline.aline.exceptionHandler;
 
 import com.aline.aline.payload.APIResponse;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityExistsException;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
+import java.security.SignatureException;
 import java.util.Arrays;
 
 @RestControllerAdvice
@@ -62,4 +65,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<APIResponse> accessDeniedException(AccessDeniedException ex){
+        String message = ex.getMessage();
+        APIResponse apiResponse = new APIResponse(message, false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<APIResponse> expiredJwtException(ExpiredJwtException ex){
+        APIResponse apiResponse = new APIResponse("JWT Token expired", false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<APIResponse> signatureException(SignatureException ex){
+        APIResponse apiResponse = new APIResponse("JWT signature is not valid !", false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
+    }
 }
