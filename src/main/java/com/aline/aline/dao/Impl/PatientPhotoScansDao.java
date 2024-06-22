@@ -73,4 +73,15 @@ public class PatientPhotoScansDao implements IPatientPhotoScansDao {
         PatientPhotoScans savedPatientPhotoScan = this.patientPhotoScansRepo.save(patientPhotoScans);
         return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScan);
     }
+
+    @Override
+    public String getPatientProfilePhotoByPatientID(String patientID) {
+        try{
+            GetPatientPhotoScansDto patientPhotoScansDto = getPatientPhotoScansByPatientID(patientID);
+            return patientPhotoScansDto.getProfilePhoto().stream().findFirst().orElse(null);
+        }
+        catch (ResourceNotFoundException ex){
+            return null;
+        }
+    }
 }

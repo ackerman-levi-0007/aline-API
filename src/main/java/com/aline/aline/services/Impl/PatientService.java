@@ -1,16 +1,11 @@
 package com.aline.aline.services.Impl;
 
-import com.aline.aline.dao.IClinicDoctorRelationshipDao;
-import com.aline.aline.dao.IPatientDao;
-import com.aline.aline.dao.IPatientDentalDetailsDao;
-import com.aline.aline.dao.IUserDao;
+import com.aline.aline.dao.*;
 import com.aline.aline.entities.Patient;
-import com.aline.aline.entities.PatientPreviousDentalHistory;
-import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.enums.UserRole;
+import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.Patient.*;
-import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.payload.User.UserIdAndNameDto;
 import com.aline.aline.services.IPatientService;
@@ -20,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -34,6 +31,7 @@ public class PatientService implements IPatientService {
     private final IUserDao userDao;
     private final IClinicDoctorRelationshipDao clinicDoctorRelationshipDao;
     private final IPatientDentalDetailsDao patientDentalDetailsDao;
+    private final IPatientPhotoScansDao patientPhotoScansDao;
 
     @Override
     public GetPatientDto createPatient(Patient patient) throws BadRequestException {
@@ -42,10 +40,23 @@ public class PatientService implements IPatientService {
     }
 
     @Override
-    public Page<GetPatientDto> getAllPatients(PageDto pageDto, FilterPatientDto filterPatientDto) {
+    public Page<GetPatientWithProfileDto> getAllPatients(PageDto pageDto, FilterPatientDto filterPatientDto) {
         Pageable pageable = PageUtils.getPageableFromPageDto(pageDto);
         UserDto loggedInUser = this.userDao.getUserByID(Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString());
-        return this.patientDao.getAllPatients(pageable, filterPatientDto, loggedInUser);
+        Page<GetPatientDto> patientDtos = this.patientDao.getAllPatients(pageable, filterPatientDto, loggedInUser);
+
+        List<GetPatientWithProfileDto> patientWithProfileDtos = patientDtos.stream().map(
+                patientDto ->{
+                    String  profilePhoto = this.patientPhotoScansDao.getPatientProfilePhotoByPatientID(patientDto.getId());
+
+                    GetPatientWithProfileDto patientWithProfileDto = this.modelMapper.map(patientDto, GetPatientWithProfileDto.class);
+                    patientWithProfileDto.setProfilePhoto(profilePhoto);
+
+                    return patientWithProfileDto;
+                }
+        ).toList();
+
+        return new PageImpl<>(patientWithProfileDtos, patientDtos.getPageable(), patientDtos.getTotalElements());
     }
 
     @Override
@@ -85,6 +96,7 @@ public class PatientService implements IPatientService {
     @Override
     public GetUserDetailsForPatientDto getUserDetailsForPatientID(String patientID) {
         GetPatientDto getPatientDto = getPatientByID(patientID);
+        String patientProfilePhoto = this.patientPhotoScansDao.getPatientProfilePhotoByPatientID(patientID);
 
         UserDto clinicDto = this.userDao.getUserByID(getPatientDto.getClinicID());
         UserDto doctorDto = this.userDao.getUserByID(getPatientDto.getDoctorID());
@@ -95,6 +107,7 @@ public class PatientService implements IPatientService {
         getUserDetailsForPatientDto.setDoctor(new UserIdAndNameDto(doctorDto.getId(), doctorDto.getName()));
         getUserDetailsForPatientDto.setClinic(new UserIdAndNameDto(clinicDto.getId(), clinicDto.getName()));
         getUserDetailsForPatientDto.setPatientStatus(getUserDetailsForPatientDto.getPatientStatus());
+        getUserDetailsForPatientDto.setPatientProfilePhoto(patientProfilePhoto);
 
         return getUserDetailsForPatientDto;
     }
