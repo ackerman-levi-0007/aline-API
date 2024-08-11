@@ -1,0 +1,59 @@
+package com.aline.aline.CustomMapper;
+
+import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
+import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanHistory;
+import org.bson.types.ObjectId;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PatientTreatmentPlanHistoryMapper {
+
+    public PatientTreatmentPlan mapper(PatientTreatmentPlanHistory patientTreatmentPlanHistory) {
+
+        PatientTreatmentPlan patientTreatmentPlan = new PatientTreatmentPlan();
+
+        patientTreatmentPlan.setId(new ObjectId(patientTreatmentPlanHistory.getTreatmentPlanID()));
+        patientTreatmentPlan.setDoctorID(patientTreatmentPlanHistory.getDoctorID());
+        patientTreatmentPlan.setClinicID(patientTreatmentPlanHistory.getClinicID());
+        patientTreatmentPlan.setPatientID(patientTreatmentPlanHistory.getPatientID());
+        patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanHistory.getMalocclusionTag());
+        patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanHistory.getCaseAssessment());
+        patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanHistory.getTreatmentPlanSummary());
+        patientTreatmentPlan.setUpperSteps(patientTreatmentPlanHistory.getUpperSteps());
+        patientTreatmentPlan.setLowerSteps(patientTreatmentPlanHistory.getLowerSteps());
+        patientTreatmentPlan.setExpectedDuration(patientTreatmentPlanHistory.getExpectedDuration());
+        patientTreatmentPlan.setTreatmentPlanCategory(patientTreatmentPlanHistory.getTreatmentPlanCategory());
+        patientTreatmentPlan.setPrice(patientTreatmentPlanHistory.getPrice());
+        patientTreatmentPlan.setIprAndAttachmentReports(patientTreatmentPlanHistory.getIprAndAttachmentReports());
+        patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlanHistory.getTreatmentSimulationsURL());
+        patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlanHistory.getTreatmentSimulationsAttachments());
+        patientTreatmentPlan.setCreatedOn(patientTreatmentPlanHistory.getCreatedOn());
+
+        return patientTreatmentPlan;
+    }
+
+    public PatientTreatmentPlanHistory mapper(PatientTreatmentPlan patientTreatmentPlan) {
+
+        PatientTreatmentPlanHistory patientTreatmentPlanHistory = new PatientTreatmentPlanHistory();
+
+        patientTreatmentPlanHistory.setTreatmentPlanID(patientTreatmentPlanHistory.getId().toString());
+        patientTreatmentPlanHistory.setDoctorID(patientTreatmentPlan.getDoctorID());
+        patientTreatmentPlanHistory.setClinicID(patientTreatmentPlan.getClinicID());
+        patientTreatmentPlanHistory.setPatientID(patientTreatmentPlan.getPatientID());
+        patientTreatmentPlanHistory.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
+        patientTreatmentPlanHistory.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
+        patientTreatmentPlanHistory.setTreatmentPlanSummary(patientTreatmentPlan.getTreatmentPlanSummary());
+        patientTreatmentPlanHistory.setUpperSteps(patientTreatmentPlan.getUpperSteps());
+        patientTreatmentPlanHistory.setLowerSteps(patientTreatmentPlan.getLowerSteps());
+        patientTreatmentPlanHistory.setExpectedDuration(patientTreatmentPlan.getExpectedDuration());
+        patientTreatmentPlanHistory.setTreatmentPlanCategory(patientTreatmentPlan.getTreatmentPlanCategory());
+        patientTreatmentPlanHistory.setPrice(patientTreatmentPlan.getPrice());
+        patientTreatmentPlanHistory.setIprAndAttachmentReports(patientTreatmentPlan.getIprAndAttachmentReports());
+        patientTreatmentPlanHistory.setTreatmentSimulationsURL(patientTreatmentPlan.getTreatmentSimulationsURL());
+        patientTreatmentPlanHistory.setTreatmentSimulationsAttachments(patientTreatmentPlan.getTreatmentSimulationsAttachments());
+        patientTreatmentPlanHistory.setOriginalCreatedOn(patientTreatmentPlan.getCreatedOn());
+
+        return patientTreatmentPlanHistory;
+    }
+
+}

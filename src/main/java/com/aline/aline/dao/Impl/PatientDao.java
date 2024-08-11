@@ -1,7 +1,9 @@
 package com.aline.aline.dao.Impl;
 
+import com.aline.aline.cache.ThreadLocalCache;
 import com.aline.aline.dao.IPatientDao;
 import com.aline.aline.entities.Patient;
+import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ForbiddenException;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -10,6 +12,8 @@ import com.aline.aline.payload.Patient.GetPatientDto;
 import com.aline.aline.payload.Patient.UpdatePatientStatusDto;
 import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.repositories.PatientRepo;
+import com.aline.aline.utilities.CommonUtils;
+import com.aline.aline.utilities.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -39,11 +43,13 @@ public class PatientDao implements IPatientDao {
     }
 
     @Override
-    public Page<GetPatientDto> getAllPatients(Pageable pageable, FilterPatientDto filterPatientDto, UserDto loggedInUser) {
+    public Page<GetPatientDto> getAllPatients(Pageable pageable, FilterPatientDto filterPatientDto) {
          Query query = new Query();
 
-        if(loggedInUser.getRole().contains(UserRole.ROLE_DOCTOR)) filterPatientDto.setDoctorID(Collections.singletonList(loggedInUser.getId()));
-        if(loggedInUser.getRole().contains(UserRole.ROLE_CLINIC)) filterPatientDto.setClinicID(Collections.singletonList(loggedInUser.getId()));
+        User loggedInUser = SecurityUtils.getLoggedInUser();
+
+        if(loggedInUser.getRole().contains(UserRole.ROLE_DOCTOR)) filterPatientDto.setDoctorID(Collections.singletonList(loggedInUser.getId().toString()));
+        if(loggedInUser.getRole().contains(UserRole.ROLE_CLINIC)) filterPatientDto.setClinicID(Collections.singletonList(loggedInUser.getId().toString()));
 
         Criteria dateOfScanCriteria = Criteria.where("dateOfScan");
 
@@ -81,8 +87,8 @@ public class PatientDao implements IPatientDao {
     }
 
     @Override
-    public GetPatientDto getPatientByID(String patientID, UserDto loggedInUser) {
-        Patient patient = getPatientByPatientIDForLoggedInUser(patientID, loggedInUser);
+    public GetPatientDto getPatientByID(String patientID) {
+        Patient patient = getPatientByPatientIDForLoggedInUser(patientID);
         return this.modelMapper.map(patient, GetPatientDto.class);
     }
 
@@ -106,15 +112,15 @@ public class PatientDao implements IPatientDao {
     }
 
     @Override
-    public void updatePatientStatus(UpdatePatientStatusDto patientStatus, UserDto loggedInUser) {
-        Patient patient = getPatientByPatientIDForLoggedInUser(patientStatus.getPatientID(), loggedInUser);
+    public void updatePatientStatus(UpdatePatientStatusDto patientStatus) {
+        Patient patient = getPatientByPatientIDForLoggedInUser(patientStatus.getPatientID());
         patient.setStatus(patientStatus.getStatus());
         this.patientRepo.save(patient);
     }
 
     @Override
-    public void deletePatient(String patientID, UserDto loggedInUser) {
-        Patient patient = getPatientByPatientIDForLoggedInUser(patientID, loggedInUser);
+    public void deletePatient(String patientID) {
+        Patient patient = getPatientByPatientIDForLoggedInUser(patientID);
         this.patientRepo.delete(patient);
     }
 
@@ -129,15 +135,17 @@ public class PatientDao implements IPatientDao {
                                              Helpers
      *****************************************************************************************/
 
-    public Patient getPatientByPatientIDForLoggedInUser(String patientID, UserDto loggedInUser){
+    public Patient getPatientByPatientIDForLoggedInUser(String patientID){
         Patient patient = null;
+
+        User loggedInUser = SecurityUtils.getLoggedInUser();
 
         if(loggedInUser.getRole().contains(UserRole.ROLE_ADMIN) || loggedInUser.getRole().contains(UserRole.ROLE_LAB)){
             patient = getPatient(patientID);
         } else if (loggedInUser.getRole().contains(UserRole.ROLE_CLINIC)) {
-            patient = getPatientByPatientIDAndClinicID(patientID, loggedInUser.getId());
+            patient = getPatientByPatientIDAndClinicID(patientID, loggedInUser.getId().toString());
         } else if (loggedInUser.getRole().contains(UserRole.ROLE_DOCTOR)) {
-            patient = getPatientByPatientIDAndDoctorID(patientID, loggedInUser.getId());
+            patient = getPatientByPatientIDAndDoctorID(patientID, loggedInUser.getId().toString());
         } else {
             throw new ForbiddenException("User does not have access to view the data. Please contact with administrator.");
         }

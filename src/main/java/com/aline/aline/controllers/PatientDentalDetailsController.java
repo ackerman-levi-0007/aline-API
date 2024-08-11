@@ -96,7 +96,7 @@ public class PatientDentalDetailsController {
             @PathVariable String patientID
     ) {
         Object savedPatientDentalDetail =
-                this.patientDentalDetailsService.getPatientDentalDetailByPatientID(patientID );
+                this.patientDentalDetailsService.getPatientDentalDetailByPatientID(patientID);
         return new ResponseEntity<>(savedPatientDentalDetail, HttpStatus.OK);
     }
 

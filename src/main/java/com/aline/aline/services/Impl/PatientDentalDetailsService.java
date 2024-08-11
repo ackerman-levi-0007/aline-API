@@ -1,8 +1,7 @@
 package com.aline.aline.services.Impl;
 
-import com.aline.aline.dao.IPatientDao;
 import com.aline.aline.dao.IPatientDentalDetailsDao;
-import com.aline.aline.dao.IUserDao;
+import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -21,21 +20,40 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
 
     private final IPatientDentalDetailsDao patientDentalDetailsDao;
     private final PatientHelperService patientHelperService;
+    private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
     public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
-        return this.patientDentalDetailsDao.createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientPreviousDentalHistoryDetails.getPatientID());
+        PatientPreviousDentalHistory patientPreviousDentalHistory = this.patientDentalDetailsDao.createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
+        this.patientDentalDetailsMappingDao.updatePatientPreviousDentalHistoryDetailsIDForPatientID(
+                patientPreviousDentalHistory.getPatientID(),
+                patientPreviousDentalHistory.getId().toString()
+        );
+        return patientPreviousDentalHistory;
     }
 
     @Override
     public PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
-        return this.patientDentalDetailsDao.createPatientTreatmentGoal(patientTreatmentGoal);
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientTreatmentGoal.getPatientID());
+        PatientTreatmentGoal savedPatientTreatmentGoal = this.patientDentalDetailsDao.createPatientTreatmentGoal(patientTreatmentGoal);
+        this.patientDentalDetailsMappingDao.updatePatientTreatmentGoalIDForPatientID(
+                savedPatientTreatmentGoal.getPatientID(),
+                savedPatientTreatmentGoal.getId().toString()
+        );
+        return savedPatientTreatmentGoal;
     }
 
     @Override
     public PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail) throws BadRequestException {
         validatePatientDentalDetail(patientDentalDetail);
-        return this.patientDentalDetailsDao.createPatientDentalDetail(patientDentalDetail);
+        PatientDentalDetail savedPatientDentalDetail = this.patientDentalDetailsDao.createPatientDentalDetail(patientDentalDetail);
+        this.patientDentalDetailsMappingDao.updatePatientDentalDetailsIDForPatientID(
+                savedPatientDentalDetail.getPatientTreatmentGoal().getPatientID(),
+                savedPatientDentalDetail.getPatientPreviousDentalHistoryDetails().getId().toString(),
+                savedPatientDentalDetail.getPatientTreatmentGoal().getId().toString()
+        );
+        return savedPatientDentalDetail;
     }
 
     @Override
@@ -117,7 +135,9 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
             throw new BadRequestException("Please provide the patientID in the patient details");
         }
         else if(!patientDentalDetail.getPatientPreviousDentalHistoryDetails().getPatientID().equals(patientDentalDetail.getPatientTreatmentGoal().getPatientID())) {
-            throw new BadRequestException("The patientID is not similar in all the patient details object.Please check !!!");
+            throw new BadRequestException("The patientID is not similar in all the patient details object. Please check !!!");
         }
+
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientDentalDetail.getPatientPreviousDentalHistoryDetails().getPatientID());
     }
 }

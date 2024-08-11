@@ -5,8 +5,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/CommonEntitiesObjects/Price.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/PatientTreatmentPlanDraftMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/PatientTreatmentPlanHistoryMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/cache/ThreadLocalCache.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientTreatmentPlanController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDentalDetailsMappingDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientTreatmentPlanDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDentalDetailsMappingDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientTreatmentPlanDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientDentalDetailsMapping.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlan.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlanDraft.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlanHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/Currencies.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/MalocclusionTag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/PatientDentalDetailsMappingField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/enums/TreatmentPlanCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/PatientDentalDetailsMappingRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/PatientTreatmentPlan/PatientTreatmentPlanDraftRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/PatientTreatmentPlan/PatientTreatmentPlanHistoryRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/PatientTreatmentPlan/PatientTreatmentPlanRepo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientTreatmentPlanService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientTreatmentPlanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/GetPatientPhotoScansDtoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/GetPatientPhotoScansDtoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientPhotoScansDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientPhotoScansDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientPhotoScansDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientPhotoScansDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/GetUserDetailsForPatientDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/GetUserDetailsForPatientDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/IPatientPhotoScansRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/PatientPhotoScansRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/SecurityApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/security/SecurityApplicationConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientPhotoScansService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientPhotoScansService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/helpers/PatientHelperService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/helpers/PatientHelperService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/utilities/SecurityUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/utilities/SecurityUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +55,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
+        <option value="Enum" />
         <option value="Class" />
       </list>
     </option>
@@ -66,25 +105,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.AlineApiApplication.executor": "Run",
-    "JUnit.AlineApiApplicationTests.executor": "Run",
-    "Maven.aline [clean,validate,compile,test...].executor": "Run",
-    "Notification.DisplayName-DoNotAsk-Branch Context group": "Branch context switched",
-    "Notification.DoNotAsk-Branch Context group": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/aline-API",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "settings.qodana"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.AlineApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AlineApiApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.aline [clean,validate,compile,test...].executor&quot;: &quot;Run&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-Branch Context group&quot;: &quot;Branch context switched&quot;,
+    &quot;Notification.DoNotAsk-Branch Context group&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/patientTreatmentPlan&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/aline-API&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;
   }
-}]]></component>
+}</component>
   <component name="QodanaIsSelectedPersistenceService">
     <option name="selectedOrLoading" value="true" />
   </component>
@@ -109,6 +148,17 @@
       <updated>1706442125175</updated>
     </task>
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

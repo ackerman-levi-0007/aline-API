@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IPatientPhotoScansRepo extends MongoRepository<PatientPhotoScans, String> {
+public interface PatientPhotoScansRepo extends MongoRepository<PatientPhotoScans, String> {
     Optional<PatientPhotoScans> findByPatientID(String patientID);
 }
