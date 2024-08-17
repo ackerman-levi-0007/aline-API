@@ -1,8 +1,6 @@
 package com.aline.aline.dao;
 
 import com.aline.aline.entities.PatientDentalDetailsMapping;
-import com.aline.aline.enums.PatientDentalDetailsMappingField;
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Repository;
 
 @Repository

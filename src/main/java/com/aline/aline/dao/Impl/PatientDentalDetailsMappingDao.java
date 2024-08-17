@@ -2,7 +2,6 @@ package com.aline.aline.dao.Impl;
 
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
-import com.aline.aline.enums.PatientDentalDetailsMappingField;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.repositories.PatientDentalDetailsMappingRepo;
 import lombok.RequiredArgsConstructor;
