@@ -2,6 +2,7 @@ package com.aline.aline.CustomMapper;
 
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
+import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +77,27 @@ public class PatientTreatmentPlanDraftMapper {
         patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlanDraft.getTreatmentSimulationsURL());
         patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlanDraft.getTreatmentSimulationsAttachments());
 
+        return patientTreatmentPlan;
+    }
 
+    public PatientTreatmentPlanDto DtoMapper(PatientTreatmentPlanDraft patientTreatmentPlanDraft) {
+        PatientTreatmentPlanDto patientTreatmentPlan = new PatientTreatmentPlanDto();
+
+        patientTreatmentPlan.setId(patientTreatmentPlanDraft.getTreatmentPlanID());
+        patientTreatmentPlan.setDoctorID(patientTreatmentPlanDraft.getDoctorID());
+        patientTreatmentPlan.setClinicID(patientTreatmentPlanDraft.getClinicID());
+        patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
+        patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
+        patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());
+        patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanDraft.getTreatmentPlanSummary());
+        patientTreatmentPlan.setUpperSteps(patientTreatmentPlanDraft.getUpperSteps());
+        patientTreatmentPlan.setLowerSteps(patientTreatmentPlanDraft.getLowerSteps());
+        patientTreatmentPlan.setExpectedDuration(patientTreatmentPlanDraft.getExpectedDuration());
+        patientTreatmentPlan.setTreatmentPlanCategory(patientTreatmentPlanDraft.getTreatmentPlanCategory());
+        patientTreatmentPlan.setPrice(patientTreatmentPlanDraft.getPrice());
+        patientTreatmentPlan.setIprAndAttachmentReports(patientTreatmentPlanDraft.getIprAndAttachmentReports());
+        patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlanDraft.getTreatmentSimulationsURL());
+        patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlanDraft.getTreatmentSimulationsAttachments());
 
         return patientTreatmentPlan;
     }

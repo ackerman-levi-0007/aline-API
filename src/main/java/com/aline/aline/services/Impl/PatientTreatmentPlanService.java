@@ -5,13 +5,18 @@ import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.dao.IPatientTreatmentPlanDao;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
+import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanHistory;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
+import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.services.IPatientTreatmentPlanService;
 import com.aline.aline.services.helpers.PatientHelperService;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -22,62 +27,86 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
     private final IPatientTreatmentPlanDao patientTreatmentPlanDao;
     private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
     private final PatientTreatmentPlanDraftMapper patientTreatmentPlanDraftMapper;
+    private final ModelMapper modelMapper;
 
     @Override
-    public PatientTreatmentPlan createTreatmentPlan(PatientTreatmentPlan patientTreatmentPlan) {
-        patientHelperService.checkLoggedInUserPermissionForPatientIDDentalDetails(patientTreatmentPlan.getPatientID());
+    public PatientTreatmentPlanDto createTreatmentPlan(PatientTreatmentPlanDto patientTreatmentPlanDto) {
+        patientHelperService.checkLoggedInUserPermissionForPatientIDDentalDetails(patientTreatmentPlanDto.getPatientID());
+        PatientTreatmentPlan patientTreatmentPlan = this.modelMapper.map(patientTreatmentPlanDto, PatientTreatmentPlan.class);
         PatientTreatmentPlan savedPatientTreatmentPlan = this.patientTreatmentPlanDao.createTreatmentPlan(patientTreatmentPlan);
         this.patientDentalDetailsMappingDao.addPatientTreatmentPlanIDForPatientID(
                 savedPatientTreatmentPlan.getPatientID(),
                 savedPatientTreatmentPlan.getId().toString()
         );
-        return savedPatientTreatmentPlan;
+        return this.modelMapper.map(savedPatientTreatmentPlan, PatientTreatmentPlanDto.class);
     }
 
     @Override
-    public PatientTreatmentPlan saveDraftForTreatmentPlan(PatientTreatmentPlan patientTreatmentPlan) {
-        patientHelperService.checkLoggedInUserPermissionForPatientIDDentalDetails(patientTreatmentPlan.getPatientID());
+    public PatientTreatmentPlanDto saveDraftForTreatmentPlan(PatientTreatmentPlanDto patientTreatmentPlanDto) {
+        patientHelperService.checkLoggedInUserPermissionForPatientIDDentalDetails(patientTreatmentPlanDto.getPatientID());
+        PatientTreatmentPlan patientTreatmentPlan = this.modelMapper.map(patientTreatmentPlanDto, PatientTreatmentPlan.class);
         PatientTreatmentPlanDraft patientTreatmentPlanDraft = this.patientTreatmentPlanDao.saveDraftForTreatmentPlan(patientTreatmentPlan);
         this.patientDentalDetailsMappingDao.addUnsavedDraftTreatmentPlanIDForPatientID(
             patientTreatmentPlanDraft.getPatientID(),
                 patientTreatmentPlanDraft.getId().toString()
         );
-        return this.patientTreatmentPlanDraftMapper.mapper(patientTreatmentPlanDraft);
+        return this.patientTreatmentPlanDraftMapper.DtoMapper(patientTreatmentPlanDraft);
     }
 
     @Override
-    public void sendTreatmentPlanModificationToDoctor(String patientID, String treatmentPlanID, PatientTreatmentPlan patientTreatmentPlan) throws BadRequestException {
+    public void sendTreatmentPlanModificationToDoctor(String patientID, String treatmentPlanID, PatientTreatmentPlanDto patientTreatmentPlanDto) throws BadRequestException {
         try{
             PatientTreatmentPlan getpatientTreatmentPlan = this.patientTreatmentPlanDao.getTreatmentPlan(patientID, treatmentPlanID);
+            PatientTreatmentPlan patientTreatmentPlan = this.modelMapper.map(patientTreatmentPlanDto, PatientTreatmentPlan.class);
             this.patientTreatmentPlanDao.updateTreatmentPlan(patientID, treatmentPlanID, getpatientTreatmentPlan, patientTreatmentPlan);
             this.patientTreatmentPlanDao.moveTreatmentPlanToHistory(getpatientTreatmentPlan);
         } catch (ResourceNotFoundException ex){
-            createTreatmentPlan(patientTreatmentPlan);
+            createTreatmentPlan(patientTreatmentPlanDto);
         }
     }
 
     @Override
-    public PatientTreatmentPlan getTreatmentPlan(String patientID, String treatmentPlanID) {
-        return this.patientTreatmentPlanDao.getTreatmentPlan(patientID, treatmentPlanID);
+    public PatientTreatmentPlanDto getTreatmentPlan(String patientID, String treatmentPlanID) {
+        PatientTreatmentPlan patientTreatmentPlan = this.patientTreatmentPlanDao.getTreatmentPlan(patientID, treatmentPlanID);
+        return this.modelMapper.map(patientTreatmentPlan, PatientTreatmentPlanDto.class);
     }
 
     @Override
-    public List<PatientTreatmentPlan> getAllTreatmentPlanForPatientID(String patientID) {
-        return this.patientTreatmentPlanDao.getAllTreatmentPlanForPatientID(patientID);
+    public List<PatientTreatmentPlanDto> getAllTreatmentPlanForPatientID(String patientID) {
+        List<PatientTreatmentPlan> patientTreatmentPlans = this.patientTreatmentPlanDao.getAllTreatmentPlanForPatientID(patientID);
+        return patientTreatmentPlans.stream().map(x -> this.modelMapper.map(x, PatientTreatmentPlanDto.class)).toList();
     }
 
     @Override
-    public PatientTreatmentPlan getTreatmentPlanDraft(String patientID, String treatmentPlanID) {
-        return this.patientTreatmentPlanDao.getTreatmentPlanDraft(patientID, treatmentPlanID);
+    public PatientTreatmentPlanDto getTreatmentPlanDraft(String patientID, String treatmentPlanID) {
+        PatientTreatmentPlan patientTreatmentPlan = this.patientTreatmentPlanDao.getTreatmentPlanDraft(patientID, treatmentPlanID);
+        return this.modelMapper.map(patientTreatmentPlan, PatientTreatmentPlanDto.class);
     }
 
     @Override
     public List<String> getAllHistoricalVersionIDsForTreatmentPlan(String patientID, String treatmentPlanID) {
-        return this.patientTreatmentPlanDao.getAllHistoricalVersionIDsForTreatmentPlan(patientID, treatmentPlanID);
+        List<PatientTreatmentPlanHistory> patientTreatmentPlanHistories = this.patientTreatmentPlanDao
+                .getAllHistoricalVersionIDsForTreatmentPlan(patientID, treatmentPlanID);
+
+        // Sort by createdDate descending and map to list of IDs
+        List<PatientTreatmentPlanHistory> toSort = new ArrayList<>();
+        for (PatientTreatmentPlanHistory history : patientTreatmentPlanHistories) {
+            if (history.getCreatedOn() != null) {
+                toSort.add(history);
+            }
+        }
+        toSort.sort(Comparator.comparing(PatientTreatmentPlanHistory::getCreatedOn).reversed());
+        List<String> ids = new ArrayList<>();
+        for (PatientTreatmentPlanHistory history : toSort) {
+            String id = history.getId().toString();
+            ids.add(id);
+        }
+        return ids;
     }
 
     @Override
-    public PatientTreatmentPlan getHistoricalTreatmentPlan(String patientID, String treatmentPlanID, String treatmentPlanVersionID) {
-        return this.patientTreatmentPlanDao.getHistoricalTreatmentPlan(patientID, treatmentPlanID, treatmentPlanVersionID);
+    public PatientTreatmentPlanDto getHistoricalTreatmentPlan(String patientID, String treatmentPlanID, String treatmentPlanVersionID) {
+        PatientTreatmentPlan patientTreatmentPlan = this.patientTreatmentPlanDao.getHistoricalTreatmentPlan(patientID, treatmentPlanID, treatmentPlanVersionID);
+        return this.modelMapper.map(patientTreatmentPlan, PatientTreatmentPlanDto.class);
     }
 }

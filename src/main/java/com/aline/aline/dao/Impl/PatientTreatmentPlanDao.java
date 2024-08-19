@@ -62,8 +62,8 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     }
 
     @Override
-    public List<String> getAllHistoricalVersionIDsForTreatmentPlan(String patientID, String treatmentPlanID) {
-        return List.of();
+    public List<PatientTreatmentPlanHistory> getAllHistoricalVersionIDsForTreatmentPlan(String patientID, String treatmentPlanID) {
+        return this.patientTreatmentPlanHistoryRepo.findByPatientIDAndTreatmentPlanID(patientID, treatmentPlanID);
     }
 
     @Override

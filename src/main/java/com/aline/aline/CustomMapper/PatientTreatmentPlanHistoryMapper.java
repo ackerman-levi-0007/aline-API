@@ -2,6 +2,7 @@ package com.aline.aline.CustomMapper;
 
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanHistory;
+import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,30 @@ public class PatientTreatmentPlanHistoryMapper {
         patientTreatmentPlanHistory.setOriginalCreatedOn(patientTreatmentPlan.getCreatedOn());
 
         return patientTreatmentPlanHistory;
+    }
+
+    public PatientTreatmentPlanDto DtoMapper(PatientTreatmentPlanHistory patientTreatmentPlanHistory) {
+
+        PatientTreatmentPlanDto patientTreatmentPlan = new PatientTreatmentPlanDto();
+
+        patientTreatmentPlan.setId(patientTreatmentPlanHistory.getTreatmentPlanID());
+        patientTreatmentPlan.setDoctorID(patientTreatmentPlanHistory.getDoctorID());
+        patientTreatmentPlan.setClinicID(patientTreatmentPlanHistory.getClinicID());
+        patientTreatmentPlan.setPatientID(patientTreatmentPlanHistory.getPatientID());
+        patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanHistory.getMalocclusionTag());
+        patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanHistory.getCaseAssessment());
+        patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanHistory.getTreatmentPlanSummary());
+        patientTreatmentPlan.setUpperSteps(patientTreatmentPlanHistory.getUpperSteps());
+        patientTreatmentPlan.setLowerSteps(patientTreatmentPlanHistory.getLowerSteps());
+        patientTreatmentPlan.setExpectedDuration(patientTreatmentPlanHistory.getExpectedDuration());
+        patientTreatmentPlan.setTreatmentPlanCategory(patientTreatmentPlanHistory.getTreatmentPlanCategory());
+        patientTreatmentPlan.setPrice(patientTreatmentPlanHistory.getPrice());
+        patientTreatmentPlan.setIprAndAttachmentReports(patientTreatmentPlanHistory.getIprAndAttachmentReports());
+        patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlanHistory.getTreatmentSimulationsURL());
+        patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlanHistory.getTreatmentSimulationsAttachments());
+        patientTreatmentPlan.setCreatedOn(patientTreatmentPlanHistory.getCreatedOn());
+
+        return patientTreatmentPlan;
     }
 
 }
