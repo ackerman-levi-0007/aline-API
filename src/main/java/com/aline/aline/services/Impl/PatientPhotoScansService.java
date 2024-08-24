@@ -43,7 +43,7 @@ public class PatientPhotoScansService implements IPatientPhotoScansService {
     public GetPatientPhotoScansDto savePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
         patientHelperService.checkLoggedInUserPermissionForPatientID(patientPhotoScans.getPatientID());
         PatientPhotoScans savedPatientPhotoScans = this.patientPhotoScansDao.savePatientPhotoScans(patientPhotoScans);
-        this.patientDentalDetailsMappingDao.updatePatientPhotoScansIDForPatientID(savedPatientPhotoScans.getPatientID(), savedPatientPhotoScans.getId().toString());
+        this.patientDentalDetailsMappingDao.updatePatientPhotoScansID(savedPatientPhotoScans.getPatientID(), savedPatientPhotoScans.getId().toString(), 0);
         return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScans);
     }
 }

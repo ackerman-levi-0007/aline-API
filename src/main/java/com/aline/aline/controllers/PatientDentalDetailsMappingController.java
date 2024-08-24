@@ -1,0 +1,40 @@
+package com.aline.aline.controllers;
+
+import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
+import com.aline.aline.services.IPatientDentalDetailsMappingService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/aline/dentalDetailsMapping")
+@Tag(name = "PatientDentalDetailsMappingController", description = "This API provides the capability to search patient dental details mapping")
+@CrossOrigin("*")
+public class PatientDentalDetailsMappingController {
+
+    private final IPatientDentalDetailsMappingService patientDentalDetailsMappingService;
+
+    @GetMapping("/getAllRebootIds")
+    public ResponseEntity<List<Integer>> getAllRebootIds(
+            @RequestHeader String patientID
+    ) {
+        List<Integer> rebootIds =
+                this.patientDentalDetailsMappingService.getAllRebootIds(patientID);
+        return new ResponseEntity<>(rebootIds, HttpStatus.OK);
+    }
+
+    @GetMapping("/getPlanMapping")
+    public ResponseEntity<PatientTreatmentPlanMapping> getPlanMapping(
+            @RequestHeader String patientID,
+            @RequestHeader int rebootID
+    ) {
+        PatientTreatmentPlanMapping patientTreatmentPlanMapping =
+                this.patientDentalDetailsMappingService.getPlanMapping(patientID, rebootID);
+        return new ResponseEntity<>(patientTreatmentPlanMapping, HttpStatus.OK);
+    }
+}

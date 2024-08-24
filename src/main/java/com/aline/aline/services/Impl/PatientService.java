@@ -102,7 +102,7 @@ public class PatientService implements IPatientService {
         UserDto clinicDto = this.userDao.getUserByID(getPatientDto.getClinicID());
         UserDto doctorDto = this.userDao.getUserByID(getPatientDto.getDoctorID());
 
-        PatientDentalDetailsMapping patientDentalDetailsMapping = this.patientDentalDetailsMappingDao.getPatientDentalDetailsMappingByPatientID(patientID);
+        PatientDentalDetailsMapping patientDentalDetailsMapping = this.patientDentalDetailsMappingDao.getPatientDentalDetailsMapping(patientID, 0);
 
         GetUserDetailsForPatientDto getUserDetailsForPatientDto = new GetUserDetailsForPatientDto();
 

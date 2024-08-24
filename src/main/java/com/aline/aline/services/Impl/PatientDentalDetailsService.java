@@ -26,9 +26,10 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
     public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
         patientHelperService.checkLoggedInUserPermissionForPatientID(patientPreviousDentalHistoryDetails.getPatientID());
         PatientPreviousDentalHistory patientPreviousDentalHistory = this.patientDentalDetailsDao.createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
-        this.patientDentalDetailsMappingDao.updatePatientPreviousDentalHistoryDetailsIDForPatientID(
+        this.patientDentalDetailsMappingDao.updatePatientPreviousDentalHistoryDetailsID(
                 patientPreviousDentalHistory.getPatientID(),
-                patientPreviousDentalHistory.getId().toString()
+                patientPreviousDentalHistory.getId().toString(),
+                0
         );
         return patientPreviousDentalHistory;
     }
@@ -37,9 +38,10 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
     public PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
         patientHelperService.checkLoggedInUserPermissionForPatientID(patientTreatmentGoal.getPatientID());
         PatientTreatmentGoal savedPatientTreatmentGoal = this.patientDentalDetailsDao.createPatientTreatmentGoal(patientTreatmentGoal);
-        this.patientDentalDetailsMappingDao.updatePatientTreatmentGoalIDForPatientID(
+        this.patientDentalDetailsMappingDao.updatePatientTreatmentGoalID(
                 savedPatientTreatmentGoal.getPatientID(),
-                savedPatientTreatmentGoal.getId().toString()
+                savedPatientTreatmentGoal.getId().toString(),
+                0
         );
         return savedPatientTreatmentGoal;
     }
@@ -48,10 +50,11 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
     public PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail) throws BadRequestException {
         validatePatientDentalDetail(patientDentalDetail);
         PatientDentalDetail savedPatientDentalDetail = this.patientDentalDetailsDao.createPatientDentalDetail(patientDentalDetail);
-        this.patientDentalDetailsMappingDao.updatePatientDentalDetailsIDForPatientID(
+        this.patientDentalDetailsMappingDao.updatePatientDentalDetailsID(
                 savedPatientDentalDetail.getPatientTreatmentGoal().getPatientID(),
                 savedPatientDentalDetail.getPatientPreviousDentalHistoryDetails().getId().toString(),
-                savedPatientDentalDetail.getPatientTreatmentGoal().getId().toString()
+                savedPatientDentalDetail.getPatientTreatmentGoal().getId().toString(),
+                0
         );
         return savedPatientDentalDetail;
     }
