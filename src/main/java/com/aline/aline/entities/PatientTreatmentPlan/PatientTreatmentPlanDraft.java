@@ -26,8 +26,7 @@ public class PatientTreatmentPlanDraft {
     @JsonIgnore
     private ObjectId id;
     private String treatmentPlanID;
-    private String doctorID;
-    private String clinicID;
+
     private String patientID;
     private List<MalocclusionTag> malocclusionTag;
     private String caseAssessment;

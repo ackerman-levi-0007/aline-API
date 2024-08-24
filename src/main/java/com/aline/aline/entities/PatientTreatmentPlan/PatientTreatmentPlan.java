@@ -25,8 +25,6 @@ public class PatientTreatmentPlan {
     @MongoId(value = FieldType.OBJECT_ID)
     private ObjectId id;
 
-    private String doctorID;
-    private String clinicID;
     private String patientID;
     private List<MalocclusionTag> malocclusionTag;
     private String caseAssessment;

@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
@@ -26,8 +25,7 @@ public class PatientTreatmentPlanHistory {
     @JsonIgnore
     private ObjectId id;
     private String treatmentPlanID;
-    private String doctorID;
-    private String clinicID;
+
     private String patientID;
     private List<MalocclusionTag> malocclusionTag;
     private String caseAssessment;

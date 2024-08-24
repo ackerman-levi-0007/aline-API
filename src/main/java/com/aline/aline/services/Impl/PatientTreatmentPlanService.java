@@ -1,11 +1,13 @@
 package com.aline.aline.services.Impl;
 
+import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.CustomMapper.PatientTreatmentPlanDraftMapper;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.dao.IPatientTreatmentPlanDao;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanHistory;
+import com.aline.aline.enums.TreatmentPlanStatus;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.services.IPatientTreatmentPlanService;
@@ -34,9 +36,14 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
         patientHelperService.checkLoggedInUserPermissionForPatientIDDentalDetails(patientTreatmentPlanDto.getPatientID());
         PatientTreatmentPlan patientTreatmentPlan = this.modelMapper.map(patientTreatmentPlanDto, PatientTreatmentPlan.class);
         PatientTreatmentPlan savedPatientTreatmentPlan = this.patientTreatmentPlanDao.createTreatmentPlan(patientTreatmentPlan);
+
+        TreatmentPlanObject treatmentPlanObject = new TreatmentPlanObject();
+        treatmentPlanObject.setId(savedPatientTreatmentPlan.getId().toString());
+        treatmentPlanObject.setStatus(TreatmentPlanStatus.shared);
+
         this.patientDentalDetailsMappingDao.addPatientTreatmentPlanIDForPatientID(
                 savedPatientTreatmentPlan.getPatientID(),
-                savedPatientTreatmentPlan.getId().toString()
+                treatmentPlanObject
         );
         return this.modelMapper.map(savedPatientTreatmentPlan, PatientTreatmentPlanDto.class);
     }
@@ -46,9 +53,14 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
         patientHelperService.checkLoggedInUserPermissionForPatientIDDentalDetails(patientTreatmentPlanDto.getPatientID());
         PatientTreatmentPlan patientTreatmentPlan = this.modelMapper.map(patientTreatmentPlanDto, PatientTreatmentPlan.class);
         PatientTreatmentPlanDraft patientTreatmentPlanDraft = this.patientTreatmentPlanDao.saveDraftForTreatmentPlan(patientTreatmentPlan);
+
+        TreatmentPlanObject treatmentPlanObject = new TreatmentPlanObject();
+        treatmentPlanObject.setId(patientTreatmentPlanDraft.getId().toString());
+        treatmentPlanObject.setStatus(TreatmentPlanStatus.draft);
+
         this.patientDentalDetailsMappingDao.addUnsavedDraftTreatmentPlanIDForPatientID(
             patientTreatmentPlanDraft.getPatientID(),
-                patientTreatmentPlanDraft.getId().toString()
+            treatmentPlanObject
         );
         return this.patientTreatmentPlanDraftMapper.DtoMapper(patientTreatmentPlanDraft);
     }

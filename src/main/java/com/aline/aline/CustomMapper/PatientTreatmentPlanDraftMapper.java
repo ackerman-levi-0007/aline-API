@@ -14,8 +14,6 @@ public class PatientTreatmentPlanDraftMapper {
         PatientTreatmentPlanDraft patientTreatmentPlanDraft = new PatientTreatmentPlanDraft();
 
         patientTreatmentPlanDraft.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
-        patientTreatmentPlanDraft.setDoctorID(patientTreatmentPlan.getDoctorID());
-        patientTreatmentPlanDraft.setClinicID(patientTreatmentPlan.getClinicID());
         patientTreatmentPlanDraft.setPatientID(patientTreatmentPlan.getPatientID());
         patientTreatmentPlanDraft.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanDraft.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
@@ -62,8 +60,6 @@ public class PatientTreatmentPlanDraftMapper {
         PatientTreatmentPlan patientTreatmentPlan = new PatientTreatmentPlan();
 
         patientTreatmentPlan.setId(new ObjectId(patientTreatmentPlanDraft.getTreatmentPlanID()));
-        patientTreatmentPlan.setDoctorID(patientTreatmentPlanDraft.getDoctorID());
-        patientTreatmentPlan.setClinicID(patientTreatmentPlanDraft.getClinicID());
         patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());
@@ -84,8 +80,6 @@ public class PatientTreatmentPlanDraftMapper {
         PatientTreatmentPlanDto patientTreatmentPlan = new PatientTreatmentPlanDto();
 
         patientTreatmentPlan.setId(patientTreatmentPlanDraft.getTreatmentPlanID());
-        patientTreatmentPlan.setDoctorID(patientTreatmentPlanDraft.getDoctorID());
-        patientTreatmentPlan.setClinicID(patientTreatmentPlanDraft.getClinicID());
         patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());

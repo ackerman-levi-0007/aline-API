@@ -1,5 +1,7 @@
 package com.aline.aline.entities;
 
+import com.aline.aline.CommonEntitiesObjects.TreatmentPlanHistoryObject;
+import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObjectStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,14 +23,14 @@ public class PatientDentalDetailsMapping {
     private ObjectId id;
 
     private String clinicID;
-
     private String doctorID;
-
     private String patientID;
 
-    private String patientPreviousDentalHistoryId;
-    private String patientTreatmentGoalId;
-    private String patientPhotoScansId;
-    private List<String> patientTreatmentPlanId;
-    private List<String> patientTreatmentPlanDraftId; //Drafts that are created but not committed in patient treatment plan
+    private int rebootID;
+    private String previousDentalHistoryId;
+    private String treatmentGoalId;
+    private String photoScansId;
+    private TreatmentPlanObjectStatus treatmentPlanLatest;
+    private List<TreatmentPlanHistoryObject> treatmentPlanHistory;
+    private TreatmentPlanObjectStatus treatmentPlanDraft;
 }

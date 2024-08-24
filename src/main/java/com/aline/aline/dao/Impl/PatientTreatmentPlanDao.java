@@ -137,7 +137,7 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
             String patientID, String treatmentPlanID, String doctorID
     ) {
         Optional<PatientTreatmentPlanDraft> patientTreatmentPlanDraft = this.patientTreatmentPlanDraftRepo
-                .findByPatientIDAndTreatmentPlanIDAndDoctorID(patientID, treatmentPlanID, doctorID);
+                .findByPatientIDAndTreatmentPlanID(patientID, treatmentPlanID);
 
         return patientTreatmentPlanDraft.isPresent() ? patientTreatmentPlanDraft.get() : new PatientTreatmentPlanDraft();
     }
@@ -146,7 +146,7 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
             String patientID, String treatmentPlanID, String clinicID
     ) {
         Optional<PatientTreatmentPlanDraft> patientTreatmentPlanDraft = this.patientTreatmentPlanDraftRepo
-                .findByPatientIDAndTreatmentPlanIDAndClinicID(patientID, treatmentPlanID,clinicID);
+                .findByPatientIDAndTreatmentPlanID(patientID, treatmentPlanID);
 
         return patientTreatmentPlanDraft.isPresent() ? patientTreatmentPlanDraft.get() : new PatientTreatmentPlanDraft();
     }

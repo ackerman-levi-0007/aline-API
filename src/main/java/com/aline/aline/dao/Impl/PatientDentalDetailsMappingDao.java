@@ -1,5 +1,7 @@
 package com.aline.aline.dao.Impl;
 
+import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObjectStatus;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -21,6 +23,7 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
         patientDentalDetailsMapping.setClinicID(clinicID);
         patientDentalDetailsMapping.setDoctorID(doctorID);
         patientDentalDetailsMapping.setPatientID(patientID);
+        patientDentalDetailsMapping.setRebootID(0); // initial reboot
 
         patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
@@ -33,53 +36,59 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     @Override
     public void updatePatientPhotoScansIDForPatientID(String patientID, String id) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMapping(patientID);
-        patientDentalDetailsMapping.setPatientPhotoScansId(id);
+        patientDentalDetailsMapping.setPhotoScansId(id);
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
 
     @Override
     public void updatePatientPreviousDentalHistoryDetailsIDForPatientID(String patientID, String id) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMapping(patientID);
-        patientDentalDetailsMapping.setPatientPreviousDentalHistoryId(id);
+        patientDentalDetailsMapping.setPreviousDentalHistoryId(id);
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
 
     @Override
     public void updatePatientTreatmentGoalIDForPatientID(String patientID, String id) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMapping(patientID);
-        patientDentalDetailsMapping.setPatientTreatmentGoalId(id);
+        patientDentalDetailsMapping.setTreatmentGoalId(id);
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
 
     @Override
     public void updatePatientDentalDetailsIDForPatientID(String patientID, String previousDentalHistoryID, String patientTreatmentGoalID) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMapping(patientID);
-        patientDentalDetailsMapping.setPatientPreviousDentalHistoryId(previousDentalHistoryID);
-        patientDentalDetailsMapping.setPatientTreatmentGoalId(patientTreatmentGoalID);
+        patientDentalDetailsMapping.setPreviousDentalHistoryId(previousDentalHistoryID);
+        patientDentalDetailsMapping.setTreatmentGoalId(patientTreatmentGoalID);
     }
 
     @Override
-    public void addPatientTreatmentPlanIDForPatientID(String patientID, String id) {
+    public void addPatientTreatmentPlanIDForPatientID(String patientID, TreatmentPlanObject treatmentPlanObject) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMapping(patientID);
 
-        List<String> patientTreatmentPlanID = patientDentalDetailsMapping.getPatientTreatmentPlanId();
-        patientTreatmentPlanID.add(id);
+        TreatmentPlanObjectStatus latestTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanLatest();
 
-        patientDentalDetailsMapping.setPatientTreatmentPlanId(
-                patientTreatmentPlanID
-        );
+        List<TreatmentPlanObject> treatmentPlanObjects = latestTreatmentPlan.getTreatmentPlanList();
+        treatmentPlanObjects.add(treatmentPlanObject);
+
+        latestTreatmentPlan.setTreatmentPlanList(treatmentPlanObjects);
+
+        patientDentalDetailsMapping.setTreatmentPlanLatest(latestTreatmentPlan);
 
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
 
     @Override
-    public void addUnsavedDraftTreatmentPlanIDForPatientID(String patientID, String id) {
+    public void addUnsavedDraftTreatmentPlanIDForPatientID(String patientID, TreatmentPlanObject treatmentPlanObject) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMapping(patientID);
 
-        List<String> patientTreatmentPlanDraft = patientDentalDetailsMapping.getPatientTreatmentPlanDraftId();
-        patientTreatmentPlanDraft.add(id);
+        TreatmentPlanObjectStatus draftTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanDraft();
 
-        patientDentalDetailsMapping.setPatientTreatmentPlanDraftId(patientTreatmentPlanDraft);
+        List<TreatmentPlanObject> treatmentPlanObjects = draftTreatmentPlan.getTreatmentPlanList();
+        treatmentPlanObjects.add(treatmentPlanObject);
+
+        draftTreatmentPlan.setTreatmentPlanList(treatmentPlanObjects);
+
+        patientDentalDetailsMapping.setTreatmentPlanDraft(draftTreatmentPlan);
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
 

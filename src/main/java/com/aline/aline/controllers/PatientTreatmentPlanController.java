@@ -14,15 +14,15 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/aline/patientTreatmentPlanController")
+@RequestMapping("/api/v1/aline/treatmentPlan")
 @Tag(name = "PatientTreatmentPlanController", description = "This API provides the capability to search and modify treatment plan details of patients")
 @CrossOrigin("*")
 public class PatientTreatmentPlanController {
 
     private final IPatientTreatmentPlanService patientTreatmentPlanService;
 
-    @PostMapping("/createTreatmentPlan")
-    public ResponseEntity<PatientTreatmentPlanDto> createTreatmentPlan(
+    @PostMapping("/createPlan")
+    public ResponseEntity<PatientTreatmentPlanDto> createPlan(
             @RequestHeader String patientID,
             @RequestBody PatientTreatmentPlanDto patientTreatmentPlan
     ){
@@ -30,8 +30,8 @@ public class PatientTreatmentPlanController {
         return new ResponseEntity<>(savedPatientTreatmentPlan, HttpStatus.OK);
     }
 
-    @PostMapping("/saveDraftForTreatmentPlan")
-    public ResponseEntity<APIResponse> saveDraftForTreatmentPlan(
+    @PostMapping("/saveDraft")
+    public ResponseEntity<APIResponse> saveDraft(
             @RequestHeader String patientID,
             @RequestBody PatientTreatmentPlanDto patientTreatmentPlan
     ){
@@ -39,8 +39,8 @@ public class PatientTreatmentPlanController {
         return new ResponseEntity<>(new APIResponse("Draft saved successfully !!!", true), HttpStatus.OK);
     }
 
-    @PutMapping("/sendTreatmentPlanModificationToDoctor")
-    public ResponseEntity<APIResponse> sendTreatmentPlanModificationToDoctor(
+    @PutMapping("/sendPlanModificationToDoctor")
+    public ResponseEntity<APIResponse> sendPlanModificationToDoctor(
             @RequestHeader String patientID,
             @RequestHeader String treatmentPlanID,
             @RequestBody PatientTreatmentPlanDto patientTreatmentPlan
@@ -49,8 +49,8 @@ public class PatientTreatmentPlanController {
         return new ResponseEntity<>(new APIResponse("Treatment plan shared successfully to doctor !!!", true), HttpStatus.OK);
     }
 
-    @GetMapping("/getTreatmentPlan")
-    public ResponseEntity<PatientTreatmentPlanDto> getTreatmentPlan(
+    @GetMapping("/getPlan")
+    public ResponseEntity<PatientTreatmentPlanDto> getPlan(
             @RequestHeader String patientID,
             @RequestHeader String treatmentPlanID
     ){
@@ -58,16 +58,16 @@ public class PatientTreatmentPlanController {
         return new ResponseEntity<>(patientTreatmentPlan, HttpStatus.OK);
     }
 
-    @GetMapping("/getAllTreatmentPlanForPatientID")
-    public ResponseEntity<List<PatientTreatmentPlanDto>> getAllTreatmentPlanForPatientID(
+    @GetMapping("/getAllPlanForPatientID")
+    public ResponseEntity<List<PatientTreatmentPlanDto>> getAllPlanForPatientID(
             @RequestHeader String patientID
     ){
         List<PatientTreatmentPlanDto> patientTreatmentPlans = this.patientTreatmentPlanService.getAllTreatmentPlanForPatientID(patientID);
         return new ResponseEntity<>(patientTreatmentPlans, HttpStatus.OK);
     }
 
-    @GetMapping("/getTreatmentPlanDraft")
-    public ResponseEntity<PatientTreatmentPlanDto> getTreatmentPlanDraft(
+    @GetMapping("/getPlanDraft")
+    public ResponseEntity<PatientTreatmentPlanDto> getPlanDraft(
             @RequestHeader String patientID,
             @RequestHeader String treatmentPlanID
     ){
@@ -84,7 +84,7 @@ public class PatientTreatmentPlanController {
         return new ResponseEntity<>(ids, HttpStatus.OK);
     }
 
-    @GetMapping("/getHistoricalTreatmentPlan")
+    @GetMapping("/getHistoricalPlan")
     public ResponseEntity<PatientTreatmentPlanDto> getHistoricalTreatmentPlan(
             @RequestHeader String patientID,
             @RequestHeader String treatmentPlanID,

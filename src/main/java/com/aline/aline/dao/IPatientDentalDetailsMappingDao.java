@@ -1,5 +1,6 @@
 package com.aline.aline.dao;
 
+import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,6 @@ public interface IPatientDentalDetailsMappingDao {
     void updatePatientPreviousDentalHistoryDetailsIDForPatientID(String patientID, String id);
     void updatePatientTreatmentGoalIDForPatientID(String patientID, String id);
     void updatePatientDentalDetailsIDForPatientID(String patientID, String previousDentalHistoryID, String patientTreatmentGoalID);
-    void addPatientTreatmentPlanIDForPatientID(String patientID, String id);
-    void addUnsavedDraftTreatmentPlanIDForPatientID(String patientID, String id);
+    void addPatientTreatmentPlanIDForPatientID(String patientID, TreatmentPlanObject treatmentPlanObject);
+    void addUnsavedDraftTreatmentPlanIDForPatientID(String patientID, TreatmentPlanObject treatmentPlanObject);
 }

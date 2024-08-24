@@ -14,8 +14,6 @@ public class PatientTreatmentPlanHistoryMapper {
         PatientTreatmentPlan patientTreatmentPlan = new PatientTreatmentPlan();
 
         patientTreatmentPlan.setId(new ObjectId(patientTreatmentPlanHistory.getTreatmentPlanID()));
-        patientTreatmentPlan.setDoctorID(patientTreatmentPlanHistory.getDoctorID());
-        patientTreatmentPlan.setClinicID(patientTreatmentPlanHistory.getClinicID());
         patientTreatmentPlan.setPatientID(patientTreatmentPlanHistory.getPatientID());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanHistory.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanHistory.getCaseAssessment());
@@ -38,8 +36,6 @@ public class PatientTreatmentPlanHistoryMapper {
         PatientTreatmentPlanHistory patientTreatmentPlanHistory = new PatientTreatmentPlanHistory();
 
         patientTreatmentPlanHistory.setTreatmentPlanID(patientTreatmentPlanHistory.getId().toString());
-        patientTreatmentPlanHistory.setDoctorID(patientTreatmentPlan.getDoctorID());
-        patientTreatmentPlanHistory.setClinicID(patientTreatmentPlan.getClinicID());
         patientTreatmentPlanHistory.setPatientID(patientTreatmentPlan.getPatientID());
         patientTreatmentPlanHistory.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanHistory.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
@@ -62,8 +58,6 @@ public class PatientTreatmentPlanHistoryMapper {
         PatientTreatmentPlanDto patientTreatmentPlan = new PatientTreatmentPlanDto();
 
         patientTreatmentPlan.setId(patientTreatmentPlanHistory.getTreatmentPlanID());
-        patientTreatmentPlan.setDoctorID(patientTreatmentPlanHistory.getDoctorID());
-        patientTreatmentPlan.setClinicID(patientTreatmentPlanHistory.getClinicID());
         patientTreatmentPlan.setPatientID(patientTreatmentPlanHistory.getPatientID());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanHistory.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanHistory.getCaseAssessment());

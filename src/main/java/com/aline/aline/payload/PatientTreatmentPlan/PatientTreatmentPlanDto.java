@@ -16,8 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class PatientTreatmentPlanDto {
     private String id;
-    private String doctorID;
-    private String clinicID;
     private String patientID;
     private List<MalocclusionTag> malocclusionTag;
     private String caseAssessment;
