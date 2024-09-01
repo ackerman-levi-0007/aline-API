@@ -1,7 +1,6 @@
 package com.aline.aline.entities;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanHistoryObject;
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObjectStatus;
+import com.aline.aline.CommonEntitiesObjects.TreatmentPlanListObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +29,7 @@ public class PatientDentalDetailsMapping {
     private String previousDentalHistoryId;
     private String treatmentGoalId;
     private String photoScansId;
-    private TreatmentPlanObjectStatus treatmentPlanLatest;
-    private List<TreatmentPlanHistoryObject> treatmentPlanHistory;
-    private TreatmentPlanObjectStatus treatmentPlanDraft;
+    private TreatmentPlanListObject treatmentPlanLatest;
+    private List<TreatmentPlanListObject> treatmentPlanHistory;
+    private TreatmentPlanListObject treatmentPlanDraft;
 }

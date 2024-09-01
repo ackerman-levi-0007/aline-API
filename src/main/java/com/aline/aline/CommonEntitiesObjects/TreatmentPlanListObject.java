@@ -10,8 +10,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TreatmentPlanHistoryObject {
+public class TreatmentPlanListObject {
     private int id;
-    private List<TreatmentPlanObject> treatmentPlanHistory;
+    private List<TreatmentPlanObject> treatmentPlans;
     private TreatmentPlanStatus treatmentPlanStatus;
 }

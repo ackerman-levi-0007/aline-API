@@ -1,7 +1,7 @@
 package com.aline.aline.dao.Impl;
 
+import com.aline.aline.CommonEntitiesObjects.TreatmentPlanListObject;
 import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObjectStatus;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -85,12 +85,12 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     ) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
 
-        TreatmentPlanObjectStatus latestTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanLatest();
+        TreatmentPlanListObject latestTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanLatest();
 
-        List<TreatmentPlanObject> treatmentPlanObjects = latestTreatmentPlan.getTreatmentPlanList();
+        List<TreatmentPlanObject> treatmentPlanObjects = latestTreatmentPlan.getTreatmentPlans();
         treatmentPlanObjects.add(treatmentPlanObject);
 
-        latestTreatmentPlan.setTreatmentPlanList(treatmentPlanObjects);
+        latestTreatmentPlan.setTreatmentPlans(treatmentPlanObjects);
 
         patientDentalDetailsMapping.setTreatmentPlanLatest(latestTreatmentPlan);
 
@@ -105,12 +105,12 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     ) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
 
-        TreatmentPlanObjectStatus draftTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanDraft();
+        TreatmentPlanListObject draftTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanDraft();
 
-        List<TreatmentPlanObject> treatmentPlanObjects = draftTreatmentPlan.getTreatmentPlanList();
+        List<TreatmentPlanObject> treatmentPlanObjects = draftTreatmentPlan.getTreatmentPlans();
         treatmentPlanObjects.add(treatmentPlanObject);
 
-        draftTreatmentPlan.setTreatmentPlanList(treatmentPlanObjects);
+        draftTreatmentPlan.setTreatmentPlans(treatmentPlanObjects);
 
         patientDentalDetailsMapping.setTreatmentPlanDraft(draftTreatmentPlan);
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
