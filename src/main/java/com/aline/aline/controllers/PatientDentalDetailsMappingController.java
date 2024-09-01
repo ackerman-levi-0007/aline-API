@@ -19,19 +19,19 @@ public class PatientDentalDetailsMappingController {
 
     private final IPatientDentalDetailsMappingService patientDentalDetailsMappingService;
 
-    @GetMapping("/getAllRebootIds")
+    @GetMapping("/getAllRebootIds/{patientID}")
     public ResponseEntity<List<Integer>> getAllRebootIds(
-            @RequestHeader String patientID
+            @PathVariable String patientID
     ) {
         List<Integer> rebootIds =
                 this.patientDentalDetailsMappingService.getAllRebootIds(patientID);
         return new ResponseEntity<>(rebootIds, HttpStatus.OK);
     }
 
-    @GetMapping("/getPlanMapping")
+    @GetMapping("/getPlanMapping/{patientID}/{rebootID}")
     public ResponseEntity<PatientTreatmentPlanMapping> getPlanMapping(
-            @RequestHeader String patientID,
-            @RequestHeader int rebootID
+            @PathVariable String patientID,
+            @PathVariable int rebootID
     ) {
         PatientTreatmentPlanMapping patientTreatmentPlanMapping =
                 this.patientDentalDetailsMappingService.getPlanMapping(patientID, rebootID);
