@@ -2,5 +2,8 @@ package com.aline.aline.enums;
 
 public enum TreatmentPlanStatus {
     draft,
-    shared
+    shared,
+    requestForModification,
+    confirmed,
+    rejected
 }

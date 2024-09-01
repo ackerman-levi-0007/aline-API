@@ -1,5 +1,6 @@
 package com.aline.aline.controllers;
 
+import com.aline.aline.enums.TreatmentPlanType;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.services.IPatientTreatmentPlanService;
@@ -52,9 +53,10 @@ public class PatientTreatmentPlanController {
     @GetMapping("/getPlan/{patientID}/{treatmentPlanID}")
     public ResponseEntity<PatientTreatmentPlanDto> getPlan(
             @PathVariable String patientID,
-            @PathVariable String treatmentPlanID
-    ){
-        PatientTreatmentPlanDto patientTreatmentPlan = this.patientTreatmentPlanService.getTreatmentPlan(patientID, treatmentPlanID);
+            @PathVariable String treatmentPlanID,
+            @RequestHeader TreatmentPlanType treatmentPlanType
+            ) throws BadRequestException {
+        PatientTreatmentPlanDto patientTreatmentPlan = this.patientTreatmentPlanService.getTreatmentPlan(patientID, treatmentPlanID, treatmentPlanType);
         return new ResponseEntity<>(patientTreatmentPlan, HttpStatus.OK);
     }
 
@@ -66,31 +68,4 @@ public class PatientTreatmentPlanController {
         return new ResponseEntity<>(patientTreatmentPlans, HttpStatus.OK);
     }
 
-    @GetMapping("/getPlanDraft/{patientID}/{treatmentPlanID}")
-    public ResponseEntity<PatientTreatmentPlanDto> getPlanDraft(
-            @PathVariable String patientID,
-            @PathVariable String treatmentPlanID
-    ){
-        PatientTreatmentPlanDto patientTreatmentPlanDraft = this.patientTreatmentPlanService.getTreatmentPlanDraft(patientID, treatmentPlanID);
-        return new ResponseEntity<>(patientTreatmentPlanDraft, HttpStatus.OK);
-    }
-
-    @GetMapping("/getAllHistoricalVersionIDsForTreatmentPlan/{patientID}/{treatmentPlanID}")
-    public ResponseEntity<List<String>> getAllHistoricalVersionIDsForTreatmentPlan(
-            @PathVariable String patientID,
-            @PathVariable String treatmentPlanID
-    ){
-        List<String> ids = this.patientTreatmentPlanService.getAllHistoricalVersionIDsForTreatmentPlan(patientID, treatmentPlanID);
-        return new ResponseEntity<>(ids, HttpStatus.OK);
-    }
-
-    @GetMapping("/getHistoricalPlan/{patientID}/{treatmentPlanID}/{treatmentPlanVersionID}")
-    public ResponseEntity<PatientTreatmentPlanDto> getHistoricalTreatmentPlan(
-            @PathVariable String patientID,
-            @PathVariable String treatmentPlanID,
-            @PathVariable String treatmentPlanVersionID
-    ){
-        PatientTreatmentPlanDto patientTreatmentPlan = this.patientTreatmentPlanService.getHistoricalTreatmentPlan(patientID, treatmentPlanID, treatmentPlanVersionID);
-        return new ResponseEntity<>(patientTreatmentPlan, HttpStatus.OK);
-    }
 }

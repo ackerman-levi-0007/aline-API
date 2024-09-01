@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -87,7 +88,14 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
 
         TreatmentPlanListObject latestTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanLatest();
 
+        if(latestTreatmentPlan == null){
+            latestTreatmentPlan = new TreatmentPlanListObject();
+            latestTreatmentPlan.setId(0);
+        }
+
         List<TreatmentPlanObject> treatmentPlanObjects = latestTreatmentPlan.getTreatmentPlans();
+
+        if( treatmentPlanObjects == null || treatmentPlanObjects.isEmpty()) treatmentPlanObjects = new ArrayList<TreatmentPlanObject>();
         treatmentPlanObjects.add(treatmentPlanObject);
 
         latestTreatmentPlan.setTreatmentPlans(treatmentPlanObjects);
@@ -107,7 +115,14 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
 
         TreatmentPlanListObject draftTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanDraft();
 
+        if(draftTreatmentPlan == null){
+            draftTreatmentPlan = new TreatmentPlanListObject();
+            draftTreatmentPlan.setId(0);
+        }
+
         List<TreatmentPlanObject> treatmentPlanObjects = draftTreatmentPlan.getTreatmentPlans();
+
+        if( treatmentPlanObjects == null || treatmentPlanObjects.isEmpty()) treatmentPlanObjects = new ArrayList<TreatmentPlanObject>();
         treatmentPlanObjects.add(treatmentPlanObject);
 
         draftTreatmentPlan.setTreatmentPlans(treatmentPlanObjects);
@@ -117,8 +132,37 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     }
 
     @Override
+    public void addTreatmentPlanToHistory(String patientID, List<TreatmentPlanObject> treatmentPlanObjects, int rebootID) {
+        PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
+
+        List<TreatmentPlanListObject> historyTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanHistory();
+
+        TreatmentPlanListObject treatmentPlanListObject = new TreatmentPlanListObject();
+
+        if(historyTreatmentPlan == null || historyTreatmentPlan.isEmpty()){
+            treatmentPlanListObject.setId(0);
+            historyTreatmentPlan = new ArrayList<TreatmentPlanListObject>();
+        } else {
+            treatmentPlanListObject.setId((int)historyTreatmentPlan.stream().count());
+        }
+
+        treatmentPlanListObject.setTreatmentPlans(treatmentPlanObjects);
+
+        historyTreatmentPlan.add(treatmentPlanListObject);
+
+        patientDentalDetailsMapping.setTreatmentPlanHistory(historyTreatmentPlan);
+        this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
+    }
+
+    @Override
+    public void moveTreatmentPlanToHistory(String patientID, int rebootID) {
+
+    }
+
+    @Override
     public List<Integer> getAllRebootIds(String patientID) {
-        return List.of();
+        List<PatientDentalDetailsMapping> patientDentalDetailsMappings = getPatientDentalDetailsMapping(patientID);
+        return patientDentalDetailsMappings.stream().map(x -> x.getRebootID()).toList();
     }
 
     @Override
@@ -133,7 +177,6 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     /*****************************************************************************************
                                             Helpers
      *****************************************************************************************/
-
     private List<PatientDentalDetailsMapping> getPatientDentalDetailsMapping(String patientID){
         return this.patientDentalDetailsMappingRepo.findByPatientID(patientID)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient dental details mapping", "patientID", patientID)

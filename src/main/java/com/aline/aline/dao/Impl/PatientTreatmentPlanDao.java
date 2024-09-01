@@ -16,6 +16,7 @@ import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanRep
 import com.aline.aline.utilities.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     private final PatientTreatmentPlanHistoryRepo patientTreatmentPlanHistoryRepo;
     private final PatientTreatmentPlanDraftMapper patientTreatmentPlanDraftMapper;
     private final PatientTreatmentPlanHistoryMapper patientTreatmentPlanHistoryMapper;
+    private final ModelMapper modelMapper;
 
     @Override
     public PatientTreatmentPlan createTreatmentPlan(PatientTreatmentPlan patientTreatmentPlan) {
@@ -43,9 +45,9 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     }
 
     @Override
-    public PatientTreatmentPlan getTreatmentPlan(String patientID, String treatmentPlanID) {
-        return this.patientTreatmentPlanRepo.findByIdAndPatientID(treatmentPlanID, patientID)
-                .orElseThrow(() -> new ResourceNotFoundException("Treatment Plan", "treatmentPlanID", treatmentPlanID)
+    public PatientTreatmentPlan getTreatmentPlan(String patientID, String id) {
+        return this.patientTreatmentPlanRepo.findByIdAndPatientID(id, patientID)
+                .orElseThrow(() -> new ResourceNotFoundException("Treatment Plan", "id", id)
                 );
     }
 
@@ -56,9 +58,9 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     }
 
     @Override
-    public PatientTreatmentPlan getTreatmentPlanDraft(String patientID, String treatmentPlanID) {
-        PatientTreatmentPlanDraft patientTreatmentPlanDraft = getPatientTreatmentPlanDraft(patientID, treatmentPlanID);
-        return this.patientTreatmentPlanDraftMapper.mapper(patientTreatmentPlanDraft);
+    public PatientTreatmentPlan getTreatmentPlanDraft(String patientID, String id) {
+        PatientTreatmentPlanDraft patientTreatmentPlanDraft = getPatientTreatmentPlanDraft(patientID, id);
+        return this.modelMapper.map(patientTreatmentPlanDraft, PatientTreatmentPlan.class);
     }
 
     @Override
@@ -67,14 +69,14 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     }
 
     @Override
-    public PatientTreatmentPlan getHistoricalTreatmentPlan(String patientID, String treatmentPlanID, String treatmentPlanVersionID) {
+    public PatientTreatmentPlan getHistoricalTreatmentPlan(String patientID, String id) {
         PatientTreatmentPlanHistory patientTreatmentPlanHistory = this.patientTreatmentPlanHistoryRepo
-                .findByIdAndPatientIDAndTreatmentPlanID(treatmentPlanVersionID, patientID, treatmentPlanID)
+                .findByIdAndPatientID(id, patientID)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "Treatment plan history", "treatmentPlanVersionID", treatmentPlanVersionID)
+                                "Treatment plan history", "id", id)
                 );
-        return this.patientTreatmentPlanHistoryMapper.mapper(patientTreatmentPlanHistory);
+        return this.modelMapper.map(patientTreatmentPlanHistory, PatientTreatmentPlan.class);
     }
 
     @Override

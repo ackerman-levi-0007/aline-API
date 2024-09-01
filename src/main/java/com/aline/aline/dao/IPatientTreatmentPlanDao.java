@@ -12,9 +12,9 @@ public interface IPatientTreatmentPlanDao {
     PatientTreatmentPlanDraft saveDraftForTreatmentPlan(PatientTreatmentPlan patientTreatmentPlan);
     PatientTreatmentPlan getTreatmentPlan(String patientID, String treatmentPlanID);
     List<PatientTreatmentPlan> getAllTreatmentPlanForPatientID(String patientID);
-    PatientTreatmentPlan getTreatmentPlanDraft(String patientID, String treatmentPlanID);
+    PatientTreatmentPlan getTreatmentPlanDraft(String patientID, String id);
     List<PatientTreatmentPlanHistory> getAllHistoricalVersionIDsForTreatmentPlan(String patientID, String treatmentPlanID);
-    PatientTreatmentPlan getHistoricalTreatmentPlan(String patientID, String treatmentPlanID, String treatmentPlanVersionID);
+    PatientTreatmentPlan getHistoricalTreatmentPlan(String patientID, String id);
     void updateTreatmentPlan(String patientID, String treatmentPlanID, PatientTreatmentPlan currentTreatmentPlan, PatientTreatmentPlan updatedTreatmentPlan) throws BadRequestException;
     void moveTreatmentPlanToHistory(PatientTreatmentPlan patientTreatmentPlan);
 }

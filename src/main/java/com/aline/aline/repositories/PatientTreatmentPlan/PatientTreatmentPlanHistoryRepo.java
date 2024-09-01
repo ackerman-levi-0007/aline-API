@@ -12,4 +12,6 @@ public interface PatientTreatmentPlanHistoryRepo extends MongoRepository<Patient
     Optional<PatientTreatmentPlanHistory> findByIdAndPatientIDAndTreatmentPlanID(String treatmentPlanVersionID, String patientID, String treatmentPlanID);
 
     List<PatientTreatmentPlanHistory> findByPatientIDAndTreatmentPlanID(String patientID, String treatmentPlanID);
+
+    Optional<PatientTreatmentPlanHistory> findByIdAndPatientID(String id, String patientID);
 }
