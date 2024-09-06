@@ -1,6 +1,7 @@
 package com.aline.aline.entities.PatientTreatmentPlan;
 
 import com.aline.aline.CommonEntitiesObjects.Price;
+import com.aline.aline.CommonEntitiesObjects.S3ImageObject;
 import com.aline.aline.enums.MalocclusionTag;
 import com.aline.aline.enums.TreatmentPlanCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -35,9 +36,9 @@ public class PatientTreatmentPlanHistory {
     private int expectedDuration;
     private TreatmentPlanCategory treatmentPlanCategory;
     private Price price;
-    private List<String> iprAndAttachmentReports;
-    private List<String> treatmentSimulationsURL;
-    private List<String> treatmentSimulationsAttachments;
+    private List<S3ImageObject> iprAndAttachmentReports;
+    private List<S3ImageObject> treatmentSimulationsURL;
+    private List<S3ImageObject> treatmentSimulationsAttachments;
 
     private Date originalCreatedOn;
 

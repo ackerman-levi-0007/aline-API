@@ -2,6 +2,7 @@ package com.aline.aline.services.Impl;
 
 import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.CustomMapper.PatientTreatmentPlanDraftMapper;
+import com.aline.aline.CustomMapper.PatientTreatmentPlanMapper;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.dao.IPatientTreatmentPlanDao;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
@@ -27,11 +28,13 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
     private final IPatientTreatmentPlanDao patientTreatmentPlanDao;
     private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
     private final PatientTreatmentPlanDraftMapper patientTreatmentPlanDraftMapper;
+    private final PatientTreatmentPlanMapper patientTreatmentPlanMapper;
     private final ModelMapper modelMapper;
 
     @Override
     public PatientTreatmentPlanDto createTreatmentPlan(PatientTreatmentPlanDto patientTreatmentPlanDto) {
         patientHelperService.checkLoggedInUserPermissionForPatientIDDentalDetails(patientTreatmentPlanDto.getPatientID());
+
         PatientTreatmentPlan patientTreatmentPlan = this.modelMapper.map(patientTreatmentPlanDto, PatientTreatmentPlan.class);
         PatientTreatmentPlan savedPatientTreatmentPlan = this.patientTreatmentPlanDao.createTreatmentPlan(patientTreatmentPlan);
 
@@ -44,7 +47,7 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
                 treatmentPlanObject,
                 0
         );
-        return this.modelMapper.map(savedPatientTreatmentPlan, PatientTreatmentPlanDto.class);
+        return patientTreatmentPlanMapper.DtoMapper(patientTreatmentPlan);
     }
 
     @Override
@@ -79,21 +82,22 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
     }
 
     @Override
-    public PatientTreatmentPlanDto getTreatmentPlan(String patientID, String treatmentPlanID, TreatmentPlanType treatmentPlanType) throws BadRequestException {
+    public PatientTreatmentPlanDto getTreatmentPlan(String patientID, int rebootID, String planID, TreatmentPlanType treatmentPlanType) throws BadRequestException {
 
-        PatientTreatmentPlan patientTreatmentPlan = null;
+        PatientTreatmentPlanDto patientTreatmentPlanDto = null;
 
         if(treatmentPlanType == TreatmentPlanType.LATEST){
-            patientTreatmentPlan = this.patientTreatmentPlanDao.getTreatmentPlan(patientID, treatmentPlanID);
+            PatientTreatmentPlan patientTreatmentPlan = this.patientTreatmentPlanDao.getTreatmentPlan(patientID, planID);
+            patientTreatmentPlanDto = patientTreatmentPlanMapper.DtoMapper(patientTreatmentPlan);
         } else if(treatmentPlanType == TreatmentPlanType.HISTORY){
-            patientTreatmentPlan = this.patientTreatmentPlanDao.getHistoricalTreatmentPlan(patientID, treatmentPlanID);
+            patientTreatmentPlanDto = this.patientTreatmentPlanDao.getHistoricalTreatmentPlan(patientID, planID);
         } else if(treatmentPlanType == TreatmentPlanType.DRAFT){
-            patientTreatmentPlan = this.patientTreatmentPlanDao.getTreatmentPlanDraft(patientID, treatmentPlanID);
+            patientTreatmentPlanDto = this.patientTreatmentPlanDao.getTreatmentPlanDraft(patientID, planID);
         } else {
             throw new BadRequestException("The given treatment plan type is not defined !!!");
         }
 
-        return this.modelMapper.map(patientTreatmentPlan, PatientTreatmentPlanDto.class);
+        return patientTreatmentPlanDto;
     }
 
     @Override

@@ -1,14 +1,13 @@
 package com.aline.aline.payload.PatientTreatmentPlan;
 
 import com.aline.aline.CommonEntitiesObjects.Price;
+import com.aline.aline.CommonEntitiesObjects.S3ImageObject;
 import com.aline.aline.enums.MalocclusionTag;
 import com.aline.aline.enums.TreatmentPlanCategory;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,6 +16,7 @@ import java.util.List;
 public class PatientTreatmentPlanDto {
     private String id;
     private String patientID;
+    private String treatmentPlanID;
     private List<MalocclusionTag> malocclusionTag;
     private String caseAssessment;
     private String treatmentPlanSummary;
@@ -25,9 +25,7 @@ public class PatientTreatmentPlanDto {
     private int expectedDuration;
     private TreatmentPlanCategory treatmentPlanCategory;
     private Price price;
-    private List<String> iprAndAttachmentReports;
-    private List<String> treatmentSimulationsURL;
-    private List<String> treatmentSimulationsAttachments;
-    private Date createdOn;
-    private Date updatedOn;
+    private List<S3ImageObject> iprAndAttachmentReports;
+    private List<S3ImageObject> treatmentSimulationsURL;
+    private List<S3ImageObject> treatmentSimulationsAttachments;
 }

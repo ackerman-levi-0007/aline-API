@@ -57,8 +57,9 @@ public class PatientTreatmentPlanHistoryMapper {
 
         PatientTreatmentPlanDto patientTreatmentPlan = new PatientTreatmentPlanDto();
 
-        patientTreatmentPlan.setId(patientTreatmentPlanHistory.getTreatmentPlanID());
+        patientTreatmentPlan.setId(patientTreatmentPlanHistory.getId().toString());
         patientTreatmentPlan.setPatientID(patientTreatmentPlanHistory.getPatientID());
+        patientTreatmentPlan.setTreatmentPlanID(patientTreatmentPlanHistory.getTreatmentPlanID());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanHistory.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanHistory.getCaseAssessment());
         patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanHistory.getTreatmentPlanSummary());
@@ -70,7 +71,6 @@ public class PatientTreatmentPlanHistoryMapper {
         patientTreatmentPlan.setIprAndAttachmentReports(patientTreatmentPlanHistory.getIprAndAttachmentReports());
         patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlanHistory.getTreatmentSimulationsURL());
         patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlanHistory.getTreatmentSimulationsAttachments());
-        patientTreatmentPlan.setCreatedOn(patientTreatmentPlanHistory.getCreatedOn());
 
         return patientTreatmentPlan;
     }

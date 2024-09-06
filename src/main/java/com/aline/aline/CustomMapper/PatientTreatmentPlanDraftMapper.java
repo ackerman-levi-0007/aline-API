@@ -79,8 +79,9 @@ public class PatientTreatmentPlanDraftMapper {
     public PatientTreatmentPlanDto DtoMapper(PatientTreatmentPlanDraft patientTreatmentPlanDraft) {
         PatientTreatmentPlanDto patientTreatmentPlan = new PatientTreatmentPlanDto();
 
-        patientTreatmentPlan.setId(patientTreatmentPlanDraft.getTreatmentPlanID());
+        patientTreatmentPlan.setId(patientTreatmentPlanDraft.getId().toString());
         patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
+        patientTreatmentPlan.setTreatmentPlanID(patientTreatmentPlanDraft.getTreatmentPlanID());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());
         patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanDraft.getTreatmentPlanSummary());

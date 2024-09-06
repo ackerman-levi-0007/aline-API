@@ -10,6 +10,7 @@ import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ForbiddenException;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
+import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanDraftRepo;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanHistoryRepo;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanRepo;
@@ -58,9 +59,9 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     }
 
     @Override
-    public PatientTreatmentPlan getTreatmentPlanDraft(String patientID, String id) {
+    public PatientTreatmentPlanDto getTreatmentPlanDraft(String patientID, String id) {
         PatientTreatmentPlanDraft patientTreatmentPlanDraft = getPatientTreatmentPlanDraft(patientID, id);
-        return this.modelMapper.map(patientTreatmentPlanDraft, PatientTreatmentPlan.class);
+        return this.patientTreatmentPlanDraftMapper.DtoMapper(patientTreatmentPlanDraft);
     }
 
     @Override
@@ -69,14 +70,14 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     }
 
     @Override
-    public PatientTreatmentPlan getHistoricalTreatmentPlan(String patientID, String id) {
+    public PatientTreatmentPlanDto getHistoricalTreatmentPlan(String patientID, String id) {
         PatientTreatmentPlanHistory patientTreatmentPlanHistory = this.patientTreatmentPlanHistoryRepo
                 .findByIdAndPatientID(id, patientID)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
                                 "Treatment plan history", "id", id)
                 );
-        return this.modelMapper.map(patientTreatmentPlanHistory, PatientTreatmentPlan.class);
+        return this.patientTreatmentPlanHistoryMapper.DtoMapper(patientTreatmentPlanHistory);
     }
 
     @Override
