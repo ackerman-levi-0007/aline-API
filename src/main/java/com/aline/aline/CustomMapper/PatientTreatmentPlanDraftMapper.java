@@ -13,7 +13,7 @@ public class PatientTreatmentPlanDraftMapper {
 
         PatientTreatmentPlanDraft patientTreatmentPlanDraft = new PatientTreatmentPlanDraft();
 
-        patientTreatmentPlanDraft.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
+        if(patientTreatmentPlan.getId() != null) patientTreatmentPlanDraft.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
         patientTreatmentPlanDraft.setPatientID(patientTreatmentPlan.getPatientID());
         patientTreatmentPlanDraft.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanDraft.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
