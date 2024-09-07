@@ -234,22 +234,11 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
                                             Helpers
     *****************************************************************************************/
 
-    private PatientTreatmentPlanDraft getPatientTreatmentPlanDraft(String patientID, String treatmentPlanID){
-        User loggedInUser = SecurityUtils.getLoggedInUser();
-
-        PatientTreatmentPlanDraft patientTreatmentPlanDraft;
-
-        if(loggedInUser.getRole().contains(UserRole.ROLE_ADMIN) || loggedInUser.getRole().contains(UserRole.ROLE_LAB)){
-            patientTreatmentPlanDraft = getPatientTreatmentPlanDraftByID(patientID, treatmentPlanID);
-        } else if (loggedInUser.getRole().contains(UserRole.ROLE_CLINIC)) {
-            patientTreatmentPlanDraft = getPatientTreatmentPlanDraftByClinicID(patientID, treatmentPlanID, loggedInUser.getId().toString());
-        } else if (loggedInUser.getRole().contains(UserRole.ROLE_DOCTOR)) {
-            patientTreatmentPlanDraft = getPatientTreatmentPlanDraftByDoctorID(patientID, treatmentPlanID, loggedInUser.getId().toString());
-        } else {
-            throw new ForbiddenException("Patient Draft : User does not have access to view the data. Please contact with administrator.");
-        }
-
-        return patientTreatmentPlanDraft;
+    private PatientTreatmentPlanDraft getPatientTreatmentPlanDraft(String patientID, String id){
+        return this.patientTreatmentPlanDraftRepo.findById(id)
+                .orElseThrow(() ->
+                    new ResourceNotFoundException("Draft","id", id)
+                );
     }
 
     private PatientTreatmentPlanDraft getPatientTreatmentPlanDraftByID(String patientID, String treatmentPlanID) {
