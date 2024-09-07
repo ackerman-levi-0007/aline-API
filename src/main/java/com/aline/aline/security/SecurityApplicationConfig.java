@@ -1,5 +1,7 @@
 package com.aline.aline.security;
 
+import com.aline.aline.cache.ThreadLocalCache;
+import com.aline.aline.entities.User;
 import com.aline.aline.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,8 +23,14 @@ public class SecurityApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> userRepo.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not Found"));
+        return username -> {
+            User user = userRepo.findByEmail(username)
+                    .orElseThrow(() -> new UsernameNotFoundException("User not Found"));
+
+            ThreadLocalCache.put("loggedInUser", user);
+
+            return user;
+        };
     }
 
     @Bean

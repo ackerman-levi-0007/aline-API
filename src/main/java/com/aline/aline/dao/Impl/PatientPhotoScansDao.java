@@ -5,7 +5,7 @@ import com.aline.aline.dao.IPatientPhotoScansDao;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientPhotoScans.GetPatientPhotoScansDto;
-import com.aline.aline.repositories.IPatientPhotoScansRepo;
+import com.aline.aline.repositories.PatientPhotoScansRepo;
 import com.aline.aline.utilities.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PatientPhotoScansDao implements IPatientPhotoScansDao {
 
-    private final IPatientPhotoScansRepo patientPhotoScansRepo;
+    private final PatientPhotoScansRepo patientPhotoScansRepo;
     private final GetPatientPhotoScansDtoMapper getPatientPhotoScansDtoMapper;
 
     @Override
@@ -57,7 +57,8 @@ public class PatientPhotoScansDao implements IPatientPhotoScansDao {
 
             return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScans);
         }else{
-            return savePatientPhotoScans(patientPhotoScans);
+             PatientPhotoScans savedPatientPhotoScans = savePatientPhotoScans(patientPhotoScans);
+             return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScans);
         }
     }
 
@@ -69,9 +70,8 @@ public class PatientPhotoScansDao implements IPatientPhotoScansDao {
     }
 
     @Override
-    public GetPatientPhotoScansDto savePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
-        PatientPhotoScans savedPatientPhotoScan = this.patientPhotoScansRepo.save(patientPhotoScans);
-        return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScan);
+    public PatientPhotoScans savePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
+        return this.patientPhotoScansRepo.save(patientPhotoScans);
     }
 
     @Override

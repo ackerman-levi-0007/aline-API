@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface IPatientPhotoScansDao {
     GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans);
     GetPatientPhotoScansDto getPatientPhotoScansByPatientID(String patientID);
-    GetPatientPhotoScansDto savePatientPhotoScans(PatientPhotoScans patientPhotoScans);
+    PatientPhotoScans savePatientPhotoScans(PatientPhotoScans patientPhotoScans);
     String getPatientProfilePhotoByPatientID(String patientID);
 }

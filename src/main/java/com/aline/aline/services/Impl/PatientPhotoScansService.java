@@ -1,5 +1,7 @@
 package com.aline.aline.services.Impl;
 
+import com.aline.aline.CustomMapper.GetPatientPhotoScansDtoMapper;
+import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.dao.IPatientPhotoScansDao;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -17,6 +19,8 @@ public class PatientPhotoScansService implements IPatientPhotoScansService {
 
     private final IPatientPhotoScansDao patientPhotoScansDao;
     private final PatientHelperService patientHelperService;
+    private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
+    private final GetPatientPhotoScansDtoMapper getPatientPhotoScansDtoMapper;
 
     @Override
     public GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
@@ -38,6 +42,8 @@ public class PatientPhotoScansService implements IPatientPhotoScansService {
     @Override
     public GetPatientPhotoScansDto savePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
         patientHelperService.checkLoggedInUserPermissionForPatientID(patientPhotoScans.getPatientID());
-        return this.patientPhotoScansDao.savePatientPhotoScans(patientPhotoScans);
+        PatientPhotoScans savedPatientPhotoScans = this.patientPhotoScansDao.savePatientPhotoScans(patientPhotoScans);
+        this.patientDentalDetailsMappingDao.updatePatientPhotoScansID(savedPatientPhotoScans.getPatientID(), savedPatientPhotoScans.getId().toString(), 0);
+        return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScans);
     }
 }

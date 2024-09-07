@@ -2,8 +2,9 @@ package com.aline.aline.services.Impl;
 
 import com.aline.aline.dao.*;
 import com.aline.aline.entities.Patient;
+import com.aline.aline.entities.PatientDentalDetailsMapping;
+import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
-import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.Patient.*;
 import com.aline.aline.payload.User.UserDto;
@@ -32,18 +33,21 @@ public class PatientService implements IPatientService {
     private final IClinicDoctorRelationshipDao clinicDoctorRelationshipDao;
     private final IPatientDentalDetailsDao patientDentalDetailsDao;
     private final IPatientPhotoScansDao patientPhotoScansDao;
+    private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
     public GetPatientDto createPatient(Patient patient) throws BadRequestException {
         checkPatientObject(patient);
-        return this.patientDao.createPatient(patient);
+        GetPatientDto patientDto = this.patientDao.createPatient(patient);
+        this.patientDentalDetailsMappingDao.createPatientDentalDetailsMapping(patientDto.getClinicID(),
+                patientDto.getDoctorID(), patientDto.getId());
+        return patientDto;
     }
 
     @Override
     public Page<GetPatientWithProfileDto> getAllPatients(PageDto pageDto, FilterPatientDto filterPatientDto) {
         Pageable pageable = PageUtils.getPageableFromPageDto(pageDto);
-        UserDto loggedInUser = this.userDao.getUserByID(Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString());
-        Page<GetPatientDto> patientDtos = this.patientDao.getAllPatients(pageable, filterPatientDto, loggedInUser);
+        Page<GetPatientDto> patientDtos = this.patientDao.getAllPatients(pageable, filterPatientDto);
 
         List<GetPatientWithProfileDto> patientWithProfileDtos = patientDtos.stream().map(
                 patientDto ->{
@@ -61,8 +65,7 @@ public class PatientService implements IPatientService {
 
     @Override
     public GetPatientDto getPatientByID(String patientID) {
-        UserDto loggedInUser = this.userDao.getUserByID(Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString());
-        return this.patientDao.getPatientByID(patientID, loggedInUser);
+        return this.patientDao.getPatientByID(patientID);
     }
 
     @Override
@@ -75,15 +78,13 @@ public class PatientService implements IPatientService {
 
     @Override
     public void updatePatientStatus(UpdatePatientStatusDto patientStatus) {
-        UserDto loggedInUser = this.userDao.getUserByID(Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString());
-        this.patientDao.updatePatientStatus(patientStatus, loggedInUser);
+        this.patientDao.updatePatientStatus(patientStatus);
     }
 
     @Override
     public void deletePatient(String patientID) {
-        UserDto loggedInUser = this.userDao.getUserByID(Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString());
         this.patientDentalDetailsDao.deletePatientDentalDetailByPatientID(patientID);
-        this.patientDao.deletePatient(patientID, loggedInUser);
+        this.patientDao.deletePatient(patientID);
     }
 
     @Override
@@ -101,6 +102,8 @@ public class PatientService implements IPatientService {
         UserDto clinicDto = this.userDao.getUserByID(getPatientDto.getClinicID());
         UserDto doctorDto = this.userDao.getUserByID(getPatientDto.getDoctorID());
 
+        PatientDentalDetailsMapping patientDentalDetailsMapping = this.patientDentalDetailsMappingDao.getPatientDentalDetailsMapping(patientID, 0);
+
         GetUserDetailsForPatientDto getUserDetailsForPatientDto = new GetUserDetailsForPatientDto();
 
         getUserDetailsForPatientDto.setPatient(new UserIdAndNameDto(getPatientDto.getId(), getPatientDto.getName()));
@@ -108,6 +111,7 @@ public class PatientService implements IPatientService {
         getUserDetailsForPatientDto.setClinic(new UserIdAndNameDto(clinicDto.getId(), clinicDto.getName()));
         getUserDetailsForPatientDto.setPatientStatus(getUserDetailsForPatientDto.getPatientStatus());
         getUserDetailsForPatientDto.setPatientProfilePhoto(patientProfilePhoto);
+        getUserDetailsForPatientDto.setPatientDentalDetailsMapping(patientDentalDetailsMapping);
 
         return getUserDetailsForPatientDto;
     }
@@ -117,8 +121,8 @@ public class PatientService implements IPatientService {
      ****************************************************************************************/
 
     public void checkPatientObject(Patient patient) throws BadRequestException {
-        String loggedInUserID = Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString();
-        UserDto user = this.userDao.getUserByID(loggedInUserID);
+        String loggedInUserID = Objects.requireNonNull(SecurityUtils.getCurrentUserUserID());
+        User user = SecurityUtils.getLoggedInUser();
 
         if(user.getRole().contains(UserRole.ROLE_CLINIC)){
             if(!loggedInUserID.equals(patient.getClinicID())) throw new BadRequestException("ClinicId provided does not match with the logged in clinic");

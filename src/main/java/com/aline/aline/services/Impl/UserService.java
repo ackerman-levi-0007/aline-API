@@ -78,7 +78,7 @@ public class UserService implements IUserService {
     public Page<UserDto> getUsers(String userID, String role, String query, PageDto pageDto) throws BadRequestException {
         Pageable pageable = PageUtils.getPageableFromPageDto(pageDto);
 
-        List<String> userIDs = getUserIDForUser(userID, role);
+        List<String> userIDs =  getUserIDForUser(userID, role);
 
         Page<UserDto> userDtoList = null;
         if(CommonUtils.isNullOrEmpty(role) || EnumUtils.contains(UserRole.class, role)){

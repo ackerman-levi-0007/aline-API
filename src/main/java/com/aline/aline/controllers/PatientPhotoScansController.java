@@ -36,7 +36,7 @@ public class PatientPhotoScansController {
         return new ResponseEntity<>(patientPhotoScans, HttpStatus.OK);
     }
 
-    @GetMapping("/savePatientPhotoScans")
+    @PostMapping("/savePatientPhotoScans")
     public ResponseEntity<GetPatientPhotoScansDto> savePatientPhotoScans(
             @RequestBody PatientPhotoScans patientPhotoScans
     ) {

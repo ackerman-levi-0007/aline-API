@@ -13,10 +13,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IPatientDao {
     GetPatientDto createPatient(Patient patient);
-    Page<GetPatientDto> getAllPatients(Pageable pageable, FilterPatientDto filterPatientDto, UserDto loggedInUser);
-    GetPatientDto getPatientByID(String patientID, UserDto loggedInUser);
+    Page<GetPatientDto> getAllPatients(Pageable pageable, FilterPatientDto filterPatientDto);
+    GetPatientDto getPatientByID(String patientID);
     GetPatientDto updatePatient(Patient updatedPatient);
-    void updatePatientStatus(UpdatePatientStatusDto patientStatus, UserDto loggedInUser);
-    void deletePatient(String patientID, UserDto loggedInUser);
+    void updatePatientStatus(UpdatePatientStatusDto patientStatus);
+    void deletePatient(String patientID);
     void changeDoctorAllocationForPatient(String patientID, String doctorID);
 }
