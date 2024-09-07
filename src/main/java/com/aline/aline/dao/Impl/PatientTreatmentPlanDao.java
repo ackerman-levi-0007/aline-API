@@ -10,25 +10,19 @@ import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanHistory;
-import com.aline.aline.entities.User;
 import com.aline.aline.enums.TreatmentPlanStatus;
-import com.aline.aline.enums.UserRole;
-import com.aline.aline.exceptionHandler.ForbiddenException;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.repositories.PatientDentalDetailsMappingRepo;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanDraftRepo;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanHistoryRepo;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanRepo;
-import com.aline.aline.utilities.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -180,32 +174,40 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
             );
         }
         else{
-            TreatmentPlanListObject historyObject = new TreatmentPlanListObject();
+            List<TreatmentPlanObject> latestPlanObjects = patientDentalDetailsMapping.getTreatmentPlanLatest()
+                    .getTreatmentPlans();
 
             List<TreatmentPlanObject> historyPlanObjects = new ArrayList<>();
 
-            List<TreatmentPlanObject> currentPlanObjects = patientDentalDetailsMapping
-                    .getTreatmentPlanLatest().getTreatmentPlans();
 
-            patientDentalDetailsMapping.getTreatmentPlanLatest()
-                    .getTreatmentPlans().forEach(
-                            treatmentPlanObjectItr -> {
-                                if(id != treatmentPlanObjectItr.getId()){
-                                    if(treatmentPlanObjectItr.getHistoryID() == null){
-                                        PatientTreatmentPlanHistory patientTreatmentPlanHistory =
-                                                movePlanToHistory(treatmentPlanObjectItr.getId());
+            for(int i=0 ; i<latestPlanObjects.size(); i++){
+                TreatmentPlanObject itr = latestPlanObjects.get(i);
 
-                                        treatmentPlanObjectItr.setHistoryID(patientTreatmentPlanHistory.getId().toString());
-                                    }
-                                }
-                                else{
-                                    treatmentPlanObjectItr.setHistoryID(historyID);
-                                }
-                                historyPlanObjects.add(treatmentPlanObjectItr);
-                                currentPlanObjects.add(treatmentPlanObjectItr);
-                            }
-                    );
+                // Use equals() to compare object references such as id and getId()
+                if (!id.equals(itr.getId())) {
+                    if (itr.getHistoryID() == null) {
+                        // Move the plan to history and update the historyID
+                        PatientTreatmentPlanHistory patientTreatmentPlanHistory =
+                                movePlanToHistory(itr.getId());
 
+                        // Set the historyID with the new history ID
+                        itr.setHistoryID(patientTreatmentPlanHistory.getId().toString());
+                    }
+                } else {
+                    // Set the historyID directly if id matches
+                    itr.setHistoryID(historyID);
+                }
+
+                latestPlanObjects.set(i, itr);
+
+                TreatmentPlanObject historyItr = new TreatmentPlanObject();
+                historyItr.setId(itr.getHistoryID());
+                historyItr.setStatus(itr.getStatus());
+
+                historyPlanObjects.add(historyItr);
+            }
+
+            TreatmentPlanListObject historyObject = new TreatmentPlanListObject();
             if(patientDentalDetailsMapping.getTreatmentPlanHistory() == null || patientDentalDetailsMapping.getTreatmentPlanHistory().isEmpty()){
                 historyObject.setId(0);
             }
@@ -213,11 +215,18 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
                 historyObject.setId(patientDentalDetailsMapping.getTreatmentPlanHistory().size());
             }
 
+            historyObject.setTreatmentPlanStatus(TreatmentPlanStatus.history);
             historyObject.setTreatmentPlans(historyPlanObjects);
 
-            TreatmentPlanListObject currentPlans = patientDentalDetailsMapping.getTreatmentPlanLatest();
-            if(historyID == null) currentPlanObjects.add(treatmentPlanObject);
+            List<TreatmentPlanListObject> historyPrvPlanObjects =
+                    patientDentalDetailsMapping.getTreatmentPlanHistory() == null ? new ArrayList<>() : patientDentalDetailsMapping.getTreatmentPlanHistory();
+            historyPrvPlanObjects.add(historyObject);
+            patientDentalDetailsMapping.setTreatmentPlanHistory(historyPrvPlanObjects);
 
+            TreatmentPlanListObject currentPlans = patientDentalDetailsMapping.getTreatmentPlanLatest();
+            if(historyID == null) latestPlanObjects.add(treatmentPlanObject);
+
+            currentPlans.setTreatmentPlans(latestPlanObjects);
             patientDentalDetailsMapping.setTreatmentPlanLatest(currentPlans);
 
             this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
@@ -239,31 +248,6 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
                 .orElseThrow(() ->
                     new ResourceNotFoundException("Draft","id", id)
                 );
-    }
-
-    private PatientTreatmentPlanDraft getPatientTreatmentPlanDraftByID(String patientID, String treatmentPlanID) {
-        Optional<PatientTreatmentPlanDraft> patientTreatmentPlanDraft = this.patientTreatmentPlanDraftRepo
-                .findByPatientIDAndTreatmentPlanID(patientID, treatmentPlanID);
-
-        return patientTreatmentPlanDraft.isPresent() ? patientTreatmentPlanDraft.get() : new PatientTreatmentPlanDraft();
-    }
-
-    private PatientTreatmentPlanDraft getPatientTreatmentPlanDraftByDoctorID(
-            String patientID, String treatmentPlanID, String doctorID
-    ) {
-        Optional<PatientTreatmentPlanDraft> patientTreatmentPlanDraft = this.patientTreatmentPlanDraftRepo
-                .findByPatientIDAndTreatmentPlanID(patientID, treatmentPlanID);
-
-        return patientTreatmentPlanDraft.isPresent() ? patientTreatmentPlanDraft.get() : new PatientTreatmentPlanDraft();
-    }
-
-    private PatientTreatmentPlanDraft getPatientTreatmentPlanDraftByClinicID(
-            String patientID, String treatmentPlanID, String clinicID
-    ) {
-        Optional<PatientTreatmentPlanDraft> patientTreatmentPlanDraft = this.patientTreatmentPlanDraftRepo
-                .findByPatientIDAndTreatmentPlanID(patientID, treatmentPlanID);
-
-        return patientTreatmentPlanDraft.isPresent() ? patientTreatmentPlanDraft.get() : new PatientTreatmentPlanDraft();
     }
 
     private boolean checkPatientTreatmentPlan(PatientTreatmentPlan currentTreatmentPlan, PatientTreatmentPlan updatedTreatmentPlan) {

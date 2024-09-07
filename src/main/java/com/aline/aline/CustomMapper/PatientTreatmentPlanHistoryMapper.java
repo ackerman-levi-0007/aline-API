@@ -35,7 +35,7 @@ public class PatientTreatmentPlanHistoryMapper {
 
         PatientTreatmentPlanHistory patientTreatmentPlanHistory = new PatientTreatmentPlanHistory();
 
-        patientTreatmentPlanHistory.setTreatmentPlanID(patientTreatmentPlanHistory.getId().toString());
+        if(patientTreatmentPlan.getId() != null) patientTreatmentPlanHistory.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
         patientTreatmentPlanHistory.setPatientID(patientTreatmentPlan.getPatientID());
         patientTreatmentPlanHistory.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanHistory.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());

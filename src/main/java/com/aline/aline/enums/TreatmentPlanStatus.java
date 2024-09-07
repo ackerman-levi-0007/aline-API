@@ -5,5 +5,6 @@ public enum TreatmentPlanStatus {
     shared,
     requestForModification,
     confirmed,
-    rejected
+    rejected,
+    history
 }
