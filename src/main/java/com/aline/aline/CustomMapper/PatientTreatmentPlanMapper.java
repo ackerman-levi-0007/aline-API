@@ -34,18 +34,18 @@ public class PatientTreatmentPlanMapper {
 
         PatientTreatmentPlan patientTreatmentPlan = new PatientTreatmentPlan();
 
-        patientTreatmentPlan.setPatientID(patientTreatmentPlan.getPatientID());
-        patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
-        patientTreatmentPlan.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
-        patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlan.getTreatmentPlanSummary());
-        patientTreatmentPlan.setUpperSteps(patientTreatmentPlan.getUpperSteps());
-        patientTreatmentPlan.setLowerSteps(patientTreatmentPlan.getLowerSteps());
-        patientTreatmentPlan.setExpectedDuration(patientTreatmentPlan.getExpectedDuration());
-        patientTreatmentPlan.setTreatmentPlanCategory(patientTreatmentPlan.getTreatmentPlanCategory());
-        patientTreatmentPlan.setPrice(patientTreatmentPlan.getPrice());
-        patientTreatmentPlan.setIprAndAttachmentReports(patientTreatmentPlan.getIprAndAttachmentReports());
-        patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlan.getTreatmentSimulationsURL());
-        patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlan.getTreatmentSimulationsAttachments());
+        patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
+        patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
+        patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());
+        patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanDraft.getTreatmentPlanSummary());
+        patientTreatmentPlan.setUpperSteps(patientTreatmentPlanDraft.getUpperSteps());
+        patientTreatmentPlan.setLowerSteps(patientTreatmentPlanDraft.getLowerSteps());
+        patientTreatmentPlan.setExpectedDuration(patientTreatmentPlanDraft.getExpectedDuration());
+        patientTreatmentPlan.setTreatmentPlanCategory(patientTreatmentPlanDraft.getTreatmentPlanCategory());
+        patientTreatmentPlan.setPrice(patientTreatmentPlanDraft.getPrice());
+        patientTreatmentPlan.setIprAndAttachmentReports(patientTreatmentPlanDraft.getIprAndAttachmentReports());
+        patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlanDraft.getTreatmentSimulationsURL());
+        patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlanDraft.getTreatmentSimulationsAttachments());
 
         return patientTreatmentPlan;
     }
