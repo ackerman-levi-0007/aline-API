@@ -1,6 +1,5 @@
 package com.aline.aline.controllers;
 
-import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.enums.TreatmentPlanType;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
@@ -23,33 +22,34 @@ public class PatientTreatmentPlanController {
 
     private final IPatientTreatmentPlanService patientTreatmentPlanService;
 
-    @PostMapping("/createPlan/{patientID}/{rebootID}")
-    public ResponseEntity<PatientTreatmentPlanDto> createPlan(
+    @PostMapping("/saveDraft/{patientID}/{rebootID}")
+    public ResponseEntity<APIResponse> saveDraft(
             @PathVariable String patientID,
             @PathVariable int rebootID,
             @RequestBody PatientTreatmentPlanDto patientTreatmentPlanDto
     ){
-        PatientTreatmentPlanDto savedPatientTreatmentPlan = this.patientTreatmentPlanService.createTreatmentPlan(patientTreatmentPlanDto);
-        return new ResponseEntity<>(savedPatientTreatmentPlan, HttpStatus.OK);
-    }
-
-    @PostMapping("/saveDraft/{patientID}")
-    public ResponseEntity<APIResponse> saveDraft(
-            @PathVariable String patientID,
-            @RequestBody PatientTreatmentPlanDto patientTreatmentPlan
-    ){
-        this.patientTreatmentPlanService.saveDraftForTreatmentPlan(patientTreatmentPlan);
+        this.patientTreatmentPlanService.createDraft(patientID, rebootID, patientTreatmentPlanDto);
         return new ResponseEntity<>(new APIResponse("Draft saved successfully !!!", true), HttpStatus.OK);
     }
 
-    @PutMapping("/sendPlanModificationToDoctor/{patientID}/{treatmentPlanID}")
-    public ResponseEntity<APIResponse> sendPlanModificationToDoctor(
+    @PutMapping("/updateDraft/{patientID}/{rebootID}")
+    public ResponseEntity<APIResponse> updateDraft(
             @PathVariable String patientID,
-            @PathVariable String treatmentPlanID,
-            @RequestBody PatientTreatmentPlanDto patientTreatmentPlan
+            @PathVariable int rebootID,
+            @RequestBody PatientTreatmentPlanDto patientTreatmentPlanDto
+    ){
+        this.patientTreatmentPlanService.updateDraft(patientID, rebootID, patientTreatmentPlanDto);
+        return new ResponseEntity<>(new APIResponse("Draft updated successfully !!!", true), HttpStatus.OK);
+    }
+
+    @PutMapping("/sendPlanModification/{patientID}/{rebootID}/{draftID}")
+    public ResponseEntity<APIResponse> sendPlanModification(
+            @PathVariable String patientID,
+            @PathVariable int rebootID,
+            @PathVariable String draftID
     ) throws BadRequestException {
-        this.patientTreatmentPlanService.sendTreatmentPlanModificationToDoctor(patientID, treatmentPlanID, patientTreatmentPlan);
-        return new ResponseEntity<>(new APIResponse("Treatment plan shared successfully to doctor !!!", true), HttpStatus.OK);
+        this.patientTreatmentPlanService.sendPlanModification(patientID, rebootID, draftID);
+        return new ResponseEntity<>(new APIResponse("Treatment plan shared successfully !!!", true), HttpStatus.OK);
     }
 
     @GetMapping("/getPlan/{patientID}/{planID}/{rebootID}")

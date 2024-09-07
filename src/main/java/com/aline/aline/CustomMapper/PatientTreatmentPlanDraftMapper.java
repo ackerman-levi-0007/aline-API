@@ -32,12 +32,8 @@ public class PatientTreatmentPlanDraftMapper {
         return patientTreatmentPlanDraft;
     }
 
-    public PatientTreatmentPlanDraft mapper(PatientTreatmentPlanDraft patientTreatmentPlanDraft, PatientTreatmentPlan patientTreatmentPlan) {
+    public PatientTreatmentPlanDraft DraftDtoSetter(PatientTreatmentPlanDraft patientTreatmentPlanDraft, PatientTreatmentPlanDto patientTreatmentPlan) {
 
-//        patientTreatmentPlanDraft.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
-//        patientTreatmentPlanDraft.setDoctorID(patientTreatmentPlan.getDoctorID());
-//        patientTreatmentPlanDraft.setClinicID(patientTreatmentPlan.getClinicID());
-//        patientTreatmentPlanDraft.setPatientID(patientTreatmentPlan.getPatientID());
         patientTreatmentPlanDraft.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanDraft.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
         patientTreatmentPlanDraft.setTreatmentPlanSummary(patientTreatmentPlan.getTreatmentPlanSummary());
@@ -49,8 +45,6 @@ public class PatientTreatmentPlanDraftMapper {
         patientTreatmentPlanDraft.setIprAndAttachmentReports(patientTreatmentPlan.getIprAndAttachmentReports());
         patientTreatmentPlanDraft.setTreatmentSimulationsURL(patientTreatmentPlan.getTreatmentSimulationsURL());
         patientTreatmentPlanDraft.setTreatmentSimulationsAttachments(patientTreatmentPlan.getTreatmentSimulationsAttachments());
-
-
 
         return patientTreatmentPlanDraft;
     }
