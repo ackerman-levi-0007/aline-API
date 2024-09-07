@@ -197,12 +197,11 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
 
                                         treatmentPlanObjectItr.setHistoryID(patientTreatmentPlanHistory.getId().toString());
                                     }
-                                    historyPlanObjects.add(treatmentPlanObjectItr);
                                 }
                                 else{
-                                    historyPlanObjects.add(treatmentPlanObjectItr);
                                     treatmentPlanObjectItr.setHistoryID(historyID);
                                 }
+                                historyPlanObjects.add(treatmentPlanObjectItr);
                                 currentPlanObjects.add(treatmentPlanObjectItr);
                             }
                     );
