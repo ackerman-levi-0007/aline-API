@@ -9,7 +9,6 @@ import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
 import com.aline.aline.enums.TreatmentPlanStatus;
 import com.aline.aline.enums.TreatmentPlanType;
-import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.services.IPatientTreatmentPlanService;
 import com.aline.aline.services.helpers.PatientHelperService;
@@ -34,7 +33,7 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
     @Override
     public PatientTreatmentPlanDto getTreatmentPlan(String patientID, int rebootID, String planID, TreatmentPlanType treatmentPlanType) throws BadRequestException {
 
-        PatientTreatmentPlanDto patientTreatmentPlanDto = null;
+        PatientTreatmentPlanDto patientTreatmentPlanDto;
 
         if(treatmentPlanType == TreatmentPlanType.LATEST){
             PatientTreatmentPlan patientTreatmentPlan = this.patientTreatmentPlanDao.getTreatmentPlan(patientID, planID);

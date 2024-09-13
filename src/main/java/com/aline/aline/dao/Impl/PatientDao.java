@@ -1,6 +1,5 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.cache.ThreadLocalCache;
 import com.aline.aline.dao.IPatientDao;
 import com.aline.aline.entities.Patient;
 import com.aline.aline.entities.User;
@@ -10,9 +9,7 @@ import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.Patient.FilterPatientDto;
 import com.aline.aline.payload.Patient.GetPatientDto;
 import com.aline.aline.payload.Patient.UpdatePatientStatusDto;
-import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.repositories.PatientRepo;
-import com.aline.aline.utilities.CommonUtils;
 import com.aline.aline.utilities.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -136,7 +133,7 @@ public class PatientDao implements IPatientDao {
      *****************************************************************************************/
 
     public Patient getPatientByPatientIDForLoggedInUser(String patientID){
-        Patient patient = null;
+        Patient patient;
 
         User loggedInUser = SecurityUtils.getLoggedInUser();
 

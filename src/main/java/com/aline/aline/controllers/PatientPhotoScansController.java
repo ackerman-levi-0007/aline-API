@@ -1,7 +1,6 @@
 package com.aline.aline.controllers;
 
 import com.aline.aline.entities.PatientPhotoScans;
-import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.payload.PatientPhotoScans.GetPatientPhotoScansDto;
 import com.aline.aline.services.IPatientPhotoScansService;
 import io.swagger.v3.oas.annotations.tags.Tag;

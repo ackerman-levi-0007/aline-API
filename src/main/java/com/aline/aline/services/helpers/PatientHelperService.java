@@ -4,7 +4,6 @@ import com.aline.aline.dao.IPatientDao;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.dao.IUserDao;
 import com.aline.aline.payload.Patient.GetPatientDto;
-import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.utilities.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

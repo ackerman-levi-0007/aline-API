@@ -2,6 +2,7 @@ package com.aline.aline.dao;
 
 import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
+import com.aline.aline.payload.PatientDentalDetailsMapping.Reboot;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +22,5 @@ public interface IPatientDentalDetailsMappingDao {
     void moveTreatmentPlanToHistory(String patientID, int rebootID);
     List<Integer> getAllRebootIds(String patientID);
     PatientTreatmentPlanMapping getPlanMapping(String patientID, int rebootID);
+    Reboot getReboot(String patientID);
 }

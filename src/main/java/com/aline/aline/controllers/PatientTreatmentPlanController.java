@@ -47,7 +47,7 @@ public class PatientTreatmentPlanController {
             @PathVariable String patientID,
             @PathVariable int rebootID,
             @PathVariable String draftID
-    ) throws BadRequestException {
+    ) {
         this.patientTreatmentPlanService.sendPlanModification(patientID, rebootID, draftID);
         return new ResponseEntity<>(new APIResponse("Treatment plan shared successfully !!!", true), HttpStatus.OK);
     }

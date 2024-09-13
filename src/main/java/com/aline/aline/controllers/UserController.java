@@ -92,7 +92,7 @@ public class UserController {
 
     @GetMapping("/getSignedInUserInfo")
     public ResponseEntity<UserDto> getSignedInUserInfo(){
-        String userIDForLoggedInUser = Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString();
+        String userIDForLoggedInUser = Objects.requireNonNull(SecurityUtils.getCurrentUserUserID());
         UserDto userDto = this.userService.getUserByID(userIDForLoggedInUser);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }

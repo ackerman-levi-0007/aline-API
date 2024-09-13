@@ -9,7 +9,6 @@ import com.aline.aline.repositories.PatientPreviousDentalHistoryRepo;
 import com.aline.aline.repositories.PatientTreatmentGoalRepo;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

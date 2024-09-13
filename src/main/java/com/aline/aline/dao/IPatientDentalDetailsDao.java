@@ -3,7 +3,6 @@ package com.aline.aline.dao;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Repository;
 
 @Repository

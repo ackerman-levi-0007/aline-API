@@ -80,7 +80,7 @@ public class UserService implements IUserService {
 
         List<String> userIDs =  getUserIDForUser(userID, role);
 
-        Page<UserDto> userDtoList = null;
+        Page<UserDto> userDtoList;
         if(CommonUtils.isNullOrEmpty(role) || EnumUtils.contains(UserRole.class, role)){
             userDtoList = this.userDao.findUsersByFilter(userIDs, role, query, pageable);
         }
@@ -154,7 +154,7 @@ public class UserService implements IUserService {
 
     public List<String> getUserIDForUser(String userID, String role) throws BadRequestException {
         List<String> userIDs = new ArrayList<>();
-        String currentLoggedInUserID = Objects.requireNonNull(SecurityUtils.getCurrentUserUserID()).toString();
+        String currentLoggedInUserID = Objects.requireNonNull(SecurityUtils.getCurrentUserUserID());
         UserDto currentUserDetails = userDao.getUserByID(currentLoggedInUserID);
         if(!CommonUtils.isNullOrEmpty(userID))userIDs.add(userID);
 

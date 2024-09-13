@@ -5,6 +5,7 @@ import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
+import com.aline.aline.payload.PatientDentalDetailsMapping.Reboot;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
 import com.aline.aline.repositories.PatientDentalDetailsMappingRepo;
 import lombok.RequiredArgsConstructor;
@@ -95,7 +96,7 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
 
         List<TreatmentPlanObject> treatmentPlanObjects = latestTreatmentPlan.getTreatmentPlans();
 
-        if( treatmentPlanObjects == null || treatmentPlanObjects.isEmpty()) treatmentPlanObjects = new ArrayList<TreatmentPlanObject>();
+        if( treatmentPlanObjects == null || treatmentPlanObjects.isEmpty()) treatmentPlanObjects = new ArrayList<>();
         treatmentPlanObjects.add(treatmentPlanObject);
 
         latestTreatmentPlan.setTreatmentPlans(treatmentPlanObjects);
@@ -122,7 +123,7 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
 
         List<TreatmentPlanObject> treatmentPlanObjects = draftTreatmentPlan.getTreatmentPlans();
 
-        if( treatmentPlanObjects == null || treatmentPlanObjects.isEmpty()) treatmentPlanObjects = new ArrayList<TreatmentPlanObject>();
+        if( treatmentPlanObjects == null || treatmentPlanObjects.isEmpty()) treatmentPlanObjects = new ArrayList<>();
         treatmentPlanObjects.add(treatmentPlanObject);
 
         draftTreatmentPlan.setTreatmentPlans(treatmentPlanObjects);
@@ -141,9 +142,9 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
 
         if(historyTreatmentPlan == null || historyTreatmentPlan.isEmpty()){
             treatmentPlanListObject.setId(0);
-            historyTreatmentPlan = new ArrayList<TreatmentPlanListObject>();
+            historyTreatmentPlan = new ArrayList<>();
         } else {
-            treatmentPlanListObject.setId((int)historyTreatmentPlan.stream().count());
+            treatmentPlanListObject.setId(historyTreatmentPlan.size());
         }
 
         treatmentPlanListObject.setTreatmentPlans(treatmentPlanObjects);
@@ -162,7 +163,7 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     @Override
     public List<Integer> getAllRebootIds(String patientID) {
         List<PatientDentalDetailsMapping> patientDentalDetailsMappings = getPatientDentalDetailsMapping(patientID);
-        return patientDentalDetailsMappings.stream().map(x -> x.getRebootID()).toList();
+        return patientDentalDetailsMappings.stream().map(PatientDentalDetailsMapping::getRebootID).toList();
     }
 
     @Override
@@ -172,6 +173,17 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     ) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
         return this.modelMapper.map(patientDentalDetailsMapping, PatientTreatmentPlanMapping.class);
+    }
+
+    @Override
+    public Reboot getReboot(String patientID) {
+        List<PatientDentalDetailsMapping> patientDentalDetailsMappings = getPatientDentalDetailsMapping(patientID);
+
+        Reboot reboot = new Reboot();
+        reboot.setTotalReboots(patientDentalDetailsMappings.size());
+        reboot.setLatestReboot(patientDentalDetailsMappings.size());
+
+        return reboot;
     }
 
     /*****************************************************************************************

@@ -1,7 +1,6 @@
 package com.aline.aline.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

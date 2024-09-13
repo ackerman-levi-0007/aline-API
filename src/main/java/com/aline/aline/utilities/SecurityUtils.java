@@ -2,7 +2,6 @@ package com.aline.aline.utilities;
 
 import com.aline.aline.cache.ThreadLocalCache;
 import com.aline.aline.entities.User;
-import org.bson.types.ObjectId;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

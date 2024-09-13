@@ -1,11 +1,8 @@
 package com.aline.aline.payload.User;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
 
 @Data
 @NoArgsConstructor

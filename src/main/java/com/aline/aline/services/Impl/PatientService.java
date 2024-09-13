@@ -7,6 +7,7 @@ import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.payload.PageDto;
 import com.aline.aline.payload.Patient.*;
+import com.aline.aline.payload.PatientDentalDetailsMapping.Reboot;
 import com.aline.aline.payload.User.UserDto;
 import com.aline.aline.payload.User.UserIdAndNameDto;
 import com.aline.aline.services.IPatientService;
@@ -45,22 +46,24 @@ public class PatientService implements IPatientService {
     }
 
     @Override
-    public Page<GetPatientWithProfileDto> getAllPatients(PageDto pageDto, FilterPatientDto filterPatientDto) {
+    public Page<PatientListDto> getAllPatients(PageDto pageDto, FilterPatientDto filterPatientDto) {
         Pageable pageable = PageUtils.getPageableFromPageDto(pageDto);
         Page<GetPatientDto> patientDtos = this.patientDao.getAllPatients(pageable, filterPatientDto);
 
-        List<GetPatientWithProfileDto> patientWithProfileDtos = patientDtos.stream().map(
+        List<PatientListDto> patientListDtos = patientDtos.stream().map(
                 patientDto ->{
                     String  profilePhoto = this.patientPhotoScansDao.getPatientProfilePhotoByPatientID(patientDto.getId());
 
-                    GetPatientWithProfileDto patientWithProfileDto = this.modelMapper.map(patientDto, GetPatientWithProfileDto.class);
-                    patientWithProfileDto.setProfilePhoto(profilePhoto);
+                    PatientListDto patientListDto = this.modelMapper.map(patientDto, PatientListDto.class);
+                    patientListDto.setProfilePhoto(profilePhoto);
 
-                    return patientWithProfileDto;
+                    Reboot reboot = this.patientDentalDetailsMappingDao.getReboot(patientDto.getId());
+                    patientListDto.setReboot(reboot);
+                    return patientListDto;
                 }
         ).toList();
 
-        return new PageImpl<>(patientWithProfileDtos, patientDtos.getPageable(), patientDtos.getTotalElements());
+        return new PageImpl<>(patientListDtos, patientDtos.getPageable(), patientDtos.getTotalElements());
     }
 
     @Override
