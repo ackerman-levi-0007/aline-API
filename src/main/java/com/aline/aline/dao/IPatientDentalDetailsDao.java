@@ -15,11 +15,12 @@ public interface IPatientDentalDetailsDao {
     PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal);
     PatientDentalDetail updatePatientDentalDetail(PatientDentalDetail patientDentalDetail);
 
-    PatientPreviousDentalHistory getPreviousDentalHistoryDetailsByPatientID(String patientID);
-    PatientTreatmentGoal getPatientTreatmentGoalByPatientID(String patientID);
-    PatientDentalDetail getPatientDentalDetailByPatientID(String patientID);
+    PatientDentalDetail getPatientDentalDetail(String previousDentalHistoryId, String treatmentGoalId);
 
     void deletePreviousDentalHistoryDetailsByPatientID(String patientID);
     void deletePatientTreatmentGoalByPatientID(String patientID);
     void deletePatientDentalDetailByPatientID(String patientID);
+
+    PatientPreviousDentalHistory getPreviousDentalHistoryDetails(String previousDentalHistoryId);
+    PatientTreatmentGoal getPatientTreatmentGoal(String treatmentGoalId);
 }

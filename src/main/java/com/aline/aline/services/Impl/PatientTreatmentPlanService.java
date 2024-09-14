@@ -4,6 +4,7 @@ import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.customMapper.PatientTreatmentPlanMapper;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.dao.IPatientTreatmentPlanDao;
+import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
 import com.aline.aline.enums.TreatmentPlanStatus;
@@ -11,6 +12,7 @@ import com.aline.aline.enums.TreatmentPlanType;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.services.IPatientTreatmentPlanService;
 import com.aline.aline.services.helpers.PatientHelperService;
+import com.aline.aline.utilities.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.modelmapper.ModelMapper;
@@ -55,9 +57,14 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
 
     @Override
     public void createDraft(String patientID, int rebootID, PatientTreatmentPlanDto patientTreatmentPlanDto) {
-        patientHelperService.checkLoggedInUserPermissionForPatientIDDentalDetails(patientTreatmentPlanDto.getPatientID());
+        patientHelperService.checkLoggedInUserPermissionForPatientID(patientTreatmentPlanDto.getPatientID());
 
         PatientTreatmentPlan  patientTreatmentPlan = this.modelMapper.map(patientTreatmentPlanDto, PatientTreatmentPlan.class);
+
+        PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
+
+        patientTreatmentPlan.setLabel(new StringBuilder().append("Option-").append(patientDentalDetailsMapping.getTreatmentPlanDraft().getTreatmentPlans().size()).toString());
+
         PatientTreatmentPlanDraft savedPatientTreatmentPlan = this.patientTreatmentPlanDao
                 .saveDraft(patientTreatmentPlan);
 

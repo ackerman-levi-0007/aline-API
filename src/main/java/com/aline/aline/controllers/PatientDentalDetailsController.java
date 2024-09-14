@@ -1,7 +1,6 @@
 package com.aline.aline.controllers;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
-import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.services.IPatientDentalDetailsService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,7 +23,7 @@ public class PatientDentalDetailsController {
             @RequestBody PatientPreviousDentalHistory patientPreviousDentalHistoryDetails
     ) {
         PatientPreviousDentalHistory savedPatientPreviousDentalHistoryDetails =
-                this.patientDentalDetailsService.createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
+                this.patientDentalDetailsService.createPreviousDentalHistoryDetails(0, patientPreviousDentalHistoryDetails);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
     }
 
@@ -33,7 +32,7 @@ public class PatientDentalDetailsController {
             @RequestBody PatientTreatmentGoal patientTreatmentGoal
     ) {
         PatientTreatmentGoal savedPatientTreatmentGoal =
-                this.patientDentalDetailsService.createPatientTreatmentGoal(patientTreatmentGoal);
+                this.patientDentalDetailsService.createPatientTreatmentGoal(0, patientTreatmentGoal);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
     }
 
@@ -42,7 +41,7 @@ public class PatientDentalDetailsController {
             @RequestBody PatientDentalDetail patientDentalDetail
     ) throws BadRequestException {
         PatientDentalDetail savedPatientDentalDetail =
-                this.patientDentalDetailsService.createPatientDentalDetail(patientDentalDetail);
+                this.patientDentalDetailsService.createPatientDentalDetail(0, patientDentalDetail);
         return new ResponseEntity<>(savedPatientDentalDetail, HttpStatus.OK);
     }
 
@@ -51,7 +50,7 @@ public class PatientDentalDetailsController {
             @RequestBody PatientPreviousDentalHistory patientPreviousDentalHistoryDetails
     ) {
         PatientPreviousDentalHistory savedPatientPreviousDentalHistoryDetails =
-                this.patientDentalDetailsService.updatePreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
+                this.patientDentalDetailsService.updatePreviousDentalHistoryDetails(0, patientPreviousDentalHistoryDetails);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
     }
 
@@ -60,7 +59,7 @@ public class PatientDentalDetailsController {
             @RequestBody PatientTreatmentGoal patientTreatmentGoal
     ) {
         PatientTreatmentGoal savedPatientTreatmentGoal =
-                this.patientDentalDetailsService.updatePatientTreatmentGoal(patientTreatmentGoal);
+                this.patientDentalDetailsService.updatePatientTreatmentGoal(0, patientTreatmentGoal);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
     }
 
@@ -69,7 +68,7 @@ public class PatientDentalDetailsController {
             @RequestBody PatientDentalDetail patientDentalDetail
     ) throws BadRequestException {
         PatientDentalDetail savedPatientDentalDetail =
-                this.patientDentalDetailsService.updatePatientDentalDetail(patientDentalDetail);
+                this.patientDentalDetailsService.updatePatientDentalDetail(0, patientDentalDetail);
         return new ResponseEntity<>(savedPatientDentalDetail, HttpStatus.OK);
     }
 
@@ -78,7 +77,7 @@ public class PatientDentalDetailsController {
             @PathVariable String patientID
     ) {
         Object savedPatientPreviousDentalHistoryDetails =
-                this.patientDentalDetailsService.getPreviousDentalHistoryDetailsByPatientID(patientID);
+                this.patientDentalDetailsService.getPreviousDentalHistoryDetailsByPatientID(patientID, 0);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
     }
 
@@ -87,7 +86,7 @@ public class PatientDentalDetailsController {
             @PathVariable String patientID
     ) {
         Object savedPatientTreatmentGoal =
-                this.patientDentalDetailsService.getPatientTreatmentGoalByPatientID(patientID);
+                this.patientDentalDetailsService.getPatientTreatmentGoalByPatientID(patientID, 0);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
     }
 
@@ -96,31 +95,7 @@ public class PatientDentalDetailsController {
             @PathVariable String patientID
     ) {
         Object savedPatientDentalDetail =
-                this.patientDentalDetailsService.getPatientDentalDetailByPatientID(patientID);
+                this.patientDentalDetailsService.getPatientDentalDetailByPatientID(patientID, 0);
         return new ResponseEntity<>(savedPatientDentalDetail, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/deletePreviousDentalHistoryDetailsByPatientID/{patientID}")
-    public ResponseEntity<APIResponse> deletePreviousDentalHistoryDetailsByPatientID(
-            @PathVariable String patientID
-    ) {
-        this.patientDentalDetailsService.deletePreviousDentalHistoryDetailsByPatientID(patientID);
-        return new ResponseEntity<>(new APIResponse("Previous dental history details successfully deleted for the patient !!!", true), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/deletePatientTreatmentGoalByPatientID/{patientID}")
-    public ResponseEntity<APIResponse> deletePatientTreatmentGoalByPatientID(
-            @PathVariable String patientID
-    ) {
-        this.patientDentalDetailsService.deletePatientTreatmentGoalByPatientID(patientID);
-        return new ResponseEntity<>(new APIResponse("Patient treatment goal successfully deleted for the patient !!!", true), HttpStatus.OK);
-    }
-
-    @DeleteMapping("/deletePatientDentalDetailByPatientID/{patientID}")
-    public ResponseEntity<APIResponse> deletePatientDentalDetailByPatientID(
-            @PathVariable String patientID
-    ) {
-        this.patientDentalDetailsService.deletePatientDentalDetailByPatientID(patientID );
-        return new ResponseEntity<>(new APIResponse("Patient dental details successfully deleted for the patient !!!", true), HttpStatus.OK);
     }
 }

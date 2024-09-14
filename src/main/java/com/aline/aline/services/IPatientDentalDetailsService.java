@@ -8,19 +8,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface IPatientDentalDetailsService {
-    PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails);
-    PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal);
-    PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail) throws BadRequestException;
+    PatientPreviousDentalHistory createPreviousDentalHistoryDetails(int rebootID, PatientPreviousDentalHistory patientPreviousDentalHistoryDetails);
+    PatientTreatmentGoal createPatientTreatmentGoal(int rebootID, PatientTreatmentGoal patientTreatmentGoal);
+    PatientDentalDetail createPatientDentalDetail(int rebootID, PatientDentalDetail patientDentalDetail) throws BadRequestException;
 
-    PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails);
-    PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal);
-    PatientDentalDetail updatePatientDentalDetail(PatientDentalDetail patientDentalDetail) throws BadRequestException;
+    PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(int rebootID, PatientPreviousDentalHistory patientPreviousDentalHistoryDetails);
+    PatientTreatmentGoal updatePatientTreatmentGoal(int rebootID, PatientTreatmentGoal patientTreatmentGoal);
+    PatientDentalDetail updatePatientDentalDetail(int rebootID, PatientDentalDetail patientDentalDetail) throws BadRequestException;
 
-    Object getPreviousDentalHistoryDetailsByPatientID(String patientID);
-    Object getPatientTreatmentGoalByPatientID(String patientID);
-    Object getPatientDentalDetailByPatientID(String patientID);
-
-    void deletePreviousDentalHistoryDetailsByPatientID(String patientID);
-    void deletePatientTreatmentGoalByPatientID(String patientID);
-    void deletePatientDentalDetailByPatientID(String patientID);
+    Object getPreviousDentalHistoryDetailsByPatientID(String patientID, int rebootID);
+    Object getPatientTreatmentGoalByPatientID(String patientID, int rebootID);
+    Object getPatientDentalDetailByPatientID(String patientID, int rebootID);
 }

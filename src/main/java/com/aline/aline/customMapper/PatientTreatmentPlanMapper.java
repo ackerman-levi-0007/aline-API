@@ -14,6 +14,7 @@ public class PatientTreatmentPlanMapper {
 
         patientTreatmentPlanDto.setId(patientTreatmentPlan.getId().toString());
         patientTreatmentPlanDto.setPatientID(patientTreatmentPlan.getPatientID());
+        patientTreatmentPlanDto.setLabel(patientTreatmentPlan.getLabel());
         patientTreatmentPlanDto.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
         patientTreatmentPlanDto.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanDto.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
@@ -35,6 +36,7 @@ public class PatientTreatmentPlanMapper {
         PatientTreatmentPlan patientTreatmentPlan = new PatientTreatmentPlan();
 
         patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
+        patientTreatmentPlan.setLabel(patientTreatmentPlanDraft.getLabel());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());
         patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanDraft.getTreatmentPlanSummary());

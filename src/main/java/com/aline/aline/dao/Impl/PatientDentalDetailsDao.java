@@ -98,22 +98,9 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
     }
 
     @Override
-    public PatientPreviousDentalHistory getPreviousDentalHistoryDetailsByPatientID(String patientID) {
-        return this.patientPreviousDentalHistoryRepo.findByPatientID(patientID)
-                .orElseThrow(() -> new ResourceNotFoundException("Previous dental history", "patientID", patientID));
-    }
-
-    @Override
-    public PatientTreatmentGoal getPatientTreatmentGoalByPatientID(String patientID) {
-        return this.patientTreatmentGoalRepo.findByPatientID(patientID).orElseThrow(
-                () -> new ResourceNotFoundException("Patient treatment goal", "patientID", patientID)
-        );
-    }
-
-    @Override
-    public PatientDentalDetail getPatientDentalDetailByPatientID(String patientID) {
-        PatientPreviousDentalHistory patientPreviousDentalHistory = getPreviousDentalHistoryDetailsByPatientID(patientID);
-        PatientTreatmentGoal patientTreatmentGoal = getPatientTreatmentGoalByPatientID(patientID);
+    public PatientDentalDetail getPatientDentalDetail(String previousDentalHistoryId, String treatmentGoalId) {
+        PatientPreviousDentalHistory patientPreviousDentalHistory = getPreviousDentalHistoryDetails(previousDentalHistoryId);
+        PatientTreatmentGoal patientTreatmentGoal = getPatientTreatmentGoal(treatmentGoalId);
 
         return new PatientDentalDetail(patientPreviousDentalHistory, patientTreatmentGoal);
     }
@@ -136,6 +123,20 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
     public void deletePatientDentalDetailByPatientID(String patientID) {
         deletePreviousDentalHistoryDetailsByPatientID(patientID);
         deletePatientTreatmentGoalByPatientID(patientID);
+    }
+
+    @Override
+    public PatientPreviousDentalHistory getPreviousDentalHistoryDetails(String previousDentalHistoryId) {
+        return this.patientPreviousDentalHistoryRepo.findById(previousDentalHistoryId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Previous dental history","id", previousDentalHistoryId));
+    }
+
+    @Override
+    public PatientTreatmentGoal getPatientTreatmentGoal(String treatmentGoalId) {
+        return this.patientTreatmentGoalRepo.findById(treatmentGoalId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Patient treatment goal", "id", treatmentGoalId));
     }
 
     /*****************************************************************************************

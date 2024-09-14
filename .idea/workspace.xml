@@ -5,41 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CommonEntitiesObjects/Price.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/commonEntitiesObjects/Price.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CommonEntitiesObjects/S3ImageObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/commonEntitiesObjects/S3ImageObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CommonEntitiesObjects/TreatmentPlanListObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/commonEntitiesObjects/TreatmentPlanListObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CommonEntitiesObjects/TreatmentPlanObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/commonEntitiesObjects/TreatmentPlanObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/GetPatientPhotoScansDtoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/GetPatientPhotoScansDtoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/PatientTreatmentPlanDraftMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanDraftMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/PatientTreatmentPlanHistoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanHistoryMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/CustomMapper/PatientTreatmentPlanMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsMappingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsMappingController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDentalDetailsMappingDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDentalDetailsMappingDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDentalDetailsMappingDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDentalDetailsMappingDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientPhotoScansDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientPhotoScansDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientTreatmentPlanDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientTreatmentPlanDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientDentalDetailsMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientDentalDetailsMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPhotoScans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPhotoScans.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlanDraft.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlanDraft.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlanHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientTreatmentPlan/PatientTreatmentPlanHistory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/GetPatientDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/GetPatientDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/UpdateDoctorAllocationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/UpdateDoctorAllocationDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/UpdatePatientDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/UpdatePatientDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/UpdatePatientStatusDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/Patient/UpdatePatientStatusDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanDraftMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanDraftMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanHistoryMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanHistoryMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/PatientTreatmentPlanMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDentalDetailsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/IPatientDentalDetailsDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDentalDetailsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PatientDentalDetailsDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientDentalDetailsMapping/Reboot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientDentalDetailsMapping/Reboot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientTreatmentPlan/PatientTreatmentPlanDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientTreatmentPlan/PatientTreatmentPlanDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientTreatmentPlan/PatientTreatmentPlanMapping.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientTreatmentPlan/PatientTreatmentPlanMapping.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/User/UserDetailsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/User/UserDetailsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientDentalDetailsMappingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientDentalDetailsMappingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsMappingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsMappingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientPhotoScansService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientPhotoScansService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientDentalDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/IPatientDentalDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientDentalDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientTreatmentPlanService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/PatientTreatmentPlanService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/helpers/PatientHelperService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/helpers/PatientHelperService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/utilities/CommonUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/utilities/CommonUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-qa.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-qa.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,7 +232,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/PatientDentalDetailsController.java</url>
-          <line>79</line>
+          <line>78</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

@@ -15,6 +15,7 @@ public class PatientTreatmentPlanHistoryMapper {
 
         patientTreatmentPlan.setId(new ObjectId(patientTreatmentPlanHistory.getTreatmentPlanID()));
         patientTreatmentPlan.setPatientID(patientTreatmentPlanHistory.getPatientID());
+        patientTreatmentPlan.setLabel(patientTreatmentPlanHistory.getLabel());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanHistory.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanHistory.getCaseAssessment());
         patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanHistory.getTreatmentPlanSummary());
@@ -37,6 +38,7 @@ public class PatientTreatmentPlanHistoryMapper {
 
         if(patientTreatmentPlan.getId() != null) patientTreatmentPlanHistory.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
         patientTreatmentPlanHistory.setPatientID(patientTreatmentPlan.getPatientID());
+        patientTreatmentPlanHistory.setLabel(patientTreatmentPlan.getLabel());
         patientTreatmentPlanHistory.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanHistory.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
         patientTreatmentPlanHistory.setTreatmentPlanSummary(patientTreatmentPlan.getTreatmentPlanSummary());
@@ -59,6 +61,7 @@ public class PatientTreatmentPlanHistoryMapper {
 
         patientTreatmentPlan.setId(patientTreatmentPlanHistory.getId().toString());
         patientTreatmentPlan.setPatientID(patientTreatmentPlanHistory.getPatientID());
+        patientTreatmentPlan.setLabel(patientTreatmentPlanHistory.getLabel());
         patientTreatmentPlan.setTreatmentPlanID(patientTreatmentPlanHistory.getTreatmentPlanID());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanHistory.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanHistory.getCaseAssessment());
