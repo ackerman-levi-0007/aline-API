@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Data
 @AllArgsConstructor
-@NoArgsConstructor@Data
+@NoArgsConstructor
 public class Reboot {
     private int totalReboots;
     private int latestReboot;

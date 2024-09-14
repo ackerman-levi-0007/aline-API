@@ -1,6 +1,6 @@
 package com.aline.aline.utilities;
 
-import com.aline.aline.CommonEntitiesObjects.S3ImageObject;
+import com.aline.aline.commonEntitiesObjects.S3ImageObject;
 
 import java.util.HashSet;
 import java.util.List;

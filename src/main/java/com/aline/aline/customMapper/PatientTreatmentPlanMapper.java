@@ -1,4 +1,4 @@
-package com.aline.aline.CustomMapper;
+package com.aline.aline.customMapper;
 
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;

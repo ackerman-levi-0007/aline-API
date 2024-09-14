@@ -1,6 +1,6 @@
 package com.aline.aline.controllers;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
 import com.aline.aline.services.IPatientDentalDetailsMappingService;

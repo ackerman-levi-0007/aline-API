@@ -1,6 +1,6 @@
 package com.aline.aline.services.Impl;
 
-import com.aline.aline.CustomMapper.GetPatientPhotoScansDtoMapper;
+import com.aline.aline.customMapper.GetPatientPhotoScansDtoMapper;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.dao.IPatientPhotoScansDao;
 import com.aline.aline.entities.PatientPhotoScans;

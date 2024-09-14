@@ -1,6 +1,6 @@
-package com.aline.aline.CustomMapper;
+package com.aline.aline.customMapper;
 
-import com.aline.aline.CommonEntitiesObjects.S3ImageObject;
+import com.aline.aline.commonEntitiesObjects.S3ImageObject;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.payload.PatientPhotoScans.GetPatientPhotoScansDto;
 import org.springframework.stereotype.Service;

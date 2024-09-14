@@ -1,6 +1,6 @@
 package com.aline.aline.services.Impl;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;

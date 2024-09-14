@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateDoctorAllocationDto {
-
     private String patientID;
-
     private String oldDoctorID;
-
     private String newDoctorID;
 }

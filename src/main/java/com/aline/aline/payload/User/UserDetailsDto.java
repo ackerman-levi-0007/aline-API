@@ -9,14 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDetailsDto {
     private String id;
-
     private String userID;
-
     private String mobileNo;
-
     private String userAddress;
-
     private String userCity;
-
     private String userCountry;
 }

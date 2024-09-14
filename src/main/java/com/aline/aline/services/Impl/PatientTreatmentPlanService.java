@@ -1,8 +1,7 @@
 package com.aline.aline.services.Impl;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
-import com.aline.aline.CustomMapper.PatientTreatmentPlanDraftMapper;
-import com.aline.aline.CustomMapper.PatientTreatmentPlanMapper;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.customMapper.PatientTreatmentPlanMapper;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.dao.IPatientTreatmentPlanDao;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
@@ -26,7 +25,6 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
     private final PatientHelperService patientHelperService;
     private final IPatientTreatmentPlanDao patientTreatmentPlanDao;
     private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
-    private final PatientTreatmentPlanDraftMapper patientTreatmentPlanDraftMapper;
     private final PatientTreatmentPlanMapper patientTreatmentPlanMapper;
     private final ModelMapper modelMapper;
 

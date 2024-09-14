@@ -1,6 +1,6 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.CustomMapper.GetPatientPhotoScansDtoMapper;
+import com.aline.aline.customMapper.GetPatientPhotoScansDtoMapper;
 import com.aline.aline.dao.IPatientPhotoScansDao;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;

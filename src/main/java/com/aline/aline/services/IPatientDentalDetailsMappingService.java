@@ -1,6 +1,6 @@
 package com.aline.aline.services;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
 import org.springframework.stereotype.Service;
 

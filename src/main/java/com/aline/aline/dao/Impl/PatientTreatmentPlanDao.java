@@ -1,10 +1,10 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanListObject;
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
-import com.aline.aline.CustomMapper.PatientTreatmentPlanDraftMapper;
-import com.aline.aline.CustomMapper.PatientTreatmentPlanHistoryMapper;
-import com.aline.aline.CustomMapper.PatientTreatmentPlanMapper;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanListObject;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.customMapper.PatientTreatmentPlanDraftMapper;
+import com.aline.aline.customMapper.PatientTreatmentPlanHistoryMapper;
+import com.aline.aline.customMapper.PatientTreatmentPlanMapper;
 import com.aline.aline.dao.IPatientTreatmentPlanDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;

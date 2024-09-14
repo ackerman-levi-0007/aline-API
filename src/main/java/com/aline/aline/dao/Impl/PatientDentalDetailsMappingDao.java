@@ -1,7 +1,7 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanListObject;
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanListObject;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;

@@ -1,7 +1,7 @@
 package com.aline.aline.payload.PatientTreatmentPlan;
 
-import com.aline.aline.CommonEntitiesObjects.Price;
-import com.aline.aline.CommonEntitiesObjects.S3ImageObject;
+import com.aline.aline.commonEntitiesObjects.Price;
+import com.aline.aline.commonEntitiesObjects.S3ImageObject;
 import com.aline.aline.enums.MalocclusionTag;
 import com.aline.aline.enums.TreatmentPlanCategory;
 import lombok.AllArgsConstructor;
@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PatientTreatmentPlanDto {
     private String id;
+    private String label;
     private String patientID;
     private String treatmentPlanID;
     private List<MalocclusionTag> malocclusionTag;

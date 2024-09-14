@@ -1,4 +1,4 @@
-package com.aline.aline.CommonEntitiesObjects;
+package com.aline.aline.commonEntitiesObjects;
 
 import com.aline.aline.enums.TreatmentPlanStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;

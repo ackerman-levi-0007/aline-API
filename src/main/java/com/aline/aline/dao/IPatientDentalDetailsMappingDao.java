@@ -1,6 +1,6 @@
 package com.aline.aline.dao;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.payload.PatientDentalDetailsMapping.Reboot;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
