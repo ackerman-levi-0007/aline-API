@@ -4,6 +4,7 @@ import com.aline.aline.commonEntitiesObjects.TreatmentPlanListObject;
 import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
+import com.aline.aline.enums.TreatmentPlanStatus;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientDentalDetailsMapping.Reboot;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
@@ -186,6 +187,16 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
         return reboot;
     }
 
+    @Override
+    public void approvePlan(String patientID, int rebootID, String planID) {
+        changePlanStatus(patientID, rebootID, planID, TreatmentPlanStatus.confirmed);
+    }
+
+    @Override
+    public void planRequestModification(String patientID, int rebootID, String planID) {
+        changePlanStatus(patientID, rebootID, planID, TreatmentPlanStatus.requestForModification);
+    }
+
     /*****************************************************************************************
                                             Helpers
      *****************************************************************************************/
@@ -199,5 +210,26 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
         return this.patientDentalDetailsMappingRepo.findByPatientIDAndRebootID(patientID, rebootID)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient dental details mapping", "patientID", patientID)
                 );
+    }
+
+    private void changePlanStatus(String patientID, int rebootID, String planID, TreatmentPlanStatus treatmentPlanStatus){
+        PatientDentalDetailsMapping patientDentalDetailsMapping =
+                getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
+
+        TreatmentPlanListObject treatmentPlanListLatest = patientDentalDetailsMapping.getTreatmentPlanLatest();
+
+        List<TreatmentPlanObject> treatmentPlanObjects =
+                treatmentPlanListLatest.getTreatmentPlans().stream().peek(
+                        x -> {
+                            if(x.getId().equals(planID)) x.setStatus(treatmentPlanStatus);
+                        }
+                ).toList();
+
+        treatmentPlanListLatest.setTreatmentPlans(treatmentPlanObjects);
+        treatmentPlanListLatest.setTreatmentPlanStatus(treatmentPlanStatus);
+
+        patientDentalDetailsMapping.setTreatmentPlanLatest(treatmentPlanListLatest);
+
+        this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
 }

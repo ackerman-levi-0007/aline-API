@@ -23,4 +23,6 @@ public interface IPatientDentalDetailsMappingDao {
     List<Integer> getAllRebootIds(String patientID);
     PatientTreatmentPlanMapping getPlanMapping(String patientID, int rebootID);
     Reboot getReboot(String patientID);
+    void approvePlan(String patientID, int rebootID, String planID);
+    void planRequestModification(String patientID, int rebootID, String planID);
 }

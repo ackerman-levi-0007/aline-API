@@ -91,33 +91,6 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     }
 
     @Override
-    public void updateTreatmentPlan(String patientID, String treatmentPlanID, PatientTreatmentPlan currentTreatmentPlan, PatientTreatmentPlan updatedTreatmentPlan) throws BadRequestException {
-        if(currentTreatmentPlan == null){
-            currentTreatmentPlan = getTreatmentPlan(patientID, treatmentPlanID);
-        }
-
-        if(checkPatientTreatmentPlan(currentTreatmentPlan, updatedTreatmentPlan)){
-            if(compareTreatmentPlan(currentTreatmentPlan, updatedTreatmentPlan)){
-
-                updatedTreatmentPlan.setCreatedOn(currentTreatmentPlan.getCreatedOn());
-
-                this.patientTreatmentPlanRepo.save(updatedTreatmentPlan);
-            }
-            else{
-                throw new BadRequestException("The updated details are the same as the current treatment plan");
-            }
-        }else{
-            throw new BadRequestException("The provided details are not correct for treatment plan");
-        }
-    }
-
-    @Override
-    public void moveTreatmentPlanToHistory(PatientTreatmentPlan patientTreatmentPlan) {
-        PatientTreatmentPlanHistory patientTreatmentPlanHistory = this.patientTreatmentPlanHistoryMapper.mapper(patientTreatmentPlan);
-        this.patientTreatmentPlanHistoryRepo.save(patientTreatmentPlanHistory);
-    }
-
-    @Override
     public void updateDraft(String patientID, int rebootID, PatientTreatmentPlanDto patientTreatmentPlanDto) {
         PatientTreatmentPlanDraft patientTreatmentPlanDraft = getPatientTreatmentPlanDraft(patientID, patientTreatmentPlanDto.getId());
 

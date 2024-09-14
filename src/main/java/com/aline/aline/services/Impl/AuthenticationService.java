@@ -39,7 +39,7 @@ public class AuthenticationService implements IAuthenticationService {
     public AuthenticationResponse register(AuthenticationRegisterRequest authenticationRequest) {
         User user = this.modelMapper.map(authenticationRequest, User.class);
         UserDto userDto = this.userDao.createUser(user, null);
-        User savedUser = this.modelMapper.map(userDto, User.class);
+        this.modelMapper.map(userDto, User.class);
 
         return tokenService.generateToken(user.getEmail());
     }

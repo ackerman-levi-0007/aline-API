@@ -72,4 +72,23 @@ public class PatientTreatmentPlanController {
         return new ResponseEntity<>(patientTreatmentPlans, HttpStatus.OK);
     }
 
+    @PutMapping("/approvePlan/{patientID}/{rebootID}/{planID}")
+    public ResponseEntity<APIResponse> approvePlan(
+            @PathVariable String patientID,
+            @PathVariable int rebootID,
+            @PathVariable String planID
+    ) {
+        this.patientTreatmentPlanService.approvePlan(patientID, rebootID, planID);
+        return new ResponseEntity<>(new APIResponse("Plan approved", true), HttpStatus.OK);
+    }
+
+    @PutMapping("/planRequestModification/{patientID}/{rebootID}/{planID}")
+    public ResponseEntity<APIResponse> planRequestModification(
+            @PathVariable String patientID,
+            @PathVariable int rebootID,
+            @PathVariable String planID
+    ) {
+        this.patientTreatmentPlanService.planRequestModification(patientID, rebootID, planID);
+        return new ResponseEntity<>(new APIResponse("Request for modification is initialized", true), HttpStatus.OK);
+    }
 }

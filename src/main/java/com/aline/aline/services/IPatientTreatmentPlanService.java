@@ -14,4 +14,6 @@ public interface IPatientTreatmentPlanService {
     void createDraft(String patientID, int rebootID, PatientTreatmentPlanDto patientTreatmentPlanDto);
     void updateDraft(String patientID, int rebootID, PatientTreatmentPlanDto patientTreatmentPlanDto);
     void sendPlanModification(String patientID, int rebootID, String draftID);
+    void approvePlan(String patientID, int rebootID, String planID);
+    void planRequestModification(String patientID, int rebootID, String planID);
 }
