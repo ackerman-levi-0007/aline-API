@@ -7,6 +7,7 @@ import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.repositories.PatientPreviousDentalHistoryRepo;
 import com.aline.aline.repositories.PatientTreatmentGoalRepo;
+import com.aline.aline.utilities.CommonUtils;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -99,6 +100,10 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
     @Override
     public PatientDentalDetail getPatientDentalDetail(String previousDentalHistoryId, String treatmentGoalId) {
+        if(CommonUtils.isNullOrEmpty(previousDentalHistoryId) || CommonUtils.isNullOrEmpty(treatmentGoalId)){
+            throw new ResourceNotFoundException("Patient dental details not found");
+        }
+
         PatientPreviousDentalHistory patientPreviousDentalHistory = getPreviousDentalHistoryDetails(previousDentalHistoryId);
         PatientTreatmentGoal patientTreatmentGoal = getPatientTreatmentGoal(treatmentGoalId);
 
