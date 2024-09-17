@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IPatientPhotoScansDao {
-    GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans);
-    GetPatientPhotoScansDto getPatientPhotoScansByPatientID(String patientID);
-    PatientPhotoScans savePatientPhotoScans(PatientPhotoScans patientPhotoScans);
+    GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID);
+    GetPatientPhotoScansDto getPatientPhotoScans(String photoScansId);
+    PatientPhotoScans savePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID);
     String getPatientProfilePhotoByPatientID(String patientID);
 }

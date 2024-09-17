@@ -69,18 +69,6 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     }
 
     @Override
-    public void updatePatientDentalDetailsID(
-            String patientID,
-            String previousDentalHistoryID,
-            String patientTreatmentGoalID,
-            int rebootID
-    ) {
-        PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
-        patientDentalDetailsMapping.setPreviousDentalHistoryId(previousDentalHistoryID);
-        patientDentalDetailsMapping.setTreatmentGoalId(patientTreatmentGoalID);
-    }
-
-    @Override
     public void addPatientTreatmentPlanID(
             String patientID,
             TreatmentPlanObject treatmentPlanObject,

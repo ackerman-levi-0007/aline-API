@@ -15,7 +15,6 @@ public interface IPatientDentalDetailsMappingDao {
     void updatePatientPhotoScansID(String patientID, String photoScansID,  int rebootID);
     void updatePatientPreviousDentalHistoryDetailsID(String patientID, String id, int rebootID);
     void updatePatientTreatmentGoalID(String patientID, String patientTreatmentGoalID, int rebootID);
-    void updatePatientDentalDetailsID(String patientID, String previousDentalHistoryID, String patientTreatmentGoalID, int rebootID);
     void addPatientTreatmentPlanID(String patientID, TreatmentPlanObject treatmentPlanObject, int rebootID);
     void addUnsavedDraftTreatmentPlanID(String patientID, TreatmentPlanObject treatmentPlanObject, int rebootID);
     void addTreatmentPlanToHistory(String patientID, List<TreatmentPlanObject> treatmentPlanObjects, int rebootID);

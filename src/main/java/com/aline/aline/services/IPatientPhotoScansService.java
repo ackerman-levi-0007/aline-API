@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface IPatientPhotoScansService {
-    GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans);
-    Object getPatientPhotoScansByPatientID(String patientID);
-    GetPatientPhotoScansDto savePatientPhotoScans(PatientPhotoScans patientPhotoScans);
+    GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID);
+    Object getPatientPhotoScansByPatientID(String patientID, int rebootID);
+    GetPatientPhotoScansDto savePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID);
 }

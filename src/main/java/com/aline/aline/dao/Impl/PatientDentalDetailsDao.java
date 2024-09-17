@@ -20,25 +20,52 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
     private final PatientPreviousDentalHistoryRepo patientPreviousDentalHistoryRepo;
     private final PatientTreatmentGoalRepo patientTreatmentGoalRepo;
+    private final PatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
-    public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
+    public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(
+            PatientPreviousDentalHistory patientPreviousDentalHistoryDetails,
+            int rebootID
+    ) {
         if(checkPreviousDentalHistoryExistsForPatientID(patientPreviousDentalHistoryDetails.getPatientID())){
             throw new EntityExistsException("Previous dental history already exists for the patient!!!");
         }
-        return this.patientPreviousDentalHistoryRepo.save(patientPreviousDentalHistoryDetails);
+        PatientPreviousDentalHistory savedPreviousDentalHistory =
+                this.patientPreviousDentalHistoryRepo.save(patientPreviousDentalHistoryDetails);
+
+        this.patientDentalDetailsMappingDao.updatePatientPreviousDentalHistoryDetailsID(
+                savedPreviousDentalHistory.getPatientID(),
+                savedPreviousDentalHistory.getId().toString(),
+                rebootID
+        );
+
+        return savedPreviousDentalHistory;
     }
 
     @Override
-    public PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
+    public PatientTreatmentGoal createPatientTreatmentGoal(
+            PatientTreatmentGoal patientTreatmentGoal,
+            int rebootID
+    ) {
         if(checkTreatmentGoalExistsForPatientID(patientTreatmentGoal.getPatientID())){
             throw new EntityExistsException("Treatment goal already exists for the patient!!!");
         }
-        return this.patientTreatmentGoalRepo.save(patientTreatmentGoal);
+        PatientTreatmentGoal savedTreatmentGoal = this.patientTreatmentGoalRepo.save(patientTreatmentGoal);
+
+        this.patientDentalDetailsMappingDao.updatePatientTreatmentGoalID(
+                savedTreatmentGoal.getPatientID(),
+                savedTreatmentGoal.getId().toString(),
+                rebootID
+        );
+
+        return savedTreatmentGoal;
     }
 
     @Override
-    public PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail) {
+    public PatientDentalDetail createPatientDentalDetail(
+            PatientDentalDetail patientDentalDetail,
+            int rebootID
+    ) {
 
         PatientPreviousDentalHistory patientPreviousDentalHistory = this.patientPreviousDentalHistoryRepo.save(patientDentalDetail.getPatientPreviousDentalHistoryDetails());
         PatientTreatmentGoal patientTreatmentGoal = this.patientTreatmentGoalRepo.save(patientDentalDetail.getPatientTreatmentGoal());
@@ -47,7 +74,10 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
     }
 
     @Override
-    public PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
+    public PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(
+            PatientPreviousDentalHistory patientPreviousDentalHistoryDetails,
+            int rebootID
+    ) {
         Optional<PatientPreviousDentalHistory> fetchedPatientPreviousDentalHistoryOptional =
                 this.patientPreviousDentalHistoryRepo.findByPatientID(patientPreviousDentalHistoryDetails.getPatientID());
 
@@ -64,12 +94,15 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
             return this.patientPreviousDentalHistoryRepo.save(fetchedPatientPreviousDentalHistory);
         }else{
-            return createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
+            return createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails, rebootID);
         }
     }
 
     @Override
-    public PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
+    public PatientTreatmentGoal updatePatientTreatmentGoal(
+            PatientTreatmentGoal patientTreatmentGoal,
+            int rebootID
+    ) {
         Optional<PatientTreatmentGoal> fetchedPatientTreatmentGoalOptional =
                 this.patientTreatmentGoalRepo.findByPatientID(patientTreatmentGoal.getPatientID());
 
@@ -86,14 +119,17 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
             return this.patientTreatmentGoalRepo.save(fetchedPatientTreatmentGoal);
         }else{
-            return createPatientTreatmentGoal(patientTreatmentGoal);
+            return createPatientTreatmentGoal(patientTreatmentGoal, rebootID);
         }
     }
 
     @Override
-    public PatientDentalDetail updatePatientDentalDetail(PatientDentalDetail patientDentalDetail) {
-        PatientPreviousDentalHistory patientPreviousDentalHistory = updatePreviousDentalHistoryDetails(patientDentalDetail.getPatientPreviousDentalHistoryDetails());
-        PatientTreatmentGoal patientTreatmentGoal = updatePatientTreatmentGoal(patientDentalDetail.getPatientTreatmentGoal());
+    public PatientDentalDetail updatePatientDentalDetail(
+            PatientDentalDetail patientDentalDetail,
+            int rebootID
+    ) {
+        PatientPreviousDentalHistory patientPreviousDentalHistory = updatePreviousDentalHistoryDetails(patientDentalDetail.getPatientPreviousDentalHistoryDetails(), rebootID);
+        PatientTreatmentGoal patientTreatmentGoal = updatePatientTreatmentGoal(patientDentalDetail.getPatientTreatmentGoal(), rebootID);
 
         return new PatientDentalDetail(patientPreviousDentalHistory, patientTreatmentGoal);
     }

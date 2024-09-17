@@ -7,20 +7,19 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IPatientDentalDetailsDao {
-    PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails);
-    PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal);
-    PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail);
+    PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails, int rebootID);
+    PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal, int rebootID);
+    PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail, int rebootID);
 
-    PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails);
-    PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal);
-    PatientDentalDetail updatePatientDentalDetail(PatientDentalDetail patientDentalDetail);
-
-    PatientDentalDetail getPatientDentalDetail(String previousDentalHistoryId, String treatmentGoalId);
+    PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails, int rebootID);
+    PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal, int rebootID);
+    PatientDentalDetail updatePatientDentalDetail(PatientDentalDetail patientDentalDetail, int rebootID);
 
     void deletePreviousDentalHistoryDetailsByPatientID(String patientID);
     void deletePatientTreatmentGoalByPatientID(String patientID);
     void deletePatientDentalDetailByPatientID(String patientID);
 
+    PatientDentalDetail getPatientDentalDetail(String previousDentalHistoryId, String treatmentGoalId);
     PatientPreviousDentalHistory getPreviousDentalHistoryDetails(String previousDentalHistoryId);
     PatientTreatmentGoal getPatientTreatmentGoal(String treatmentGoalId);
 }
