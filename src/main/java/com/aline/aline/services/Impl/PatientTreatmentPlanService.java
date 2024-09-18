@@ -69,8 +69,11 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
 
         PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
 
-        patientTreatmentPlan.setLabel("Option-" +
-                patientDentalDetailsMapping.getTreatmentPlanDraft().getTreatmentPlans().size()
+        patientTreatmentPlan.setLabel(
+                "Option-" +
+                        (patientDentalDetailsMapping.getTreatmentPlanDraft() == null ?
+                                "1" :
+                                (patientDentalDetailsMapping.getTreatmentPlanDraft().getTreatmentPlans().size() + 1))
         );
 
         PatientTreatmentPlanDraft savedPatientTreatmentPlan = this.patientTreatmentPlanDao
