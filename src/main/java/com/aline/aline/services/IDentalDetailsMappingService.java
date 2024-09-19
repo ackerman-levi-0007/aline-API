@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface IPatientDentalDetailsMappingService {
+public interface IDentalDetailsMappingService {
     List<Integer> getAllRebootIds(String patientID);
     PatientTreatmentPlanMapping getPlanMapping(String patientID, int rebootID);
-    void addPatientTreatmentPlanID(String patientID, TreatmentPlanObject treatmentPlanObject, int rebootID);
+    void addPatientTreatmentPlanID(String patientID, TreatmentPlanObject treatmentPlanObject, int rebootID, String draftID);
     void addUnsavedDraftTreatmentPlanID(String patientID, TreatmentPlanObject treatmentPlanObject, int rebootID);
     void addTreatmentPlanToHistory(String patientID, List<TreatmentPlanObject> treatmentPlanObjects, int rebootID);
     void moveTreatmentPlanToHistory(String patientID, int rebootID);

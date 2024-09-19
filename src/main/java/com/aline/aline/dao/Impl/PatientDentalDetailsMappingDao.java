@@ -13,8 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -72,9 +72,26 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     public void addPatientTreatmentPlanID(
             String patientID,
             TreatmentPlanObject treatmentPlanObject,
-            int rebootID
-    ) {
+            int rebootID,
+            String draftID) {
         PatientDentalDetailsMapping patientDentalDetailsMapping = getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
+
+        TreatmentPlanListObject draftObject = patientDentalDetailsMapping.getTreatmentPlanDraft();
+        List<TreatmentPlanObject> draftsList = draftObject.getTreatmentPlans();
+
+        Optional<TreatmentPlanObject> draft = draftsList.stream().filter(x -> x.getId().equals(draftID)).findFirst();
+
+        if(draft.isPresent()){
+            treatmentPlanObject.setDisplayOrder(draft.get().getDisplayOrder());
+            draft.get().setStatus(TreatmentPlanStatus.shared);
+        }
+
+        List<TreatmentPlanObject> sortedDraftsList = draftsList.stream()
+                .sorted(Comparator.comparingInt(TreatmentPlanObject::getDisplayOrder))
+                .collect(Collectors.toList());
+
+        draftObject.setTreatmentPlans(sortedDraftsList);
+        patientDentalDetailsMapping.setTreatmentPlanDraft(draftObject);
 
         TreatmentPlanListObject latestTreatmentPlan = patientDentalDetailsMapping.getTreatmentPlanLatest();
 
@@ -86,6 +103,7 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
         List<TreatmentPlanObject> treatmentPlanObjects = latestTreatmentPlan.getTreatmentPlans();
 
         if( treatmentPlanObjects == null || treatmentPlanObjects.isEmpty()) treatmentPlanObjects = new ArrayList<>();
+
         treatmentPlanObjects.add(treatmentPlanObject);
 
         latestTreatmentPlan.setTreatmentPlans(treatmentPlanObjects);
@@ -183,6 +201,119 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
     @Override
     public void planRequestModification(String patientID, int rebootID, String planID) {
         changePlanStatus(patientID, rebootID, planID, TreatmentPlanStatus.requestForModification);
+    }
+
+    @Override
+    public void updateHistoryPlanMapping(
+            String patientID,
+            int rebootID,
+            TreatmentPlanObject treatmentPlanObject,
+            String treatmentPlanID,
+            String draftID
+    ) {
+        PatientDentalDetailsMapping patientDentalDetailsMapping =
+                getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
+
+        TreatmentPlanListObject draftObject = patientDentalDetailsMapping.getTreatmentPlanDraft();
+        List<TreatmentPlanObject> draftsList = draftObject.getTreatmentPlans();
+
+        Optional<TreatmentPlanObject> draft = draftsList.stream().filter(x -> x.getId().equals(draftID)).findFirst();
+
+        if(draft.isPresent()){
+            treatmentPlanObject.setDisplayOrder(draft.get().getDisplayOrder());
+            draft.get().setStatus(TreatmentPlanStatus.shared);
+        }
+
+        List<TreatmentPlanObject> sortedDraftsList = draftsList.stream()
+                .sorted(Comparator.comparingInt(TreatmentPlanObject::getDisplayOrder))
+                .collect(Collectors.toList());
+
+        draftObject.setTreatmentPlans(sortedDraftsList);
+        patientDentalDetailsMapping.setTreatmentPlanDraft(draftObject);
+
+        TreatmentPlanListObject latestObject = patientDentalDetailsMapping.getTreatmentPlanLatest();
+        List<TreatmentPlanObject> latestPlanList = latestObject.getTreatmentPlans();
+
+        Optional<TreatmentPlanObject> latestPlan = latestPlanList.stream().filter(x -> x.getId().equals(treatmentPlanID)).findFirst();
+
+        if(latestPlan.isPresent()){
+            latestPlan.get().setStatus(TreatmentPlanStatus.shared);
+
+            for(int i=0 ; i<latestPlanList.size() ; i++)
+                if (latestPlanList.get(i).getId().equals(treatmentPlanID)) {
+                    latestPlanList.set(i, latestPlan.get());
+                    break;
+                }
+        }
+
+        List<TreatmentPlanObject> sortedLatestPlan = latestPlanList.stream()
+                .sorted(Comparator.comparingInt(TreatmentPlanObject::getDisplayOrder))
+                .collect(Collectors.toList());
+
+        latestObject.setTreatmentPlans(sortedLatestPlan);
+        patientDentalDetailsMapping.setTreatmentPlanLatest(latestObject);
+
+        List<TreatmentPlanListObject> historyPlanObject = patientDentalDetailsMapping.getTreatmentPlanHistory();
+
+        if(historyPlanObject == null || historyPlanObject.isEmpty()){
+
+            historyPlanObject = new ArrayList<>();
+
+            List<TreatmentPlanObject> treatmentPlans = new ArrayList<>();
+            treatmentPlans.add(treatmentPlanObject);
+
+              TreatmentPlanListObject historyObject = new TreatmentPlanListObject();
+              historyObject.setId(0);
+              historyObject.setTreatmentPlans(treatmentPlans);
+              historyObject.setTreatmentPlanStatus(TreatmentPlanStatus.history);
+
+              historyPlanObject.add(historyObject);
+        }
+        else{
+
+            int objFoundIdx = -1;
+
+            for(int i=0 ; i<historyPlanObject.size() ; i++){
+                boolean historyObjFound = false;
+                for(int j=0 ; j<historyPlanObject.get(i).getTreatmentPlans().size() ; j++){
+                    if(historyPlanObject.get(i).getTreatmentPlans().get(j).getDisplayOrder()
+                            == treatmentPlanObject.getDisplayOrder()){
+                        historyObjFound = true;
+                        break;
+                    }
+                }
+
+                if(!historyObjFound){
+                    objFoundIdx = i;
+                    break;
+                }
+            }
+
+            if(objFoundIdx == -1){
+                List<TreatmentPlanObject> treatmentPlans = new ArrayList<>();
+                treatmentPlans.add(treatmentPlanObject);
+
+                TreatmentPlanListObject newHistoryRevision = new TreatmentPlanListObject();
+                newHistoryRevision.setId(historyPlanObject.size());
+                newHistoryRevision.setTreatmentPlans(treatmentPlans);
+                newHistoryRevision.setTreatmentPlanStatus(TreatmentPlanStatus.history);
+
+                historyPlanObject.add(newHistoryRevision);
+            } else {
+                TreatmentPlanListObject historyPlanFoundObj = historyPlanObject.get(objFoundIdx);
+                historyPlanFoundObj.getTreatmentPlans().add(treatmentPlanObject);
+
+                List<TreatmentPlanObject> sortedHistoryList = historyPlanFoundObj.getTreatmentPlans().stream()
+                        .sorted(Comparator.comparingInt(TreatmentPlanObject::getDisplayOrder))
+                        .collect(Collectors.toList());
+
+                historyPlanFoundObj.setTreatmentPlans(sortedHistoryList);
+                historyPlanObject.set(objFoundIdx, historyPlanFoundObj);
+            }
+        }
+        patientDentalDetailsMapping.setTreatmentPlanHistory(historyPlanObject);
+
+        this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
 
     /*****************************************************************************************

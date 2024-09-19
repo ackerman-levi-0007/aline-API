@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface IPatientTreatmentPlanService {
+public interface ITreatmentPlanService {
     PatientTreatmentPlanDto getTreatmentPlan(String patientID, int rebootID, String treatmentPlanID, TreatmentPlanType treatmentPlanType) throws BadRequestException;
     List<PatientTreatmentPlanDto> getAllTreatmentPlanForPatientID(String patientID);
     void createDraft(String patientID, int rebootID, PatientTreatmentPlanDto patientTreatmentPlanDto);

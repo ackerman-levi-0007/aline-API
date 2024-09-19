@@ -5,7 +5,7 @@ import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
 import com.aline.aline.entities.User;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
-import com.aline.aline.services.IPatientDentalDetailsMappingService;
+import com.aline.aline.services.IDentalDetailsMappingService;
 import com.aline.aline.utilities.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PatientDentalDetailsMappingService implements IPatientDentalDetailsMappingService {
+public class DentalDetailsMappingService implements IDentalDetailsMappingService {
 
     private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
 
@@ -36,8 +36,8 @@ public class PatientDentalDetailsMappingService implements IPatientDentalDetails
     }
 
     @Override
-    public void addPatientTreatmentPlanID(String patientID, TreatmentPlanObject treatmentPlanObject, int rebootID) {
-        this.patientDentalDetailsMappingDao.addPatientTreatmentPlanID(patientID, treatmentPlanObject, rebootID);
+    public void addPatientTreatmentPlanID(String patientID, TreatmentPlanObject treatmentPlanObject, int rebootID, String draftID) {
+        this.patientDentalDetailsMappingDao.addPatientTreatmentPlanID(patientID, treatmentPlanObject, rebootID, draftID);
     }
 
     @Override

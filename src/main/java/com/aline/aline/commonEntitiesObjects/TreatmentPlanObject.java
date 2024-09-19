@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TreatmentPlanObject {
     private String id;
+    private String label;
 
     @JsonIgnore
-    private String historyID;
-
+    private int displayOrder;
     private TreatmentPlanStatus status;
 }

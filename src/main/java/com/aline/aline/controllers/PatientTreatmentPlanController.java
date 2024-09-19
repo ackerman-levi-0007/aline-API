@@ -3,7 +3,7 @@ package com.aline.aline.controllers;
 import com.aline.aline.enums.TreatmentPlanType;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
-import com.aline.aline.services.IPatientTreatmentPlanService;
+import com.aline.aline.services.ITreatmentPlanService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class PatientTreatmentPlanController {
 
-    private final IPatientTreatmentPlanService patientTreatmentPlanService;
+    private final ITreatmentPlanService patientTreatmentPlanService;
 
     @PostMapping("/saveDraft/{patientID}/{rebootID}")
     public ResponseEntity<APIResponse> saveDraft(

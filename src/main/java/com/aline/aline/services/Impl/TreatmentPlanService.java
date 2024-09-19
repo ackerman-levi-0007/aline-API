@@ -13,8 +13,7 @@ import com.aline.aline.enums.TreatmentPlanType;
 import com.aline.aline.enums.UserRole;
 import com.aline.aline.exceptionHandler.ForbiddenException;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
-import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
-import com.aline.aline.services.IPatientTreatmentPlanService;
+import com.aline.aline.services.ITreatmentPlanService;
 import com.aline.aline.services.helpers.PatientHelperService;
 import com.aline.aline.utilities.CommonUtils;
 import com.aline.aline.utilities.SecurityUtils;
@@ -28,7 +27,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PatientTreatmentPlanService implements IPatientTreatmentPlanService {
+public class TreatmentPlanService implements ITreatmentPlanService {
 
     private final PatientHelperService patientHelperService;
     private final IPatientTreatmentPlanDao patientTreatmentPlanDao;
@@ -69,18 +68,18 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
 
         PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
 
-        patientTreatmentPlan.setLabel(
-                "Option-" +
-                        (patientDentalDetailsMapping.getTreatmentPlanDraft() == null ?
-                                "1" :
-                                (patientDentalDetailsMapping.getTreatmentPlanDraft().getTreatmentPlans().size() + 1))
-        );
+        int displayOrder = patientDentalDetailsMapping.getTreatmentPlanDraft() == null ?
+                            1 : (patientDentalDetailsMapping.getTreatmentPlanDraft().getTreatmentPlans().size() + 1);
+
+        patientTreatmentPlan.setLabel("Option-" + displayOrder);
 
         PatientTreatmentPlanDraft savedPatientTreatmentPlan = this.patientTreatmentPlanDao
                 .saveDraft(patientTreatmentPlan);
 
         TreatmentPlanObject treatmentPlanObject = new TreatmentPlanObject();
         treatmentPlanObject.setId(savedPatientTreatmentPlan.getId().toString());
+        treatmentPlanObject.setLabel(savedPatientTreatmentPlan.getLabel());
+        treatmentPlanObject.setDisplayOrder(displayOrder);
         treatmentPlanObject.setStatus(TreatmentPlanStatus.draft);
 
         this.patientDentalDetailsMappingDao.addUnsavedDraftTreatmentPlanID(
@@ -98,7 +97,7 @@ public class PatientTreatmentPlanService implements IPatientTreatmentPlanService
 
     @Override
     public void sendPlanModification(String patientID, int rebootID, String draftID) {
-        patientHelperService.checkLoggedInUserPermission(patientID, rebootID);
+        this.patientHelperService.checkLoggedInUserPermission(patientID, rebootID);
         this.patientTreatmentPlanDao.savePlan(patientID, rebootID , draftID);
     }
 

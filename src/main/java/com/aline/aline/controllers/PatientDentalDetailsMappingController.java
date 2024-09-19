@@ -3,7 +3,7 @@ package com.aline.aline.controllers;
 import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
-import com.aline.aline.services.IPatientDentalDetailsMappingService;
+import com.aline.aline.services.IDentalDetailsMappingService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,7 @@ import java.util.List;
 @CrossOrigin("*")
 public class PatientDentalDetailsMappingController {
 
-    private final IPatientDentalDetailsMappingService patientDentalDetailsMappingService;
+    private final IDentalDetailsMappingService patientDentalDetailsMappingService;
 
     @GetMapping("/getAllRebootIds/{patientID}")
     public ResponseEntity<List<Integer>> getAllRebootIds(
@@ -42,13 +42,14 @@ public class PatientDentalDetailsMappingController {
 
     //For testing has to remove
 
-    @PostMapping("/addPatientTreatmentPlanID/{patientID}/{rebootID}")
+    @PostMapping("/addPatientTreatmentPlanID/{patientID}/{rebootID}/{draftID}")
     public ResponseEntity<APIResponse> addPatientTreatmentPlanID(
             @PathVariable String patientID,
             @PathVariable int rebootID,
-            @RequestBody TreatmentPlanObject treatmentPlanObject
+            @RequestBody TreatmentPlanObject treatmentPlanObject,
+            @PathVariable String draftID
             ) {
-        this.patientDentalDetailsMappingService.addPatientTreatmentPlanID(patientID, treatmentPlanObject, rebootID);
+        this.patientDentalDetailsMappingService.addPatientTreatmentPlanID(patientID, treatmentPlanObject, rebootID, draftID);
         return new ResponseEntity<>(new APIResponse("ok", true), HttpStatus.OK);
     }
 
