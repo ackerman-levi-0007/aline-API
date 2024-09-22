@@ -104,6 +104,7 @@ public class TreatmentPlanDao implements ITreatmentPlanDao {
             TreatmentPlanObject treatmentPlanObject = new TreatmentPlanObject();
             treatmentPlanObject.setId(savedPlan.getId().toString());
             treatmentPlanObject.setLabel(savedPlan.getLabel());
+            treatmentPlanObject.setDraftID(draftID);
             treatmentPlanObject.setStatus(TreatmentPlanStatus.shared);
 
             this.patientDentalDetailsMappingDao.addPatientTreatmentPlanID(savedPlan.getPatientID(), treatmentPlanObject ,rebootID, draftID);
@@ -123,11 +124,13 @@ public class TreatmentPlanDao implements ITreatmentPlanDao {
     private PatientTreatmentPlanHistory updatePlan(PatientTreatmentPlanDraft patientTreatmentPlanDraft) {
         PatientTreatmentPlan patientTreatmentPlan = getPlan(patientTreatmentPlanDraft.getTreatmentPlanID());
 
+        PatientTreatmentPlan historyPlan = patientTreatmentPlan;
+
         PatientTreatmentPlan updatedPlan = this.patientTreatmentPlanMapper.PlanDraftSetter(patientTreatmentPlan, patientTreatmentPlanDraft);
 
         this.patientTreatmentPlanRepo.save(updatedPlan);
         PatientTreatmentPlanHistory patientTreatmentPlanHistory = this.patientTreatmentPlanHistoryMapper
-                .mapper(patientTreatmentPlan);
+                .mapper(historyPlan);
 
         return this.patientTreatmentPlanHistoryRepo.save(patientTreatmentPlanHistory);
     }

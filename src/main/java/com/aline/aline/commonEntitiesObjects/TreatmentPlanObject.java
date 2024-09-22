@@ -14,6 +14,9 @@ public class TreatmentPlanObject {
     private String label;
 
     @JsonIgnore
+    private String draftID;
+
+    @JsonIgnore
     private int displayOrder;
     private TreatmentPlanStatus status;
 }

@@ -130,24 +130,24 @@ public class TreatmentPlanService implements ITreatmentPlanService {
 
         PatientDentalDetailsMapping patientTreatmentPlanMapping = CommonUtils.getPatientPlanMapping();
 
-        if(patientTreatmentPlanMapping.getTreatmentPlanLatest() == null ||
-                patientTreatmentPlanMapping.getTreatmentPlanLatest().getTreatmentPlans().isEmpty()){
-            throw new BadRequestException("No latest treatment plan");
-        }
-        else{
-            if(patientTreatmentPlanMapping.getTreatmentPlanLatest().getTreatmentPlanStatus().equals(TreatmentPlanStatus.confirmed)){
-                throw new BadRequestException("Treatment plan is approved for the patient");
-            }
-            else {
-                if (patientTreatmentPlanMapping.getTreatmentPlanLatest()
-                        .getTreatmentPlans()
-                        .parallelStream()
-                        .noneMatch(plan -> plan.getId().equals(planID))
-                ) {
-                    throw new BadRequestException("No plan found for update");
-                }
-            }
-        }
+//        if(patientTreatmentPlanMapping.getTreatmentPlanLatest() == null ||
+//                patientTreatmentPlanMapping.getTreatmentPlanLatest().getTreatmentPlans().isEmpty()){
+//            throw new BadRequestException("No latest treatment plan");
+//        }
+//        else{
+//            if(patientTreatmentPlanMapping.getTreatmentPlanLatest().getTreatmentPlanStatus().equals(TreatmentPlanStatus.confirmed)){
+//                throw new BadRequestException("Treatment plan is approved for the patient");
+//            }
+//            else {
+//                if (patientTreatmentPlanMapping.getTreatmentPlanLatest()
+//                        .getTreatmentPlans()
+//                        .parallelStream()
+//                        .noneMatch(plan -> plan.getId().equals(planID))
+//                ) {
+//                    throw new BadRequestException("No plan found for update");
+//                }
+//            }
+//        }
     }
 
 }

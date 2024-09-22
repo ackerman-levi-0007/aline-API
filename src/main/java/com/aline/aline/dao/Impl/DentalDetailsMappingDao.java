@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Repository
@@ -200,7 +201,7 @@ public class DentalDetailsMappingDao implements IDentalDetailsMappingDao {
 
     @Override
     public void planRequestModification(String patientID, int rebootID, String planID) {
-        changePlanStatus(patientID, rebootID, planID, TreatmentPlanStatus.requestForModification);
+        changePlanStatus(patientID, rebootID, planID, TreatmentPlanStatus.modificationRequested);
     }
 
     @Override
@@ -256,7 +257,7 @@ public class DentalDetailsMappingDao implements IDentalDetailsMappingDao {
         latestObject.setTreatmentPlans(sortedLatestPlan);
         patientDentalDetailsMapping.setTreatmentPlanLatest(latestObject);
 
-        if(currentPlanStatus != null && currentPlanStatus == TreatmentPlanStatus.requestForModification){
+        if(currentPlanStatus == TreatmentPlanStatus.modificationRequested){
             List<TreatmentPlanListObject> historyPlanObject = patientDentalDetailsMapping.getTreatmentPlanHistory();
 
             if(historyPlanObject == null || historyPlanObject.isEmpty()){
@@ -339,13 +340,17 @@ public class DentalDetailsMappingDao implements IDentalDetailsMappingDao {
     private void changePlanStatus(String patientID, int rebootID, String planID, TreatmentPlanStatus treatmentPlanStatus){
         PatientDentalDetailsMapping patientDentalDetailsMapping =
                 getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
-
+        AtomicReference<String> draftIDRef = new AtomicReference<>();
         TreatmentPlanListObject treatmentPlanListLatest = patientDentalDetailsMapping.getTreatmentPlanLatest();
 
         List<TreatmentPlanObject> treatmentPlanObjects =
-                treatmentPlanListLatest.getTreatmentPlans().stream().peek(
+                treatmentPlanListLatest.getTreatmentPlans().stream().map(
                         x -> {
-                            if(x.getId().equals(planID)) x.setStatus(treatmentPlanStatus);
+                            if(x.getId().equals(planID)) {
+                                x.setStatus(treatmentPlanStatus);
+                                draftIDRef.set(x.getDraftID());
+                            }
+                            return x;
                         }
                 ).toList();
 
@@ -353,6 +358,17 @@ public class DentalDetailsMappingDao implements IDentalDetailsMappingDao {
         treatmentPlanListLatest.setTreatmentPlanStatus(treatmentPlanStatus);
 
         patientDentalDetailsMapping.setTreatmentPlanLatest(treatmentPlanListLatest);
+
+        TreatmentPlanListObject drafts = patientDentalDetailsMapping.getTreatmentPlanDraft();
+        drafts.getTreatmentPlans().stream().peek(
+                x -> {
+                    if(x.getId().equals(draftIDRef.get())) {
+                        x.setStatus(treatmentPlanStatus);
+                    }
+                }
+        ).toList();
+
+        patientDentalDetailsMapping.setTreatmentPlanDraft(drafts);
 
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
