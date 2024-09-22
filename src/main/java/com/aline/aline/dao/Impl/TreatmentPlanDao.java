@@ -1,31 +1,27 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.commonEntitiesObjects.TreatmentPlanListObject;
 import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.customMapper.PatientTreatmentPlanDraftMapper;
 import com.aline.aline.customMapper.PatientTreatmentPlanHistoryMapper;
 import com.aline.aline.customMapper.PatientTreatmentPlanMapper;
-import com.aline.aline.dao.IPatientTreatmentPlanDao;
-import com.aline.aline.entities.PatientDentalDetailsMapping;
+import com.aline.aline.dao.ITreatmentPlanDao;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanHistory;
 import com.aline.aline.enums.TreatmentPlanStatus;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
-import com.aline.aline.repositories.PatientDentalDetailsMappingRepo;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanDraftRepo;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanHistoryRepo;
 import com.aline.aline.repositories.PatientTreatmentPlan.PatientTreatmentPlanRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
+public class TreatmentPlanDao implements ITreatmentPlanDao {
 
     private final PatientTreatmentPlanRepo patientTreatmentPlanRepo;
     private final PatientTreatmentPlanDraftRepo patientTreatmentPlanDraftRepo;
@@ -33,8 +29,7 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     private final PatientTreatmentPlanDraftMapper patientTreatmentPlanDraftMapper;
     private final PatientTreatmentPlanHistoryMapper patientTreatmentPlanHistoryMapper;
     private final PatientTreatmentPlanMapper patientTreatmentPlanMapper;
-    private final PatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
-    private final PatientDentalDetailsMappingRepo patientDentalDetailsMappingRepo;
+    private final DentalDetailsMappingDao patientDentalDetailsMappingDao;
 
 
     private PatientTreatmentPlan createPlan(PatientTreatmentPlanDraft patientTreatmentPlanDraft) {
@@ -103,8 +98,6 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
     public void savePlan(String patientID, int rebootID, String draftID) {
         PatientTreatmentPlanDraft patientTreatmentPlanDraft = getPatientTreatmentPlanDraft(patientID, draftID);
 
-        String id, historyID = null;
-
         if(patientTreatmentPlanDraft.getTreatmentPlanID() == null){
             PatientTreatmentPlan savedPlan = createPlan(patientTreatmentPlanDraft);
 
@@ -136,12 +129,6 @@ public class PatientTreatmentPlanDao implements IPatientTreatmentPlanDao {
         PatientTreatmentPlanHistory patientTreatmentPlanHistory = this.patientTreatmentPlanHistoryMapper
                 .mapper(patientTreatmentPlan);
 
-        return this.patientTreatmentPlanHistoryRepo.save(patientTreatmentPlanHistory);
-    }
-
-    private PatientTreatmentPlanHistory movePlanToHistory(String planID) {
-        PatientTreatmentPlan patientTreatmentPlan = getPlan(planID);
-        PatientTreatmentPlanHistory patientTreatmentPlanHistory = this.patientTreatmentPlanHistoryMapper.mapper(patientTreatmentPlan);
         return this.patientTreatmentPlanHistoryRepo.save(patientTreatmentPlanHistory);
     }
 

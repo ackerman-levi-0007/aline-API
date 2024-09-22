@@ -7,7 +7,7 @@ import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 
 import java.util.List;
 
-public interface IPatientTreatmentPlanDao {
+public interface ITreatmentPlanDao {
     PatientTreatmentPlanDraft saveDraft(PatientTreatmentPlan patientTreatmentPlan);
     PatientTreatmentPlan getTreatmentPlan(String patientID, String treatmentPlanID);
     List<PatientTreatmentPlan> getAllTreatmentPlanForPatientID(String patientID);

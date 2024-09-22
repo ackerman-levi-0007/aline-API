@@ -2,7 +2,7 @@ package com.aline.aline.dao.Impl;
 
 import com.aline.aline.commonEntitiesObjects.TreatmentPlanListObject;
 import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
-import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
+import com.aline.aline.dao.IDentalDetailsMappingDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.enums.TreatmentPlanStatus;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMappingDao {
+public class DentalDetailsMappingDao implements IDentalDetailsMappingDao {
 
     private final PatientDentalDetailsMappingRepo patientDentalDetailsMappingRepo;
     private final ModelMapper modelMapper;
@@ -214,6 +214,8 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
         PatientDentalDetailsMapping patientDentalDetailsMapping =
                 getPatientDentalDetailsMappingForRebootID(patientID, rebootID);
 
+        TreatmentPlanStatus currentPlanStatus = null;
+
         TreatmentPlanListObject draftObject = patientDentalDetailsMapping.getTreatmentPlanDraft();
         List<TreatmentPlanObject> draftsList = draftObject.getTreatmentPlans();
 
@@ -237,6 +239,7 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
         Optional<TreatmentPlanObject> latestPlan = latestPlanList.stream().filter(x -> x.getId().equals(treatmentPlanID)).findFirst();
 
         if(latestPlan.isPresent()){
+            currentPlanStatus = latestPlan.get().getStatus();
             latestPlan.get().setStatus(TreatmentPlanStatus.shared);
 
             for(int i=0 ; i<latestPlanList.size() ; i++)
@@ -253,65 +256,67 @@ public class PatientDentalDetailsMappingDao implements IPatientDentalDetailsMapp
         latestObject.setTreatmentPlans(sortedLatestPlan);
         patientDentalDetailsMapping.setTreatmentPlanLatest(latestObject);
 
-        List<TreatmentPlanListObject> historyPlanObject = patientDentalDetailsMapping.getTreatmentPlanHistory();
+        if(currentPlanStatus != null && currentPlanStatus == TreatmentPlanStatus.requestForModification){
+            List<TreatmentPlanListObject> historyPlanObject = patientDentalDetailsMapping.getTreatmentPlanHistory();
 
-        if(historyPlanObject == null || historyPlanObject.isEmpty()){
+            if(historyPlanObject == null || historyPlanObject.isEmpty()){
 
-            historyPlanObject = new ArrayList<>();
+                historyPlanObject = new ArrayList<>();
 
-            List<TreatmentPlanObject> treatmentPlans = new ArrayList<>();
-            treatmentPlans.add(treatmentPlanObject);
+                List<TreatmentPlanObject> treatmentPlans = new ArrayList<>();
+                treatmentPlans.add(treatmentPlanObject);
 
-              TreatmentPlanListObject historyObject = new TreatmentPlanListObject();
-              historyObject.setId(0);
-              historyObject.setTreatmentPlans(treatmentPlans);
-              historyObject.setTreatmentPlanStatus(TreatmentPlanStatus.history);
+                TreatmentPlanListObject historyObject = new TreatmentPlanListObject();
+                historyObject.setId(0);
+                historyObject.setTreatmentPlans(treatmentPlans);
+                historyObject.setTreatmentPlanStatus(TreatmentPlanStatus.history);
 
-              historyPlanObject.add(historyObject);
-        }
-        else{
+                historyPlanObject.add(historyObject);
+            }
+            else{
 
-            int objFoundIdx = -1;
+                int objFoundIdx = -1;
 
-            for(int i=0 ; i<historyPlanObject.size() ; i++){
-                boolean historyObjFound = false;
-                for(int j=0 ; j<historyPlanObject.get(i).getTreatmentPlans().size() ; j++){
-                    if(historyPlanObject.get(i).getTreatmentPlans().get(j).getDisplayOrder()
-                            == treatmentPlanObject.getDisplayOrder()){
-                        historyObjFound = true;
+                for(int i=0 ; i<historyPlanObject.size() ; i++){
+                    boolean historyObjFound = false;
+                    for(int j=0 ; j<historyPlanObject.get(i).getTreatmentPlans().size() ; j++){
+                        if(historyPlanObject.get(i).getTreatmentPlans().get(j).getDisplayOrder()
+                                == treatmentPlanObject.getDisplayOrder()){
+                            historyObjFound = true;
+                            break;
+                        }
+                    }
+
+                    if(!historyObjFound){
+                        objFoundIdx = i;
                         break;
                     }
                 }
 
-                if(!historyObjFound){
-                    objFoundIdx = i;
-                    break;
+                if(objFoundIdx == -1){
+                    List<TreatmentPlanObject> treatmentPlans = new ArrayList<>();
+                    treatmentPlans.add(treatmentPlanObject);
+
+                    TreatmentPlanListObject newHistoryRevision = new TreatmentPlanListObject();
+                    newHistoryRevision.setId(historyPlanObject.size());
+                    newHistoryRevision.setTreatmentPlans(treatmentPlans);
+                    newHistoryRevision.setTreatmentPlanStatus(TreatmentPlanStatus.history);
+
+                    historyPlanObject.add(newHistoryRevision);
+                } else {
+                    TreatmentPlanListObject historyPlanFoundObj = historyPlanObject.get(objFoundIdx);
+                    historyPlanFoundObj.getTreatmentPlans().add(treatmentPlanObject);
+
+                    List<TreatmentPlanObject> sortedHistoryList = historyPlanFoundObj.getTreatmentPlans().stream()
+                            .sorted(Comparator.comparingInt(TreatmentPlanObject::getDisplayOrder))
+                            .collect(Collectors.toList());
+
+                    historyPlanFoundObj.setTreatmentPlans(sortedHistoryList);
+                    historyPlanObject.set(objFoundIdx, historyPlanFoundObj);
                 }
             }
-
-            if(objFoundIdx == -1){
-                List<TreatmentPlanObject> treatmentPlans = new ArrayList<>();
-                treatmentPlans.add(treatmentPlanObject);
-
-                TreatmentPlanListObject newHistoryRevision = new TreatmentPlanListObject();
-                newHistoryRevision.setId(historyPlanObject.size());
-                newHistoryRevision.setTreatmentPlans(treatmentPlans);
-                newHistoryRevision.setTreatmentPlanStatus(TreatmentPlanStatus.history);
-
-                historyPlanObject.add(newHistoryRevision);
-            } else {
-                TreatmentPlanListObject historyPlanFoundObj = historyPlanObject.get(objFoundIdx);
-                historyPlanFoundObj.getTreatmentPlans().add(treatmentPlanObject);
-
-                List<TreatmentPlanObject> sortedHistoryList = historyPlanFoundObj.getTreatmentPlans().stream()
-                        .sorted(Comparator.comparingInt(TreatmentPlanObject::getDisplayOrder))
-                        .collect(Collectors.toList());
-
-                historyPlanFoundObj.setTreatmentPlans(sortedHistoryList);
-                historyPlanObject.set(objFoundIdx, historyPlanFoundObj);
-            }
+            patientDentalDetailsMapping.setTreatmentPlanHistory(historyPlanObject);
         }
-        patientDentalDetailsMapping.setTreatmentPlanHistory(historyPlanObject);
 
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }

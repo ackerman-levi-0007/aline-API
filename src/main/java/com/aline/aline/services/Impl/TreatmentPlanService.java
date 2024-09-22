@@ -2,8 +2,8 @@ package com.aline.aline.services.Impl;
 
 import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.customMapper.PatientTreatmentPlanMapper;
-import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
-import com.aline.aline.dao.IPatientTreatmentPlanDao;
+import com.aline.aline.dao.IDentalDetailsMappingDao;
+import com.aline.aline.dao.ITreatmentPlanDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
@@ -30,8 +30,8 @@ import java.util.List;
 public class TreatmentPlanService implements ITreatmentPlanService {
 
     private final PatientHelperService patientHelperService;
-    private final IPatientTreatmentPlanDao patientTreatmentPlanDao;
-    private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
+    private final ITreatmentPlanDao patientTreatmentPlanDao;
+    private final IDentalDetailsMappingDao patientDentalDetailsMappingDao;
     private final PatientTreatmentPlanMapper patientTreatmentPlanMapper;
     private final ModelMapper modelMapper;
 
@@ -138,15 +138,14 @@ public class TreatmentPlanService implements ITreatmentPlanService {
             if(patientTreatmentPlanMapping.getTreatmentPlanLatest().getTreatmentPlanStatus().equals(TreatmentPlanStatus.confirmed)){
                 throw new BadRequestException("Treatment plan is approved for the patient");
             }
-            else if(patientTreatmentPlanMapping.getTreatmentPlanLatest()
-                    .getTreatmentPlans()
-                    .parallelStream()
-                    .anyMatch(plan -> plan.getId().equals(planID))
-            ){
-
-            }
-            else{
-                throw new BadRequestException("No plan found for update");
+            else {
+                if (patientTreatmentPlanMapping.getTreatmentPlanLatest()
+                        .getTreatmentPlans()
+                        .parallelStream()
+                        .noneMatch(plan -> plan.getId().equals(planID))
+                ) {
+                    throw new BadRequestException("No plan found for update");
+                }
             }
         }
     }

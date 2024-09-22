@@ -6,7 +6,7 @@ import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IPatientDentalDetailsDao {
+public interface IDentalDetailsDao {
     PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails, int rebootID);
     PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal, int rebootID);
     PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail, int rebootID);

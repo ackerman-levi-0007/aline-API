@@ -1,9 +1,8 @@
 package com.aline.aline.dao.Impl;
 
 import com.aline.aline.customMapper.GetPatientPhotoScansDtoMapper;
-import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
-import com.aline.aline.dao.IPatientPhotoScansDao;
-import com.aline.aline.entities.PatientDentalDetailsMapping;
+import com.aline.aline.dao.IDentalDetailsMappingDao;
+import com.aline.aline.dao.IPhotoScansDao;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientPhotoScans.GetPatientPhotoScansDto;
@@ -16,11 +15,11 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class PatientPhotoScansDao implements IPatientPhotoScansDao {
+public class PhotoScansDao implements IPhotoScansDao {
 
     private final PatientPhotoScansRepo patientPhotoScansRepo;
     private final GetPatientPhotoScansDtoMapper getPatientPhotoScansDtoMapper;
-    private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
+    private final IDentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
     public  GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID) {

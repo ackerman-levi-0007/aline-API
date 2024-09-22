@@ -32,9 +32,9 @@ public class PatientService implements IPatientService {
     private final ModelMapper modelMapper;
     private final IUserDao userDao;
     private final IClinicDoctorRelationshipDao clinicDoctorRelationshipDao;
-    private final IPatientDentalDetailsDao patientDentalDetailsDao;
-    private final IPatientPhotoScansDao patientPhotoScansDao;
-    private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
+    private final IDentalDetailsDao patientDentalDetailsDao;
+    private final IPhotoScansDao patientPhotoScansDao;
+    private final IDentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
     public GetPatientDto createPatient(Patient patient) throws BadRequestException {

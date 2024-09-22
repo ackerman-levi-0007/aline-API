@@ -1,6 +1,6 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.dao.IPatientDentalDetailsDao;
+import com.aline.aline.dao.IDentalDetailsDao;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -16,11 +16,11 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
+public class DentalDetailsDao implements IDentalDetailsDao {
 
     private final PatientPreviousDentalHistoryRepo patientPreviousDentalHistoryRepo;
     private final PatientTreatmentGoalRepo patientTreatmentGoalRepo;
-    private final PatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
+    private final DentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
     public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(

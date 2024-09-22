@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface IPatientDentalDetailsMappingDao {
+public interface IDentalDetailsMappingDao {
     void createPatientDentalDetailsMapping(String clinicID, String doctorID, String patientID);
     PatientDentalDetailsMapping getPatientDentalDetailsMapping(String patientID, int rebootID);
     void updatePatientPhotoScansID(String patientID, String photoScansID,  int rebootID);

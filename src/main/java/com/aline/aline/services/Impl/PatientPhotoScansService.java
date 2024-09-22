@@ -1,7 +1,7 @@
 package com.aline.aline.services.Impl;
 
 import com.aline.aline.customMapper.GetPatientPhotoScansDtoMapper;
-import com.aline.aline.dao.IPatientPhotoScansDao;
+import com.aline.aline.dao.IPhotoScansDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class PatientPhotoScansService implements IPatientPhotoScansService {
 
-    private final IPatientPhotoScansDao patientPhotoScansDao;
+    private final IPhotoScansDao patientPhotoScansDao;
     private final PatientHelperService patientHelperService;
     private final GetPatientPhotoScansDtoMapper getPatientPhotoScansDtoMapper;
 

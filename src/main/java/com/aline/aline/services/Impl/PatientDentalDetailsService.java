@@ -1,6 +1,6 @@
 package com.aline.aline.services.Impl;
 
-import com.aline.aline.dao.IPatientDentalDetailsDao;
+import com.aline.aline.dao.IDentalDetailsDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class PatientDentalDetailsService implements IPatientDentalDetailsService {
 
-    private final IPatientDentalDetailsDao patientDentalDetailsDao;
+    private final IDentalDetailsDao patientDentalDetailsDao;
     private final PatientHelperService patientHelperService;
 
     @Override
