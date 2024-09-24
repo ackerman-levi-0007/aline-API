@@ -1,6 +1,7 @@
 package com.aline.aline.dao.Impl;
 
 import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
+import com.aline.aline.customMapper.DeepClone;
 import com.aline.aline.customMapper.PatientTreatmentPlanDraftMapper;
 import com.aline.aline.customMapper.PatientTreatmentPlanHistoryMapper;
 import com.aline.aline.customMapper.PatientTreatmentPlanMapper;
@@ -124,7 +125,7 @@ public class TreatmentPlanDao implements ITreatmentPlanDao {
     private PatientTreatmentPlanHistory updatePlan(PatientTreatmentPlanDraft patientTreatmentPlanDraft) {
         PatientTreatmentPlan patientTreatmentPlan = getPlan(patientTreatmentPlanDraft.getTreatmentPlanID());
 
-        PatientTreatmentPlan historyPlan = patientTreatmentPlan;
+        PatientTreatmentPlan historyPlan = DeepClone.deepClone(patientTreatmentPlan);
 
         PatientTreatmentPlan updatedPlan = this.patientTreatmentPlanMapper.PlanDraftSetter(patientTreatmentPlan, patientTreatmentPlanDraft);
 
