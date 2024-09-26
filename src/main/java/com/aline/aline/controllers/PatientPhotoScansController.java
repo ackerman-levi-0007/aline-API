@@ -17,30 +17,33 @@ import org.springframework.web.bind.annotation.*;
 public class PatientPhotoScansController {
     private final IPatientPhotoScansService patientPhotoScansService;
 
-    @PutMapping("/updatePatientPhotoScans")
+    @PutMapping("/updatePatientPhotoScans/{rebootID}")
     public ResponseEntity<GetPatientPhotoScansDto> updatePatientPhotoScans(
-            @RequestBody PatientPhotoScans patientPhotoScans
+            @RequestBody PatientPhotoScans patientPhotoScans,
+            @PathVariable int rebootID
     ) {
         GetPatientPhotoScansDto getPatientPhotoScansDto =
-                this.patientPhotoScansService.updatePatientPhotoScans(patientPhotoScans, 0);
+                this.patientPhotoScansService.updatePatientPhotoScans(patientPhotoScans, rebootID);
         return new ResponseEntity<>(getPatientPhotoScansDto, HttpStatus.OK);
     }
 
-    @GetMapping("/getPatientPhotoScansByPatientID/{patientID}")
+    @GetMapping("/getPatientPhotoScansByPatientID/{patientID}/{rebootID}")
     public ResponseEntity<Object> getPatientPhotoScansByPatientID(
-            @PathVariable String patientID
+            @PathVariable String patientID,
+            @PathVariable int rebootID
     ) {
         Object patientPhotoScans =
-                this.patientPhotoScansService.getPatientPhotoScansByPatientID(patientID, 0);
+                this.patientPhotoScansService.getPatientPhotoScansByPatientID(patientID, rebootID);
         return new ResponseEntity<>(patientPhotoScans, HttpStatus.OK);
     }
 
-    @PostMapping("/savePatientPhotoScans")
+    @PostMapping("/savePatientPhotoScans/{rebootID}")
     public ResponseEntity<GetPatientPhotoScansDto> savePatientPhotoScans(
-            @RequestBody PatientPhotoScans patientPhotoScans
+            @RequestBody PatientPhotoScans patientPhotoScans,
+            @PathVariable int rebootID
     ) {
         GetPatientPhotoScansDto savedPatientPhotoScans =
-                this.patientPhotoScansService.savePatientPhotoScans(patientPhotoScans, 0);
+                this.patientPhotoScansService.savePatientPhotoScans(patientPhotoScans, rebootID);
         return new ResponseEntity<>(savedPatientPhotoScans, HttpStatus.OK);
     }
 }
