@@ -1,7 +1,6 @@
 package com.aline.aline.controllers;
 
 import com.aline.aline.entities.PatientPhotoScans;
-import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.payload.PatientPhotoScans.GetPatientPhotoScansDto;
 import com.aline.aline.services.IPatientPhotoScansService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,7 +22,7 @@ public class PatientPhotoScansController {
             @RequestBody PatientPhotoScans patientPhotoScans
     ) {
         GetPatientPhotoScansDto getPatientPhotoScansDto =
-                this.patientPhotoScansService.updatePatientPhotoScans(patientPhotoScans);
+                this.patientPhotoScansService.updatePatientPhotoScans(patientPhotoScans, 0);
         return new ResponseEntity<>(getPatientPhotoScansDto, HttpStatus.OK);
     }
 
@@ -32,7 +31,7 @@ public class PatientPhotoScansController {
             @PathVariable String patientID
     ) {
         Object patientPhotoScans =
-                this.patientPhotoScansService.getPatientPhotoScansByPatientID(patientID);
+                this.patientPhotoScansService.getPatientPhotoScansByPatientID(patientID, 0);
         return new ResponseEntity<>(patientPhotoScans, HttpStatus.OK);
     }
 
@@ -41,7 +40,7 @@ public class PatientPhotoScansController {
             @RequestBody PatientPhotoScans patientPhotoScans
     ) {
         GetPatientPhotoScansDto savedPatientPhotoScans =
-                this.patientPhotoScansService.savePatientPhotoScans(patientPhotoScans);
+                this.patientPhotoScansService.savePatientPhotoScans(patientPhotoScans, 0);
         return new ResponseEntity<>(savedPatientPhotoScans, HttpStatus.OK);
     }
 }

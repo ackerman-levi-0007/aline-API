@@ -5,7 +5,6 @@ import com.aline.aline.dao.IUserDao;
 import com.aline.aline.entities.User;
 import com.aline.aline.exceptionHandler.ForbiddenException;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
-import com.aline.aline.exceptionHandler.UnauthorizedException;
 import com.aline.aline.payload.Authentication.AuthenticationLoginRequest;
 import com.aline.aline.payload.Authentication.AuthenticationRegisterRequest;
 import com.aline.aline.payload.Authentication.AuthenticationResponse;
@@ -22,7 +21,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -41,7 +39,7 @@ public class AuthenticationService implements IAuthenticationService {
     public AuthenticationResponse register(AuthenticationRegisterRequest authenticationRequest) {
         User user = this.modelMapper.map(authenticationRequest, User.class);
         UserDto userDto = this.userDao.createUser(user, null);
-        User savedUser = this.modelMapper.map(userDto, User.class);
+        this.modelMapper.map(userDto, User.class);
 
         return tokenService.generateToken(user.getEmail());
     }
@@ -75,7 +73,7 @@ public class AuthenticationService implements IAuthenticationService {
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
         if(userEmail != null){
-            User user  = null;
+            User user;
             try{
                 user = this.userDao.findByEmailForLogin(userEmail);
             }

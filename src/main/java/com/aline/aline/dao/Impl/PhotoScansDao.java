@@ -1,7 +1,8 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.CustomMapper.GetPatientPhotoScansDtoMapper;
-import com.aline.aline.dao.IPatientPhotoScansDao;
+import com.aline.aline.customMapper.GetPatientPhotoScansDtoMapper;
+import com.aline.aline.dao.IDentalDetailsMappingDao;
+import com.aline.aline.dao.IPhotoScansDao;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientPhotoScans.GetPatientPhotoScansDto;
@@ -14,13 +15,14 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class PatientPhotoScansDao implements IPatientPhotoScansDao {
+public class PhotoScansDao implements IPhotoScansDao {
 
     private final PatientPhotoScansRepo patientPhotoScansRepo;
     private final GetPatientPhotoScansDtoMapper getPatientPhotoScansDtoMapper;
+    private final IDentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
-    public  GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
+    public  GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID) {
         Optional<PatientPhotoScans> fetchedPatientPhotoScansOptional =
                 this.patientPhotoScansRepo.findByPatientID(patientPhotoScans.getPatientID());
 
@@ -57,27 +59,36 @@ public class PatientPhotoScansDao implements IPatientPhotoScansDao {
 
             return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScans);
         }else{
-             PatientPhotoScans savedPatientPhotoScans = savePatientPhotoScans(patientPhotoScans);
+             PatientPhotoScans savedPatientPhotoScans = savePatientPhotoScans(patientPhotoScans, rebootID);
              return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScans);
         }
     }
 
     @Override
-    public GetPatientPhotoScansDto getPatientPhotoScansByPatientID(String patientID) {
-        return this.patientPhotoScansRepo.findByPatientID(patientID)
+    public GetPatientPhotoScansDto getPatientPhotoScans(String photoScansId) {
+
+        if(CommonUtils.isNullOrEmpty(photoScansId)) throw new ResourceNotFoundException("Patient photo scans id not provided");
+
+        return this.patientPhotoScansRepo.findById(photoScansId)
                 .map(getPatientPhotoScansDtoMapper)
-                .orElseThrow(() -> new ResourceNotFoundException("Patient photo scans", "patientID", patientID));
+                .orElseThrow(() -> new ResourceNotFoundException("Patient photo scans", "id", photoScansId));
     }
 
     @Override
-    public PatientPhotoScans savePatientPhotoScans(PatientPhotoScans patientPhotoScans) {
-        return this.patientPhotoScansRepo.save(patientPhotoScans);
+    public PatientPhotoScans savePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID) {
+        PatientPhotoScans savedPhotoScans = this.patientPhotoScansRepo.save(patientPhotoScans);
+        patientDentalDetailsMappingDao.updatePatientPhotoScansID(
+                savedPhotoScans.getPatientID(),
+                savedPhotoScans.getId().toString(),
+                rebootID
+        );
+        return savedPhotoScans;
     }
 
     @Override
     public String getPatientProfilePhotoByPatientID(String patientID) {
         try{
-            GetPatientPhotoScansDto patientPhotoScansDto = getPatientPhotoScansByPatientID(patientID);
+            GetPatientPhotoScansDto patientPhotoScansDto = getPatientPhotoScans("");
             return patientPhotoScansDto.getProfilePhoto().stream().findFirst().orElse(null);
         }
         catch (ResourceNotFoundException ex){

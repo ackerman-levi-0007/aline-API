@@ -1,13 +1,14 @@
 package com.aline.aline.services.Impl;
 
-import com.aline.aline.dao.IPatientDentalDetailsDao;
-import com.aline.aline.dao.IPatientDentalDetailsMappingDao;
+import com.aline.aline.dao.IDentalDetailsDao;
+import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.services.IPatientDentalDetailsService;
 import com.aline.aline.services.helpers.PatientHelperService;
+import com.aline.aline.utilities.CommonUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
@@ -18,71 +19,58 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class PatientDentalDetailsService implements IPatientDentalDetailsService {
 
-    private final IPatientDentalDetailsDao patientDentalDetailsDao;
+    private final IDentalDetailsDao patientDentalDetailsDao;
     private final PatientHelperService patientHelperService;
-    private final IPatientDentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
-    public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientPreviousDentalHistoryDetails.getPatientID());
-        PatientPreviousDentalHistory patientPreviousDentalHistory = this.patientDentalDetailsDao.createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
-        this.patientDentalDetailsMappingDao.updatePatientPreviousDentalHistoryDetailsID(
-                patientPreviousDentalHistory.getPatientID(),
-                patientPreviousDentalHistory.getId().toString(),
-                0
-        );
-        return patientPreviousDentalHistory;
+    public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(int rebootID, PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
+        patientHelperService.checkLoggedInUserPermission(
+                patientPreviousDentalHistoryDetails.getPatientID(), rebootID);
+        return this.patientDentalDetailsDao.createPreviousDentalHistoryDetails(
+                patientPreviousDentalHistoryDetails, rebootID);
     }
 
     @Override
-    public PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientTreatmentGoal.getPatientID());
-        PatientTreatmentGoal savedPatientTreatmentGoal = this.patientDentalDetailsDao.createPatientTreatmentGoal(patientTreatmentGoal);
-        this.patientDentalDetailsMappingDao.updatePatientTreatmentGoalID(
-                savedPatientTreatmentGoal.getPatientID(),
-                savedPatientTreatmentGoal.getId().toString(),
-                0
-        );
-        return savedPatientTreatmentGoal;
+    public PatientTreatmentGoal createPatientTreatmentGoal(int rebootID, PatientTreatmentGoal patientTreatmentGoal) {
+        patientHelperService.checkLoggedInUserPermission(
+                patientTreatmentGoal.getPatientID(), rebootID);
+        return this.patientDentalDetailsDao.createPatientTreatmentGoal(patientTreatmentGoal, rebootID);
     }
 
     @Override
-    public PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail) throws BadRequestException {
-        validatePatientDentalDetail(patientDentalDetail);
-        PatientDentalDetail savedPatientDentalDetail = this.patientDentalDetailsDao.createPatientDentalDetail(patientDentalDetail);
-        this.patientDentalDetailsMappingDao.updatePatientDentalDetailsID(
-                savedPatientDentalDetail.getPatientTreatmentGoal().getPatientID(),
-                savedPatientDentalDetail.getPatientPreviousDentalHistoryDetails().getId().toString(),
-                savedPatientDentalDetail.getPatientTreatmentGoal().getId().toString(),
-                0
-        );
-        return savedPatientDentalDetail;
+    public PatientDentalDetail createPatientDentalDetail(int rebootID, PatientDentalDetail patientDentalDetail) throws BadRequestException {
+        validatePatientDentalDetail(patientDentalDetail, rebootID);
+        return this.patientDentalDetailsDao.createPatientDentalDetail(patientDentalDetail, rebootID);
     }
 
     @Override
-    public PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientPreviousDentalHistoryDetails.getPatientID());
-        return this.patientDentalDetailsDao.updatePreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
+    public PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(int rebootID, PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
+        patientHelperService.checkLoggedInUserPermission(
+                patientPreviousDentalHistoryDetails.getPatientID(), rebootID);
+        return this.patientDentalDetailsDao.updatePreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails, rebootID);
     }
 
     @Override
-    public PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientTreatmentGoal.getPatientID());
-        return this.patientDentalDetailsDao.updatePatientTreatmentGoal(patientTreatmentGoal);
+    public PatientTreatmentGoal updatePatientTreatmentGoal(int rebootID, PatientTreatmentGoal patientTreatmentGoal) {
+        patientHelperService.checkLoggedInUserPermission(
+                patientTreatmentGoal.getPatientID(), rebootID);
+        return this.patientDentalDetailsDao.updatePatientTreatmentGoal(patientTreatmentGoal, rebootID);
     }
 
     @Override
-    public PatientDentalDetail updatePatientDentalDetail(PatientDentalDetail patientDentalDetail) throws BadRequestException {
-        validatePatientDentalDetail(patientDentalDetail);
+    public PatientDentalDetail updatePatientDentalDetail(int rebootID, PatientDentalDetail patientDentalDetail) throws BadRequestException {
+        validatePatientDentalDetail(patientDentalDetail, rebootID);
         patientHelperService.checkLoggedInUserPermissionForPatientID(patientDentalDetail.getPatientTreatmentGoal().getPatientID());
-        return this.patientDentalDetailsDao.updatePatientDentalDetail(patientDentalDetail);
+        return this.patientDentalDetailsDao.updatePatientDentalDetail(patientDentalDetail, rebootID);
     }
 
     @Override
-    public Object getPreviousDentalHistoryDetailsByPatientID(String patientID) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
+    public Object getPreviousDentalHistoryDetailsByPatientID(String patientID, int rebootID) {
+        patientHelperService.checkLoggedInUserPermission(patientID, rebootID);
         try{
-            return this.patientDentalDetailsDao.getPreviousDentalHistoryDetailsByPatientID(patientID);
+            return this.patientDentalDetailsDao.getPreviousDentalHistoryDetails(
+                    CommonUtils.getPatientPlanMapping().getPreviousDentalHistoryId()
+            );
         }
         catch (ResourceNotFoundException ex){
             return new HashMap<>();
@@ -91,48 +79,36 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
     }
 
     @Override
-    public Object getPatientTreatmentGoalByPatientID(String patientID) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
+    public Object getPatientTreatmentGoalByPatientID(String patientID, int rebootID) {
+        patientHelperService.checkLoggedInUserPermission(patientID, rebootID);
         try{
-            return this.patientDentalDetailsDao.getPatientTreatmentGoalByPatientID(patientID);
+            return this.patientDentalDetailsDao.getPatientTreatmentGoal(
+                    CommonUtils.getPatientPlanMapping().getTreatmentGoalId()
+            );
         }catch (ResourceNotFoundException ex){
             return new HashMap<>();
         }
     }
 
     @Override
-    public Object getPatientDentalDetailByPatientID(String patientID) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
+    public Object getPatientDentalDetailByPatientID(String patientID, int rebootID) {
+        patientHelperService.checkLoggedInUserPermission(patientID, rebootID);
         try {
-            return this.patientDentalDetailsDao.getPatientDentalDetailByPatientID(patientID);
+            PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
+            return this.patientDentalDetailsDao.getPatientDentalDetail(
+                    patientDentalDetailsMapping.getPreviousDentalHistoryId(),
+                    patientDentalDetailsMapping.getTreatmentGoalId()
+            );
         }catch (ResourceNotFoundException ex){
             return new HashMap<>();
         }
-    }
-
-    @Override
-    public void deletePreviousDentalHistoryDetailsByPatientID(String patientID) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
-        this.patientDentalDetailsDao.deletePreviousDentalHistoryDetailsByPatientID(patientID);
-    }
-
-    @Override
-    public void deletePatientTreatmentGoalByPatientID(String patientID) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
-        this.patientDentalDetailsDao.deletePatientTreatmentGoalByPatientID(patientID);
-    }
-
-    @Override
-    public void deletePatientDentalDetailByPatientID(String patientID) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
-        this.patientDentalDetailsDao.deletePatientDentalDetailByPatientID(patientID);
     }
 
     /*****************************************************************************************
                                             Helpers
      ****************************************************************************************/
 
-    public void validatePatientDentalDetail(PatientDentalDetail patientDentalDetail) throws BadRequestException {
+    public void validatePatientDentalDetail(PatientDentalDetail patientDentalDetail, int rebootID) throws BadRequestException {
         if(patientDentalDetail.getPatientPreviousDentalHistoryDetails().getPatientID() == null
                 || patientDentalDetail.getPatientTreatmentGoal().getPatientID() == null){
             throw new BadRequestException("Please provide the patientID in the patient details");
@@ -141,6 +117,7 @@ public class PatientDentalDetailsService implements IPatientDentalDetailsService
             throw new BadRequestException("The patientID is not similar in all the patient details object. Please check !!!");
         }
 
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientDentalDetail.getPatientPreviousDentalHistoryDetails().getPatientID());
+        patientHelperService.checkLoggedInUserPermission(
+                patientDentalDetail.getPatientPreviousDentalHistoryDetails().getPatientID(), rebootID);
     }
 }

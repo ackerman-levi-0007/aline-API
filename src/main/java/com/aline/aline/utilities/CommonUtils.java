@@ -1,6 +1,8 @@
 package com.aline.aline.utilities;
 
-import com.aline.aline.CommonEntitiesObjects.S3ImageObject;
+import com.aline.aline.cache.ThreadLocalCache;
+import com.aline.aline.commonEntitiesObjects.S3ImageObject;
+import com.aline.aline.entities.PatientDentalDetailsMapping;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,6 +26,10 @@ public class CommonUtils {
                 getS3ObjectFromListByURL(oldS3ImageObjects, x.getURL()) : x);
 
         return updatedS3ImageObjects;
+    }
+
+    public static PatientDentalDetailsMapping getPatientPlanMapping(){
+        return (PatientDentalDetailsMapping) ThreadLocalCache.get("patientDentalDetailsMapping");
     }
 
     public static S3ImageObject getS3ObjectFromListByURL(List<S3ImageObject> s3ImageObjectList, String url){

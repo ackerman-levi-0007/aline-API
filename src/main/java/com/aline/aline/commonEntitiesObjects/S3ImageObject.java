@@ -1,4 +1,4 @@
-package com.aline.aline.CommonEntitiesObjects;
+package com.aline.aline.commonEntitiesObjects;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

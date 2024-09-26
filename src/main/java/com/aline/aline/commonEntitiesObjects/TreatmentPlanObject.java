@@ -1,4 +1,4 @@
-package com.aline.aline.CommonEntitiesObjects;
+package com.aline.aline.commonEntitiesObjects;
 
 import com.aline.aline.enums.TreatmentPlanStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,9 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TreatmentPlanObject {
     private String id;
+    private String label;
 
     @JsonIgnore
-    private String historyID;
+    private String draftID;
 
+    @JsonIgnore
+    private int displayOrder;
     private TreatmentPlanStatus status;
 }

@@ -1,7 +1,5 @@
 package com.aline.aline.exceptionHandler;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

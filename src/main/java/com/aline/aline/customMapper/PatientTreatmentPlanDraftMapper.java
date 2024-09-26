@@ -1,4 +1,4 @@
-package com.aline.aline.CustomMapper;
+package com.aline.aline.customMapper;
 
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
@@ -15,6 +15,7 @@ public class PatientTreatmentPlanDraftMapper {
 
         if(patientTreatmentPlan.getId() != null) patientTreatmentPlanDraft.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
         patientTreatmentPlanDraft.setPatientID(patientTreatmentPlan.getPatientID());
+        patientTreatmentPlanDraft.setLabel(patientTreatmentPlan.getLabel());
         patientTreatmentPlanDraft.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanDraft.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
         patientTreatmentPlanDraft.setTreatmentPlanSummary(patientTreatmentPlan.getTreatmentPlanSummary());
@@ -55,6 +56,7 @@ public class PatientTreatmentPlanDraftMapper {
 
         patientTreatmentPlan.setId(new ObjectId(patientTreatmentPlanDraft.getTreatmentPlanID()));
         patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
+        patientTreatmentPlan.setLabel(patientTreatmentPlanDraft.getLabel());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());
         patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanDraft.getTreatmentPlanSummary());
@@ -75,6 +77,7 @@ public class PatientTreatmentPlanDraftMapper {
 
         patientTreatmentPlan.setId(patientTreatmentPlanDraft.getId().toString());
         patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
+        patientTreatmentPlan.setLabel(patientTreatmentPlanDraft.getLabel());
         patientTreatmentPlan.setTreatmentPlanID(patientTreatmentPlanDraft.getTreatmentPlanID());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());

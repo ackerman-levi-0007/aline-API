@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UpdatePatientStatusDto {
     private String patientID;
-
     private PatientStatus status;
 }

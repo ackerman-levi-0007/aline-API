@@ -1,4 +1,4 @@
-package com.aline.aline.CustomMapper;
+package com.aline.aline.customMapper;
 
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
@@ -14,6 +14,7 @@ public class PatientTreatmentPlanMapper {
 
         patientTreatmentPlanDto.setId(patientTreatmentPlan.getId().toString());
         patientTreatmentPlanDto.setPatientID(patientTreatmentPlan.getPatientID());
+        patientTreatmentPlanDto.setLabel(patientTreatmentPlan.getLabel());
         patientTreatmentPlanDto.setTreatmentPlanID(patientTreatmentPlan.getId().toString());
         patientTreatmentPlanDto.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
         patientTreatmentPlanDto.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
@@ -35,6 +36,7 @@ public class PatientTreatmentPlanMapper {
         PatientTreatmentPlan patientTreatmentPlan = new PatientTreatmentPlan();
 
         patientTreatmentPlan.setPatientID(patientTreatmentPlanDraft.getPatientID());
+        patientTreatmentPlan.setLabel(patientTreatmentPlanDraft.getLabel());
         patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
         patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());
         patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanDraft.getTreatmentPlanSummary());
@@ -52,17 +54,17 @@ public class PatientTreatmentPlanMapper {
 
     public PatientTreatmentPlan PlanDraftSetter(PatientTreatmentPlan patientTreatmentPlan, PatientTreatmentPlanDraft patientTreatmentPlanDraft) {
 
-        patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlan.getMalocclusionTag());
-        patientTreatmentPlan.setCaseAssessment(patientTreatmentPlan.getCaseAssessment());
-        patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlan.getTreatmentPlanSummary());
-        patientTreatmentPlan.setUpperSteps(patientTreatmentPlan.getUpperSteps());
-        patientTreatmentPlan.setLowerSteps(patientTreatmentPlan.getLowerSteps());
-        patientTreatmentPlan.setExpectedDuration(patientTreatmentPlan.getExpectedDuration());
-        patientTreatmentPlan.setTreatmentPlanCategory(patientTreatmentPlan.getTreatmentPlanCategory());
-        patientTreatmentPlan.setPrice(patientTreatmentPlan.getPrice());
-        patientTreatmentPlan.setIprAndAttachmentReports(patientTreatmentPlan.getIprAndAttachmentReports());
-        patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlan.getTreatmentSimulationsURL());
-        patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlan.getTreatmentSimulationsAttachments());
+        patientTreatmentPlan.setMalocclusionTag(patientTreatmentPlanDraft.getMalocclusionTag());
+        patientTreatmentPlan.setCaseAssessment(patientTreatmentPlanDraft.getCaseAssessment());
+        patientTreatmentPlan.setTreatmentPlanSummary(patientTreatmentPlanDraft.getTreatmentPlanSummary());
+        patientTreatmentPlan.setUpperSteps(patientTreatmentPlanDraft.getUpperSteps());
+        patientTreatmentPlan.setLowerSteps(patientTreatmentPlanDraft.getLowerSteps());
+        patientTreatmentPlan.setExpectedDuration(patientTreatmentPlanDraft.getExpectedDuration());
+        patientTreatmentPlan.setTreatmentPlanCategory(patientTreatmentPlanDraft.getTreatmentPlanCategory());
+        patientTreatmentPlan.setPrice(patientTreatmentPlanDraft.getPrice());
+        patientTreatmentPlan.setIprAndAttachmentReports(patientTreatmentPlanDraft.getIprAndAttachmentReports());
+        patientTreatmentPlan.setTreatmentSimulationsURL(patientTreatmentPlanDraft.getTreatmentSimulationsURL());
+        patientTreatmentPlan.setTreatmentSimulationsAttachments(patientTreatmentPlanDraft.getTreatmentSimulationsAttachments());
 
         return patientTreatmentPlan;
     }

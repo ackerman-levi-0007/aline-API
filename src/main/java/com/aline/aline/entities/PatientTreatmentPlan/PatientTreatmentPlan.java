@@ -1,7 +1,7 @@
 package com.aline.aline.entities.PatientTreatmentPlan;
 
-import com.aline.aline.CommonEntitiesObjects.Price;
-import com.aline.aline.CommonEntitiesObjects.S3ImageObject;
+import com.aline.aline.commonEntitiesObjects.Price;
+import com.aline.aline.commonEntitiesObjects.S3ImageObject;
 import com.aline.aline.enums.MalocclusionTag;
 import com.aline.aline.enums.TreatmentPlanCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,7 +25,7 @@ import java.util.List;
 public class PatientTreatmentPlan {
     @MongoId(value = FieldType.OBJECT_ID)
     private ObjectId id;
-
+    private String label;
     private String patientID;
     private List<MalocclusionTag> malocclusionTag;
     private String caseAssessment;

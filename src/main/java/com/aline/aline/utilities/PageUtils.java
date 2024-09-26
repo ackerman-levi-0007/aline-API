@@ -7,7 +7,7 @@ import org.springframework.data.domain.Sort;
 
 public class PageUtils {
     public static Pageable getPageableFromPageDto (PageDto pageDto){
-        Sort sort = null;
+        Sort sort;
         if(pageDto.getSortDir().equalsIgnoreCase("asc")){
             sort = Sort.by(pageDto.getSortBy()).ascending();
         }

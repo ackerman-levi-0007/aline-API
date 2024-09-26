@@ -1,6 +1,6 @@
 package com.aline.aline.payload.PatientTreatmentPlan;
 
-import com.aline.aline.CommonEntitiesObjects.TreatmentPlanListObject;
+import com.aline.aline.commonEntitiesObjects.TreatmentPlanListObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

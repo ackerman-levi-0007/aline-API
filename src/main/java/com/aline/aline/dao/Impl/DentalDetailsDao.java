@@ -1,44 +1,71 @@
 package com.aline.aline.dao.Impl;
 
-import com.aline.aline.dao.IPatientDentalDetailsDao;
+import com.aline.aline.dao.IDentalDetailsDao;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.repositories.PatientPreviousDentalHistoryRepo;
 import com.aline.aline.repositories.PatientTreatmentGoalRepo;
+import com.aline.aline.utilities.CommonUtils;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
+public class DentalDetailsDao implements IDentalDetailsDao {
 
     private final PatientPreviousDentalHistoryRepo patientPreviousDentalHistoryRepo;
     private final PatientTreatmentGoalRepo patientTreatmentGoalRepo;
+    private final DentalDetailsMappingDao patientDentalDetailsMappingDao;
 
     @Override
-    public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
+    public PatientPreviousDentalHistory createPreviousDentalHistoryDetails(
+            PatientPreviousDentalHistory patientPreviousDentalHistoryDetails,
+            int rebootID
+    ) {
         if(checkPreviousDentalHistoryExistsForPatientID(patientPreviousDentalHistoryDetails.getPatientID())){
             throw new EntityExistsException("Previous dental history already exists for the patient!!!");
         }
-        return this.patientPreviousDentalHistoryRepo.save(patientPreviousDentalHistoryDetails);
+        PatientPreviousDentalHistory savedPreviousDentalHistory =
+                this.patientPreviousDentalHistoryRepo.save(patientPreviousDentalHistoryDetails);
+
+        this.patientDentalDetailsMappingDao.updatePatientPreviousDentalHistoryDetailsID(
+                savedPreviousDentalHistory.getPatientID(),
+                savedPreviousDentalHistory.getId().toString(),
+                rebootID
+        );
+
+        return savedPreviousDentalHistory;
     }
 
     @Override
-    public PatientTreatmentGoal createPatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
+    public PatientTreatmentGoal createPatientTreatmentGoal(
+            PatientTreatmentGoal patientTreatmentGoal,
+            int rebootID
+    ) {
         if(checkTreatmentGoalExistsForPatientID(patientTreatmentGoal.getPatientID())){
             throw new EntityExistsException("Treatment goal already exists for the patient!!!");
         }
-        return this.patientTreatmentGoalRepo.save(patientTreatmentGoal);
+        PatientTreatmentGoal savedTreatmentGoal = this.patientTreatmentGoalRepo.save(patientTreatmentGoal);
+
+        this.patientDentalDetailsMappingDao.updatePatientTreatmentGoalID(
+                savedTreatmentGoal.getPatientID(),
+                savedTreatmentGoal.getId().toString(),
+                rebootID
+        );
+
+        return savedTreatmentGoal;
     }
 
     @Override
-    public PatientDentalDetail createPatientDentalDetail(PatientDentalDetail patientDentalDetail) {
+    public PatientDentalDetail createPatientDentalDetail(
+            PatientDentalDetail patientDentalDetail,
+            int rebootID
+    ) {
 
         PatientPreviousDentalHistory patientPreviousDentalHistory = this.patientPreviousDentalHistoryRepo.save(patientDentalDetail.getPatientPreviousDentalHistoryDetails());
         PatientTreatmentGoal patientTreatmentGoal = this.patientTreatmentGoalRepo.save(patientDentalDetail.getPatientTreatmentGoal());
@@ -47,7 +74,10 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
     }
 
     @Override
-    public PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(PatientPreviousDentalHistory patientPreviousDentalHistoryDetails) {
+    public PatientPreviousDentalHistory updatePreviousDentalHistoryDetails(
+            PatientPreviousDentalHistory patientPreviousDentalHistoryDetails,
+            int rebootID
+    ) {
         Optional<PatientPreviousDentalHistory> fetchedPatientPreviousDentalHistoryOptional =
                 this.patientPreviousDentalHistoryRepo.findByPatientID(patientPreviousDentalHistoryDetails.getPatientID());
 
@@ -64,12 +94,15 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
             return this.patientPreviousDentalHistoryRepo.save(fetchedPatientPreviousDentalHistory);
         }else{
-            return createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails);
+            return createPreviousDentalHistoryDetails(patientPreviousDentalHistoryDetails, rebootID);
         }
     }
 
     @Override
-    public PatientTreatmentGoal updatePatientTreatmentGoal(PatientTreatmentGoal patientTreatmentGoal) {
+    public PatientTreatmentGoal updatePatientTreatmentGoal(
+            PatientTreatmentGoal patientTreatmentGoal,
+            int rebootID
+    ) {
         Optional<PatientTreatmentGoal> fetchedPatientTreatmentGoalOptional =
                 this.patientTreatmentGoalRepo.findByPatientID(patientTreatmentGoal.getPatientID());
 
@@ -86,35 +119,29 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
 
             return this.patientTreatmentGoalRepo.save(fetchedPatientTreatmentGoal);
         }else{
-            return createPatientTreatmentGoal(patientTreatmentGoal);
+            return createPatientTreatmentGoal(patientTreatmentGoal, rebootID);
         }
     }
 
     @Override
-    public PatientDentalDetail updatePatientDentalDetail(PatientDentalDetail patientDentalDetail) {
-        PatientPreviousDentalHistory patientPreviousDentalHistory = updatePreviousDentalHistoryDetails(patientDentalDetail.getPatientPreviousDentalHistoryDetails());
-        PatientTreatmentGoal patientTreatmentGoal = updatePatientTreatmentGoal(patientDentalDetail.getPatientTreatmentGoal());
+    public PatientDentalDetail updatePatientDentalDetail(
+            PatientDentalDetail patientDentalDetail,
+            int rebootID
+    ) {
+        PatientPreviousDentalHistory patientPreviousDentalHistory = updatePreviousDentalHistoryDetails(patientDentalDetail.getPatientPreviousDentalHistoryDetails(), rebootID);
+        PatientTreatmentGoal patientTreatmentGoal = updatePatientTreatmentGoal(patientDentalDetail.getPatientTreatmentGoal(), rebootID);
 
         return new PatientDentalDetail(patientPreviousDentalHistory, patientTreatmentGoal);
     }
 
     @Override
-    public PatientPreviousDentalHistory getPreviousDentalHistoryDetailsByPatientID(String patientID) {
-        return this.patientPreviousDentalHistoryRepo.findByPatientID(patientID)
-                .orElseThrow(() -> new ResourceNotFoundException("Previous dental history", "patientID", patientID));
-    }
+    public PatientDentalDetail getPatientDentalDetail(String previousDentalHistoryId, String treatmentGoalId) {
+        if(CommonUtils.isNullOrEmpty(previousDentalHistoryId) || CommonUtils.isNullOrEmpty(treatmentGoalId)){
+            throw new ResourceNotFoundException("Patient dental details not found");
+        }
 
-    @Override
-    public PatientTreatmentGoal getPatientTreatmentGoalByPatientID(String patientID) {
-        return this.patientTreatmentGoalRepo.findByPatientID(patientID).orElseThrow(
-                () -> new ResourceNotFoundException("Patient treatment goal", "patientID", patientID)
-        );
-    }
-
-    @Override
-    public PatientDentalDetail getPatientDentalDetailByPatientID(String patientID) {
-        PatientPreviousDentalHistory patientPreviousDentalHistory = getPreviousDentalHistoryDetailsByPatientID(patientID);
-        PatientTreatmentGoal patientTreatmentGoal = getPatientTreatmentGoalByPatientID(patientID);
+        PatientPreviousDentalHistory patientPreviousDentalHistory = getPreviousDentalHistoryDetails(previousDentalHistoryId);
+        PatientTreatmentGoal patientTreatmentGoal = getPatientTreatmentGoal(treatmentGoalId);
 
         return new PatientDentalDetail(patientPreviousDentalHistory, patientTreatmentGoal);
     }
@@ -137,6 +164,20 @@ public class PatientDentalDetailsDao implements IPatientDentalDetailsDao {
     public void deletePatientDentalDetailByPatientID(String patientID) {
         deletePreviousDentalHistoryDetailsByPatientID(patientID);
         deletePatientTreatmentGoalByPatientID(patientID);
+    }
+
+    @Override
+    public PatientPreviousDentalHistory getPreviousDentalHistoryDetails(String previousDentalHistoryId) {
+        return this.patientPreviousDentalHistoryRepo.findById(previousDentalHistoryId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Previous dental history","id", previousDentalHistoryId));
+    }
+
+    @Override
+    public PatientTreatmentGoal getPatientTreatmentGoal(String treatmentGoalId) {
+        return this.patientTreatmentGoalRepo.findById(treatmentGoalId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Patient treatment goal", "id", treatmentGoalId));
     }
 
     /*****************************************************************************************

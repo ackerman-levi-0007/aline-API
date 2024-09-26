@@ -12,20 +12,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class UpdatePatientDto {
     private String id;
-
     private String name;
-
     private String clinicID;
-
     private String doctorID;
-
     private PatientStatus status;
-
     private Date dateOfScan;
-
     private String gender;
-
     private int age;
-
     private String nationality;
 }
