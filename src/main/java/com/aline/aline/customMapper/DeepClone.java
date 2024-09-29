@@ -1,5 +1,6 @@
 package com.aline.aline.customMapper;
 
+import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 
 public class DeepClone {
@@ -25,5 +26,16 @@ public class DeepClone {
         newPlan.setUpdatedOn(patientTreatmentPlan.getUpdatedOn());
 
         return newPlan;
+    }
+
+    public static PatientDentalDetailsMapping deepCloneForNewMapping(PatientDentalDetailsMapping patientDentalDetailsMapping) {
+        PatientDentalDetailsMapping newMapping = new PatientDentalDetailsMapping();
+
+        newMapping.setClinicID(patientDentalDetailsMapping.getClinicID());
+        newMapping.setDoctorID(patientDentalDetailsMapping.getDoctorID());
+        newMapping.setPatientID(patientDentalDetailsMapping.getPatientID());
+        newMapping.setRebootID(patientDentalDetailsMapping.getRebootID());
+
+        return newMapping;
     }
 }
