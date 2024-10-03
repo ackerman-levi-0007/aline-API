@@ -12,6 +12,7 @@ import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -178,6 +179,28 @@ public class DentalDetailsDao implements IDentalDetailsDao {
         return this.patientTreatmentGoalRepo.findById(treatmentGoalId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Patient treatment goal", "id", treatmentGoalId));
+    }
+
+    @Override
+    public PatientDentalDetail cloneLatestDetails(String patientID, String previousDentalHistoryID, String treatmentGoalID) {
+        PatientPreviousDentalHistory patientPreviousDentalHistory;
+        PatientTreatmentGoal patientTreatmentGoal;
+        try{
+            patientPreviousDentalHistory = getPreviousDentalHistoryDetails(previousDentalHistoryID);
+            patientPreviousDentalHistory.setId(null);
+
+            patientTreatmentGoal = getPatientTreatmentGoal(treatmentGoalID);
+            patientTreatmentGoal.setId(null);
+
+            PatientPreviousDentalHistory savedPreviousDentalHistory = this.patientPreviousDentalHistoryRepo.save(patientPreviousDentalHistory);
+            PatientTreatmentGoal savedTreatmentGoal = this.patientTreatmentGoalRepo.save(patientTreatmentGoal);
+
+            return new PatientDentalDetail(savedPreviousDentalHistory, savedTreatmentGoal);
+        }
+        catch (ResourceNotFoundException ex){
+            //Do nothing
+        }
+        return null;
     }
 
     /*****************************************************************************************
