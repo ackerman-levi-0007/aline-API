@@ -1,6 +1,7 @@
 package com.aline.aline.dao.Impl;
 
 import com.aline.aline.dao.IDentalDetailsDao;
+import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -79,10 +80,15 @@ public class DentalDetailsDao implements IDentalDetailsDao {
             PatientPreviousDentalHistory patientPreviousDentalHistoryDetails,
             int rebootID
     ) {
-        Optional<PatientPreviousDentalHistory> fetchedPatientPreviousDentalHistoryOptional =
-                this.patientPreviousDentalHistoryRepo.findByPatientID(patientPreviousDentalHistoryDetails.getPatientID());
+        PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
 
-        if(fetchedPatientPreviousDentalHistoryOptional.isPresent()){
+        String historyID = patientDentalDetailsMapping.getPreviousDentalHistoryId();
+
+        if(!CommonUtils.isNullOrEmpty(historyID)){
+
+            Optional<PatientPreviousDentalHistory> fetchedPatientPreviousDentalHistoryOptional =
+                    this.patientPreviousDentalHistoryRepo.findById(historyID);
+
             PatientPreviousDentalHistory fetchedPatientPreviousDentalHistory = fetchedPatientPreviousDentalHistoryOptional.get();
 
             fetchedPatientPreviousDentalHistory.setChiefComplaint(patientPreviousDentalHistoryDetails.getChiefComplaint());
@@ -104,10 +110,15 @@ public class DentalDetailsDao implements IDentalDetailsDao {
             PatientTreatmentGoal patientTreatmentGoal,
             int rebootID
     ) {
-        Optional<PatientTreatmentGoal> fetchedPatientTreatmentGoalOptional =
-                this.patientTreatmentGoalRepo.findByPatientID(patientTreatmentGoal.getPatientID());
+        PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
 
-        if(fetchedPatientTreatmentGoalOptional.isPresent()) {
+        String goalID = patientDentalDetailsMapping.getTreatmentGoalId();
+
+        if(!CommonUtils.isNullOrEmpty(goalID)) {
+
+            Optional<PatientTreatmentGoal> fetchedPatientTreatmentGoalOptional =
+                    this.patientTreatmentGoalRepo.findById(goalID);
+
             PatientTreatmentGoal fetchedPatientTreatmentGoal = fetchedPatientTreatmentGoalOptional.get();
 
             fetchedPatientTreatmentGoal.setCorrection(patientTreatmentGoal.getCorrection());
