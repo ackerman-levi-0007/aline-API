@@ -1,6 +1,5 @@
 package com.aline.aline.payload.Patient;
 
-import com.aline.aline.enums.PatientStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +19,7 @@ public class FilterPatientDto {
     private String gender;
     private List<String> clinicID   =   new ArrayList<>();
     private List<String> doctorID   =   new ArrayList<>();
-    private PatientStatus status;
+    private String status;
     private int fromAge =  0;
     private int toAge   =  0;
     private String nationality;
