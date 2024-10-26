@@ -18,84 +18,93 @@ import org.springframework.web.bind.annotation.*;
 public class PatientDentalDetailsController {
     private final IPatientDentalDetailsService patientDentalDetailsService;
 
-    @PostMapping("/createPreviousDentalHistoryDetails")
+    @PostMapping("/createPreviousDentalHistoryDetails/{rebootID}")
     public ResponseEntity<PatientPreviousDentalHistory> createPreviousDentalHistoryDetails(
-            @RequestBody PatientPreviousDentalHistory patientPreviousDentalHistoryDetails
+            @RequestBody PatientPreviousDentalHistory patientPreviousDentalHistoryDetails,
+            @PathVariable int rebootID
     ) {
         PatientPreviousDentalHistory savedPatientPreviousDentalHistoryDetails =
-                this.patientDentalDetailsService.createPreviousDentalHistoryDetails(0, patientPreviousDentalHistoryDetails);
+                this.patientDentalDetailsService.createPreviousDentalHistoryDetails(rebootID, patientPreviousDentalHistoryDetails);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
     }
 
-    @PostMapping("/createPatientTreatmentGoal")
+    @PostMapping("/createPatientTreatmentGoal/{rebootID}")
     public ResponseEntity<PatientTreatmentGoal> createPatientTreatmentGoal(
-            @RequestBody PatientTreatmentGoal patientTreatmentGoal
+            @RequestBody PatientTreatmentGoal patientTreatmentGoal,
+            @PathVariable int rebootID
     ) {
         PatientTreatmentGoal savedPatientTreatmentGoal =
-                this.patientDentalDetailsService.createPatientTreatmentGoal(0, patientTreatmentGoal);
+                this.patientDentalDetailsService.createPatientTreatmentGoal(rebootID, patientTreatmentGoal);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
     }
 
-    @PostMapping("/createPatientDentalDetail")
+    @PostMapping("/createPatientDentalDetail/{rebootID}")
     public ResponseEntity<PatientDentalDetail> createPatientDentalDetail(
-            @RequestBody PatientDentalDetail patientDentalDetail
+            @RequestBody PatientDentalDetail patientDentalDetail,
+            @PathVariable int rebootID
     ) throws BadRequestException {
         PatientDentalDetail savedPatientDentalDetail =
-                this.patientDentalDetailsService.createPatientDentalDetail(0, patientDentalDetail);
+                this.patientDentalDetailsService.createPatientDentalDetail(rebootID, patientDentalDetail);
         return new ResponseEntity<>(savedPatientDentalDetail, HttpStatus.OK);
     }
 
-    @PutMapping("/updatePreviousDentalHistoryDetails")
+    @PutMapping("/updatePreviousDentalHistoryDetails/{rebootID}")
     public ResponseEntity<PatientPreviousDentalHistory> updatePreviousDentalHistoryDetails(
-            @RequestBody PatientPreviousDentalHistory patientPreviousDentalHistoryDetails
+            @RequestBody PatientPreviousDentalHistory patientPreviousDentalHistoryDetails,
+            @PathVariable int rebootID
     ) {
         PatientPreviousDentalHistory savedPatientPreviousDentalHistoryDetails =
-                this.patientDentalDetailsService.updatePreviousDentalHistoryDetails(0, patientPreviousDentalHistoryDetails);
+                this.patientDentalDetailsService.updatePreviousDentalHistoryDetails(rebootID, patientPreviousDentalHistoryDetails);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
     }
 
-    @PutMapping("/updatePatientTreatmentGoal")
+    @PutMapping("/updatePatientTreatmentGoal/{rebootID}")
     public ResponseEntity<PatientTreatmentGoal> updatePatientTreatmentGoal(
-            @RequestBody PatientTreatmentGoal patientTreatmentGoal
+            @RequestBody PatientTreatmentGoal patientTreatmentGoal,
+            @PathVariable int rebootID
     ) {
         PatientTreatmentGoal savedPatientTreatmentGoal =
-                this.patientDentalDetailsService.updatePatientTreatmentGoal(0, patientTreatmentGoal);
+                this.patientDentalDetailsService.updatePatientTreatmentGoal(rebootID, patientTreatmentGoal);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
     }
 
-    @PutMapping("/updatePatientDentalDetail")
+    @PutMapping("/updatePatientDentalDetail/{rebootID}")
     public ResponseEntity<PatientDentalDetail> updatePatientDentalDetail(
-            @RequestBody PatientDentalDetail patientDentalDetail
+            @RequestBody PatientDentalDetail patientDentalDetail,
+            @PathVariable int rebootID
     ) throws BadRequestException {
         PatientDentalDetail savedPatientDentalDetail =
-                this.patientDentalDetailsService.updatePatientDentalDetail(0, patientDentalDetail);
+                this.patientDentalDetailsService.updatePatientDentalDetail(rebootID, patientDentalDetail);
         return new ResponseEntity<>(savedPatientDentalDetail, HttpStatus.OK);
     }
 
-    @GetMapping("/getPreviousDentalHistoryDetailsByPatientID/{patientID}")
+    @GetMapping("/getPreviousDentalHistoryDetailsByPatientID/{patientID}/{rebootID}")
     public ResponseEntity<Object> getPreviousDentalHistoryDetailsByPatientID(
-            @PathVariable String patientID
+            @PathVariable String patientID,
+            @PathVariable int rebootID
     ) {
         Object savedPatientPreviousDentalHistoryDetails =
-                this.patientDentalDetailsService.getPreviousDentalHistoryDetailsByPatientID(patientID, 0);
+                this.patientDentalDetailsService.getPreviousDentalHistoryDetailsByPatientID(patientID, rebootID);
         return new ResponseEntity<>(savedPatientPreviousDentalHistoryDetails, HttpStatus.OK);
     }
 
-    @GetMapping("/getPatientTreatmentGoalByPatientID/{patientID}")
+    @GetMapping("/getPatientTreatmentGoalByPatientID/{patientID}/{rebootID}")
     public ResponseEntity<Object> getPatientTreatmentGoalByPatientID(
-            @PathVariable String patientID
+            @PathVariable String patientID,
+            @PathVariable int rebootID
     ) {
         Object savedPatientTreatmentGoal =
-                this.patientDentalDetailsService.getPatientTreatmentGoalByPatientID(patientID, 0);
+                this.patientDentalDetailsService.getPatientTreatmentGoalByPatientID(patientID, rebootID);
         return new ResponseEntity<>(savedPatientTreatmentGoal, HttpStatus.OK);
     }
 
-    @GetMapping("/getPatientDentalDetailByPatientID/{patientID}")
+    @GetMapping("/getPatientDentalDetailByPatientID/{patientID}/{rebootID}")
     public ResponseEntity<Object> getPatientDentalDetailByPatientID(
-            @PathVariable String patientID
+            @PathVariable String patientID,
+            @PathVariable int rebootID
     ) {
         Object savedPatientDentalDetail =
-                this.patientDentalDetailsService.getPatientDentalDetailByPatientID(patientID, 0);
+                this.patientDentalDetailsService.getPatientDentalDetailByPatientID(patientID, rebootID);
         return new ResponseEntity<>(savedPatientDentalDetail, HttpStatus.OK);
     }
 }

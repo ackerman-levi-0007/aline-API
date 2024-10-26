@@ -1,7 +1,9 @@
 package com.aline.aline.controllers;
 
+import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanMapping;
 import com.aline.aline.services.IDentalDetailsMappingService;
+import com.aline.aline.services.IRebootService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import java.util.List;
 public class DentalDetailsMappingController {
 
     private final IDentalDetailsMappingService patientDentalDetailsMappingService;
+    private final IRebootService rebootService;
 
     @GetMapping("/getAllRebootIds/{patientID}")
     public ResponseEntity<List<Integer>> getAllRebootIds(
@@ -36,5 +39,13 @@ public class DentalDetailsMappingController {
         PatientTreatmentPlanMapping patientTreatmentPlanMapping =
                 this.patientDentalDetailsMappingService.getPlanMapping(patientID, rebootID);
         return new ResponseEntity<>(patientTreatmentPlanMapping, HttpStatus.OK);
+    }
+
+    @PostMapping("/createReboot/{patientID}")
+    public ResponseEntity<APIResponse> createReboot(
+            @PathVariable String patientID
+    ){
+         this.rebootService.createReboot(patientID);
+        return new ResponseEntity<>(new APIResponse("Reboot created successfully!!!", true), HttpStatus.OK);
     }
 }

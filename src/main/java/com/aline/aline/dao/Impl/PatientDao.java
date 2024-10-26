@@ -10,6 +10,7 @@ import com.aline.aline.payload.Patient.FilterPatientDto;
 import com.aline.aline.payload.Patient.GetPatientDto;
 import com.aline.aline.payload.Patient.UpdatePatientStatusDto;
 import com.aline.aline.repositories.PatientRepo;
+import com.aline.aline.utilities.CommonUtils;
 import com.aline.aline.utilities.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -59,8 +60,8 @@ public class PatientDao implements IPatientDao {
         if(!filterPatientDto.getClinicID().isEmpty()) query.addCriteria(Criteria.where("clinicID").in(filterPatientDto.getClinicID()));
         if(!filterPatientDto.getDoctorID().isEmpty()) query.addCriteria(Criteria.where("doctorID").in(filterPatientDto.getDoctorID()));
         if(filterPatientDto.getName() != null) query.addCriteria(Criteria.where("name").regex(filterPatientDto.getName(), "i"));
-        if(filterPatientDto.getGender() != null) query.addCriteria(Criteria.where("gender").is(filterPatientDto.getGender()));
-        if(filterPatientDto.getStatus() != null) query.addCriteria(Criteria.where("status").is(filterPatientDto.getStatus()));
+        if(!CommonUtils.isNullOrEmpty(filterPatientDto.getGender())) query.addCriteria(Criteria.where("gender").is(filterPatientDto.getGender()));
+        if(!CommonUtils.isNullOrEmpty(filterPatientDto.getStatus())) query.addCriteria(Criteria.where("status").is(filterPatientDto.getStatus()));
         if(filterPatientDto.getNationality() != null) query.addCriteria(Criteria.where("nationality").regex(filterPatientDto.getNationality(), "i"));
 
         Criteria ageCriteria = Criteria.where("age");

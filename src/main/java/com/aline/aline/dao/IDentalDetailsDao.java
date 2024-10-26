@@ -22,4 +22,6 @@ public interface IDentalDetailsDao {
     PatientDentalDetail getPatientDentalDetail(String previousDentalHistoryId, String treatmentGoalId);
     PatientPreviousDentalHistory getPreviousDentalHistoryDetails(String previousDentalHistoryId);
     PatientTreatmentGoal getPatientTreatmentGoal(String treatmentGoalId);
+
+    PatientDentalDetail cloneLatestDetails(String patientID, String previousDentalHistoryID, String treatmentGoalID);
 }

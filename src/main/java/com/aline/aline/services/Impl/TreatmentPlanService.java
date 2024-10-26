@@ -85,7 +85,7 @@ public class TreatmentPlanService implements ITreatmentPlanService {
         this.patientDentalDetailsMappingDao.addUnsavedDraftTreatmentPlanID(
                 savedPatientTreatmentPlan.getPatientID(),
                 treatmentPlanObject,
-                0
+                rebootID
         );
     }
 

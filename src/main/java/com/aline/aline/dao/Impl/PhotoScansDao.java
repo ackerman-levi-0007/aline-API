@@ -3,6 +3,7 @@ package com.aline.aline.dao.Impl;
 import com.aline.aline.customMapper.GetPatientPhotoScansDtoMapper;
 import com.aline.aline.dao.IDentalDetailsMappingDao;
 import com.aline.aline.dao.IPhotoScansDao;
+import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientPhotoScans;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientPhotoScans.GetPatientPhotoScansDto;
@@ -23,10 +24,14 @@ public class PhotoScansDao implements IPhotoScansDao {
 
     @Override
     public  GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID) {
-        Optional<PatientPhotoScans> fetchedPatientPhotoScansOptional =
-                this.patientPhotoScansRepo.findByPatientID(patientPhotoScans.getPatientID());
+        PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
 
-        if(fetchedPatientPhotoScansOptional.isPresent()){
+        String photoScansID = patientDentalDetailsMapping.getPhotoScansId();
+
+        if(!CommonUtils.isNullOrEmpty(photoScansID)){
+            Optional<PatientPhotoScans> fetchedPatientPhotoScansOptional =
+                    this.patientPhotoScansRepo.findById(photoScansID);
+
             PatientPhotoScans fetchedPatientPhotoScans = fetchedPatientPhotoScansOptional.get();
 
             fetchedPatientPhotoScans.setProfilePhoto(CommonUtils.getUpdateListForS3Images(

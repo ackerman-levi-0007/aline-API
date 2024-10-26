@@ -187,9 +187,13 @@ public class DentalDetailsMappingDao implements IDentalDetailsMappingDao {
     public Reboot getReboot(String patientID) {
         List<PatientDentalDetailsMapping> patientDentalDetailsMappings = getPatientDentalDetailsMapping(patientID);
 
+        Optional<PatientDentalDetailsMapping> latestPatientDentalMapping = patientDentalDetailsMappings.stream()
+                .max(Comparator.comparingInt(PatientDentalDetailsMapping::getRebootID));
+
+
         Reboot reboot = new Reboot();
         reboot.setTotalReboots(patientDentalDetailsMappings.size());
-        reboot.setLatestReboot(patientDentalDetailsMappings.size());
+        reboot.setLatestReboot(latestPatientDentalMapping.get().getRebootID());
 
         return reboot;
     }
@@ -322,14 +326,21 @@ public class DentalDetailsMappingDao implements IDentalDetailsMappingDao {
         this.patientDentalDetailsMappingRepo.save(patientDentalDetailsMapping);
     }
 
-    /*****************************************************************************************
-                                            Helpers
-     *****************************************************************************************/
-    private List<PatientDentalDetailsMapping> getPatientDentalDetailsMapping(String patientID){
+    @Override
+    public void saveMapping(PatientDentalDetailsMapping newMapping) {
+        this.patientDentalDetailsMappingRepo.save(newMapping);
+    }
+
+    @Override
+    public List<PatientDentalDetailsMapping> getPatientDentalDetailsMapping(String patientID){
         return this.patientDentalDetailsMappingRepo.findByPatientID(patientID)
                 .orElseThrow(() -> new ResourceNotFoundException("Patient dental details mapping", "patientID", patientID)
                 );
     }
+
+    /*****************************************************************************************
+                                            Helpers
+     *****************************************************************************************/
 
     private PatientDentalDetailsMapping getPatientDentalDetailsMappingForRebootID(String patientID, int rebootID){
         return this.patientDentalDetailsMappingRepo.findByPatientIDAndRebootID(patientID, rebootID)

@@ -12,6 +12,7 @@ import java.util.List;
 public interface IDentalDetailsMappingDao {
     void createPatientDentalDetailsMapping(String clinicID, String doctorID, String patientID);
     PatientDentalDetailsMapping getPatientDentalDetailsMapping(String patientID, int rebootID);
+    List<PatientDentalDetailsMapping> getPatientDentalDetailsMapping(String patientID);
     void updatePatientPhotoScansID(String patientID, String photoScansID,  int rebootID);
     void updatePatientPreviousDentalHistoryDetailsID(String patientID, String id, int rebootID);
     void updatePatientTreatmentGoalID(String patientID, String patientTreatmentGoalID, int rebootID);
@@ -26,4 +27,6 @@ public interface IDentalDetailsMappingDao {
     void planRequestModification(String patientID, int rebootID, String planID);
 
     void updateHistoryPlanMapping(String patientID, int rebootID, TreatmentPlanObject treatmentPlanObject, String treatmentPlanID, String draftID);
+
+    void saveMapping(PatientDentalDetailsMapping newMapping);
 }

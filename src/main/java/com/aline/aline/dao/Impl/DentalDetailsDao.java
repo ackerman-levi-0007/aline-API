@@ -1,6 +1,7 @@
 package com.aline.aline.dao.Impl;
 
 import com.aline.aline.dao.IDentalDetailsDao;
+import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientPreviousDentalHistory;
 import com.aline.aline.entities.PatientTreatmentGoal;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
@@ -12,6 +13,7 @@ import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -78,10 +80,15 @@ public class DentalDetailsDao implements IDentalDetailsDao {
             PatientPreviousDentalHistory patientPreviousDentalHistoryDetails,
             int rebootID
     ) {
-        Optional<PatientPreviousDentalHistory> fetchedPatientPreviousDentalHistoryOptional =
-                this.patientPreviousDentalHistoryRepo.findByPatientID(patientPreviousDentalHistoryDetails.getPatientID());
+        PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
 
-        if(fetchedPatientPreviousDentalHistoryOptional.isPresent()){
+        String historyID = patientDentalDetailsMapping.getPreviousDentalHistoryId();
+
+        if(!CommonUtils.isNullOrEmpty(historyID)){
+
+            Optional<PatientPreviousDentalHistory> fetchedPatientPreviousDentalHistoryOptional =
+                    this.patientPreviousDentalHistoryRepo.findById(historyID);
+
             PatientPreviousDentalHistory fetchedPatientPreviousDentalHistory = fetchedPatientPreviousDentalHistoryOptional.get();
 
             fetchedPatientPreviousDentalHistory.setChiefComplaint(patientPreviousDentalHistoryDetails.getChiefComplaint());
@@ -103,10 +110,15 @@ public class DentalDetailsDao implements IDentalDetailsDao {
             PatientTreatmentGoal patientTreatmentGoal,
             int rebootID
     ) {
-        Optional<PatientTreatmentGoal> fetchedPatientTreatmentGoalOptional =
-                this.patientTreatmentGoalRepo.findByPatientID(patientTreatmentGoal.getPatientID());
+        PatientDentalDetailsMapping patientDentalDetailsMapping = CommonUtils.getPatientPlanMapping();
 
-        if(fetchedPatientTreatmentGoalOptional.isPresent()) {
+        String goalID = patientDentalDetailsMapping.getTreatmentGoalId();
+
+        if(!CommonUtils.isNullOrEmpty(goalID)) {
+
+            Optional<PatientTreatmentGoal> fetchedPatientTreatmentGoalOptional =
+                    this.patientTreatmentGoalRepo.findById(goalID);
+
             PatientTreatmentGoal fetchedPatientTreatmentGoal = fetchedPatientTreatmentGoalOptional.get();
 
             fetchedPatientTreatmentGoal.setCorrection(patientTreatmentGoal.getCorrection());
@@ -178,6 +190,28 @@ public class DentalDetailsDao implements IDentalDetailsDao {
         return this.patientTreatmentGoalRepo.findById(treatmentGoalId)
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Patient treatment goal", "id", treatmentGoalId));
+    }
+
+    @Override
+    public PatientDentalDetail cloneLatestDetails(String patientID, String previousDentalHistoryID, String treatmentGoalID) {
+        PatientPreviousDentalHistory patientPreviousDentalHistory;
+        PatientTreatmentGoal patientTreatmentGoal;
+        try{
+            patientPreviousDentalHistory = getPreviousDentalHistoryDetails(previousDentalHistoryID);
+            patientPreviousDentalHistory.setId(null);
+
+            patientTreatmentGoal = getPatientTreatmentGoal(treatmentGoalID);
+            patientTreatmentGoal.setId(null);
+
+            PatientPreviousDentalHistory savedPreviousDentalHistory = this.patientPreviousDentalHistoryRepo.save(patientPreviousDentalHistory);
+            PatientTreatmentGoal savedTreatmentGoal = this.patientTreatmentGoalRepo.save(patientTreatmentGoal);
+
+            return new PatientDentalDetail(savedPreviousDentalHistory, savedTreatmentGoal);
+        }
+        catch (ResourceNotFoundException ex){
+            //Do nothing
+        }
+        return null;
     }
 
     /*****************************************************************************************
