@@ -24,7 +24,7 @@ public class PatientPhotoScansService implements IPatientPhotoScansService {
 
     @Override
     public GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID) {
-        patientHelperService.checkLoggedInUserPermissionForPatientID(patientPhotoScans.getPatientID());
+        patientHelperService.checkLoggedInUserPermission(patientPhotoScans.getPatientID(), rebootID);
         return this.patientPhotoScansDao.updatePatientPhotoScans(patientPhotoScans, rebootID);
     }
 
