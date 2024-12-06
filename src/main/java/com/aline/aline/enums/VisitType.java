@@ -6,5 +6,6 @@ public enum VisitType {
     progressVisit,
     ipr,
     rebootScan,
-    debonding
+    debonding,
+    none
 }

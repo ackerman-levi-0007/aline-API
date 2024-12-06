@@ -3,10 +3,11 @@ package com.aline.aline.services.Impl;
 import com.aline.aline.customMapper.DeepClone;
 import com.aline.aline.dao.IDentalDetailsDao;
 import com.aline.aline.dao.IDentalDetailsMappingDao;
+import com.aline.aline.dao.ITreatmentProgressUpdateDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
+import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
-import com.aline.aline.services.IPatientDentalDetailsService;
 import com.aline.aline.services.IRebootService;
 import com.aline.aline.utilities.CommonUtils;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class RebootService implements IRebootService {
 
     private final IDentalDetailsMappingDao dentalDetailsMappingDao;
     private final IDentalDetailsDao dentalDetailsDao;
+    private final ITreatmentProgressUpdateDao treatmentProgressUpdateDao;
 
     @Override
     public void createReboot(String patientID) {
@@ -55,5 +57,9 @@ public class RebootService implements IRebootService {
         }
 
         this.dentalDetailsMappingDao.saveMapping(newMapping);
+        TreatmentProgressUpdate treatmentProgressUpdate = new TreatmentProgressUpdate();
+        treatmentProgressUpdate.setPatientID(patientID);
+        treatmentProgressUpdate.setProgress("Case rebooted");
+        this.treatmentProgressUpdateDao.createTreatmentProgress(treatmentProgressUpdate,false);
     }
 }

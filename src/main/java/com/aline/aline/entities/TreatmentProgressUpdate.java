@@ -5,6 +5,7 @@ import com.aline.aline.enums.AlignerTracking;
 import com.aline.aline.enums.VisitType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
@@ -30,8 +31,8 @@ public class TreatmentProgressUpdate {
     private int slug;
     private String patientID;
     private String progress;
-    private VisitType visitType;
-    private AlignerTracking alignerTracking;
+    private VisitType visitType = VisitType.none;
+    private AlignerTracking alignerTracking = AlignerTracking.none;
     @JsonIgnore
     private boolean clickable = false;
     private String notes;
