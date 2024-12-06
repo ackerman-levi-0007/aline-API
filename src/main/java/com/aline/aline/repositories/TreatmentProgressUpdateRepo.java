@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface TreatmentProgressUpdateRepo extends MongoRepository<TreatmentProgressUpdate, String> {
     Optional<TreatmentProgressUpdate> findByPatientIDAndSlug(String patientID, int slug);
-    List<TreatmentProgressUpdate> findByPatientID(String patientID);
+    List<TreatmentProgressUpdate> findByPatientIDOrderByCreatedOnDesc(String patientID);
 }

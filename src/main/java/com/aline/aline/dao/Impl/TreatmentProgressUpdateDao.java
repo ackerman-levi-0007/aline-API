@@ -44,7 +44,7 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
     @Override
     public List<TreatmentProgressDto> getAllTreatmentProgress(String patientID) {
         List<TreatmentProgressUpdate> treatmentProgressUpdateList =
-                this.treatmentProgressUpdateRepo.findByPatientID(patientID);
+                this.treatmentProgressUpdateRepo.findByPatientIDOrderByCreatedOnDesc(patientID);
 
         return treatmentProgressUpdateList.stream().map(
                 TreatmentProgressMapper::mapper
@@ -98,6 +98,6 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
     }
 
     private List<TreatmentProgressUpdate> getAllProgressForPatientID(String patientID){
-        return this.treatmentProgressUpdateRepo.findByPatientID(patientID);
+        return this.treatmentProgressUpdateRepo.findByPatientIDOrderByCreatedOnDesc(patientID);
     }
 }
