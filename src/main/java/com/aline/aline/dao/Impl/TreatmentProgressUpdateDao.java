@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
     @Override
     public void createTreatmentProgress(TreatmentProgressUpdate treatmentProgressUpdate, boolean clickable) {
         int maxSlugID = getMaxSlugIDForPatientID(treatmentProgressUpdate.getPatientID());
+        treatmentProgressUpdate.setSlug(maxSlugID + 1);
         treatmentProgressUpdate.setClickable(clickable);
         this.treatmentProgressUpdateRepo.save(treatmentProgressUpdate);
     }
@@ -94,7 +96,11 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
             return 0;
         }
         else{
-            return 0;
+            Optional<Integer> maxSlug = progressUpdateList.stream()
+                    .map(TreatmentProgressUpdate::getSlug)
+                    .max(Integer::compare);
+
+            return maxSlug.isPresent() ? maxSlug.get() : 0;
         }
     }
 
