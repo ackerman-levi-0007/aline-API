@@ -13,6 +13,7 @@ public class TreatmentProgressMapper {
         treatmentProgressDto.setProgress(treatmentProgressUpdate.getProgress());
         treatmentProgressDto.setVisitType(treatmentProgressUpdate.getVisitType());
         treatmentProgressDto.setAlignerTracking(treatmentProgressUpdate.getAlignerTracking());
+        treatmentProgressDto.setClickable(treatmentProgressUpdate.isClickable());
         treatmentProgressDto.setNotes(treatmentProgressUpdate.getNotes());
         treatmentProgressDto.setPhotos(treatmentProgressUpdate.getPhotos().stream().map(S3ImageObject::getURL).toList());
         treatmentProgressDto.setCreatedOn(treatmentProgressUpdate.getCreatedOn());

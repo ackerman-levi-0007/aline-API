@@ -22,6 +22,7 @@ public class TreatmentProgressDto {
     private String progress;
     private VisitType visitType;
     private AlignerTracking alignerTracking;
+    private boolean clickable;
     private String notes;
     private List<String> photos;
     private Date createdOn;

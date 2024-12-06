@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ITreatmentProgressUpdateDao {
-    void createTreatmentProgress(TreatmentProgressUpdate treatmentProgressUpdate);
+    void createTreatmentProgress(TreatmentProgressUpdate treatmentProgressUpdate, boolean clickable);
     void updateTreatmentProgress(TreatmentProgressUpdateDto treatmentProgressUpdate);
     List<TreatmentProgressDto> getAllTreatmentProgress(String patientID);
     TreatmentProgressDto getTreatmentProgress(String id);

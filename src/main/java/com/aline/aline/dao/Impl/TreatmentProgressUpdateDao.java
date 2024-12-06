@@ -20,7 +20,9 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
     private final TreatmentProgressUpdateRepo treatmentProgressUpdateRepo;
 
     @Override
-    public void createTreatmentProgress(TreatmentProgressUpdate treatmentProgressUpdate) {
+    public void createTreatmentProgress(TreatmentProgressUpdate treatmentProgressUpdate, boolean clickable) {
+        int maxSlugID = getMaxSlugIDForPatientID(treatmentProgressUpdate.getPatientID());
+        treatmentProgressUpdate.setClickable(clickable);
         this.treatmentProgressUpdateRepo.save(treatmentProgressUpdate);
     }
 
@@ -45,7 +47,7 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
                 this.treatmentProgressUpdateRepo.findByPatientID(patientID);
 
         return treatmentProgressUpdateList.stream().map(
-                x -> TreatmentProgressMapper.mapper(x)
+                TreatmentProgressMapper::mapper
         ).toList();
     }
 
@@ -81,5 +83,21 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Treatment Progress","id",id
                 ));
+    }
+
+    private int getMaxSlugIDForPatientID(String patientID) {
+        List<TreatmentProgressUpdate> progressUpdateList =
+                getAllProgressForPatientID(patientID);
+
+        if(progressUpdateList == null || progressUpdateList.isEmpty()){
+            return 0;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    private List<TreatmentProgressUpdate> getAllProgressForPatientID(String patientID){
+        return this.treatmentProgressUpdateRepo.findByPatientID(patientID);
     }
 }

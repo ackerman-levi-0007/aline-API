@@ -32,6 +32,8 @@ public class TreatmentProgressUpdate {
     private String progress;
     private VisitType visitType;
     private AlignerTracking alignerTracking;
+    @JsonIgnore
+    private boolean clickable = false;
     private String notes;
     private List<S3ImageObject> photos;
 

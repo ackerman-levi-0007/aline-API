@@ -27,7 +27,7 @@ public class TreatmentProgressUpdateService implements ITreatmentProgressUpdateS
     @Override
     public void createTreatmentProgress(String patientID, TreatmentProgressUpdate treatmentProgressUpdate) {
         this.patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
-        this.treatmentProgressUpdateDao.createTreatmentProgress(treatmentProgressUpdate);
+        this.treatmentProgressUpdateDao.createTreatmentProgress(treatmentProgressUpdate, true);
     }
 
     @Override
