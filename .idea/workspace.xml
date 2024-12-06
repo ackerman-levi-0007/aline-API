@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/TreatmentProgressUpdateController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/TreatmentProgressMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/ITreatmentProgressUpdateDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TreatmentProgressUpdateDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/TreatmentProgressUpdate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/TreatmentProgress/TreatmentProgressDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/repositories/TreatmentProgressUpdateRepo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/ITreatmentProgressUpdateService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/TreatmentProgressUpdateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/TreatmentProgress/TreatmentProgressUpdateDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/TreatmentProgressUpdateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/TreatmentProgressUpdateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/ITreatmentProgressUpdateDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/ITreatmentProgressUpdateDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TreatmentProgressUpdateDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TreatmentProgressUpdateDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/ITreatmentProgressUpdateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/ITreatmentProgressUpdateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/TreatmentProgressUpdateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/services/Impl/TreatmentProgressUpdateService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,8 +73,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.AlineApiApplication.executor": "Run",
-    "JUnit.AlineApiApplicationTests.executor": "Run",
+    "Application.AlineApiApplication.executor": "Debug",
+    "JUnit.AlineApiApplicationTests.executor": "Debug",
     "Maven.aline [clean,validate,compile,test...].executor": "Run",
     "Notification.DisplayName-DoNotAsk-Branch Context group": "Branch context switched",
     "Notification.DoNotAsk-Branch Context group": "true",
@@ -347,6 +344,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/GetPatientPhotoScansDtoMapper.java</url>
           <line>13</line>
           <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/controllers/TreatmentProgressUpdateController.java</url>
+          <line>57</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TreatmentProgressUpdateDao.java</url>
+          <line>28</line>
+          <option name="timeStamp" value="98" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TreatmentProgressUpdateDao.java</url>
+          <line>79</line>
+          <option name="timeStamp" value="99" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

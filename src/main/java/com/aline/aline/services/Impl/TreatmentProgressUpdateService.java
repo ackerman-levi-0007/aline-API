@@ -3,6 +3,7 @@ package com.aline.aline.services.Impl;
 import com.aline.aline.dao.ITreatmentProgressUpdateDao;
 import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.payload.TreatmentProgress.TreatmentProgressDto;
+import com.aline.aline.payload.TreatmentProgress.TreatmentProgressUpdateDto;
 import com.aline.aline.services.ITreatmentProgressUpdateService;
 import com.aline.aline.services.helpers.PatientHelperService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class TreatmentProgressUpdateService implements ITreatmentProgressUpdateS
     }
 
     @Override
-    public void updateTreatmentProgress(String patientID, TreatmentProgressUpdate treatmentProgressUpdate) {
+    public void updateTreatmentProgress(String patientID, TreatmentProgressUpdateDto treatmentProgressUpdate) {
         this.patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
         this.treatmentProgressUpdateDao.updateTreatmentProgress(treatmentProgressUpdate);
     }

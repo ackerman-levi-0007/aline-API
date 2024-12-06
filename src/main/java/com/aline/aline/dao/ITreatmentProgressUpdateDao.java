@@ -3,6 +3,7 @@ package com.aline.aline.dao;
 
 import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.payload.TreatmentProgress.TreatmentProgressDto;
+import com.aline.aline.payload.TreatmentProgress.TreatmentProgressUpdateDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ITreatmentProgressUpdateDao {
     void createTreatmentProgress(TreatmentProgressUpdate treatmentProgressUpdate);
-    void updateTreatmentProgress(TreatmentProgressUpdate treatmentProgressUpdate);
+    void updateTreatmentProgress(TreatmentProgressUpdateDto treatmentProgressUpdate);
     List<TreatmentProgressDto> getAllTreatmentProgress(String patientID);
     TreatmentProgressDto getTreatmentProgress(String id);
     TreatmentProgressDto getTreatmentProgress(String patientID, int slug);

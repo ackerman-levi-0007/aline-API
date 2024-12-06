@@ -3,6 +3,7 @@ package com.aline.aline.controllers;
 import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.TreatmentProgress.TreatmentProgressDto;
+import com.aline.aline.payload.TreatmentProgress.TreatmentProgressUpdateDto;
 import com.aline.aline.services.ITreatmentProgressUpdateService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +53,7 @@ public class TreatmentProgressUpdateController {
     @PutMapping("/updateProgress/{patientID}")
     public ResponseEntity<APIResponse> updateProgress(
             @PathVariable String patientID,
-            @RequestBody TreatmentProgressUpdate treatmentProgressUpdate
+            @RequestBody TreatmentProgressUpdateDto treatmentProgressUpdate
     ){
         this.treatmentProgressUpdateService.updateTreatmentProgress(patientID, treatmentProgressUpdate);
         return new ResponseEntity<>(new APIResponse("Treatment progress updated", true), HttpStatus.OK);

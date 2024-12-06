@@ -5,6 +5,7 @@ import com.aline.aline.dao.ITreatmentProgressUpdateDao;
 import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.TreatmentProgress.TreatmentProgressDto;
+import com.aline.aline.payload.TreatmentProgress.TreatmentProgressUpdateDto;
 import com.aline.aline.repositories.TreatmentProgressUpdateRepo;
 import com.aline.aline.utilities.CommonUtils;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
     }
 
     @Override
-    public void updateTreatmentProgress(TreatmentProgressUpdate treatmentProgressUpdate) {
-        TreatmentProgressUpdate savedProgress = getTreatmentProgressByID(treatmentProgressUpdate.getId().toString());
+    public void updateTreatmentProgress(TreatmentProgressUpdateDto treatmentProgressUpdate) {
+        TreatmentProgressUpdate savedProgress = getTreatmentProgressByID(treatmentProgressUpdate.getId());
 
         savedProgress.setProgress(treatmentProgressUpdate.getProgress());
         savedProgress.setVisitType(treatmentProgressUpdate.getVisitType());
