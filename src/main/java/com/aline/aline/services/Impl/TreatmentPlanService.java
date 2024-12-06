@@ -4,9 +4,11 @@ import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.customMapper.PatientTreatmentPlanMapper;
 import com.aline.aline.dao.IDentalDetailsMappingDao;
 import com.aline.aline.dao.ITreatmentPlanDao;
+import com.aline.aline.dao.ITreatmentProgressUpdateDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
+import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.entities.User;
 import com.aline.aline.enums.TreatmentPlanStatus;
 import com.aline.aline.enums.TreatmentPlanType;
@@ -34,6 +36,7 @@ public class TreatmentPlanService implements ITreatmentPlanService {
     private final IDentalDetailsMappingDao patientDentalDetailsMappingDao;
     private final PatientTreatmentPlanMapper patientTreatmentPlanMapper;
     private final ModelMapper modelMapper;
+    private final ITreatmentProgressUpdateDao treatmentProgressUpdateDao;
 
     @Override
     public PatientTreatmentPlanDto getTreatmentPlan(String patientID, int rebootID, String planID, TreatmentPlanType treatmentPlanType) throws BadRequestException {
@@ -106,6 +109,11 @@ public class TreatmentPlanService implements ITreatmentPlanService {
     public void approvePlan(String patientID, int rebootID, String planID) {
         validatePlanStatusChangeRequest(patientID, rebootID, planID);
         this.patientDentalDetailsMappingDao.approvePlan(patientID, rebootID, planID);
+
+        TreatmentProgressUpdate treatmentProgressUpdate = new TreatmentProgressUpdate();
+        treatmentProgressUpdate.setPatientID(patientID);
+        treatmentProgressUpdate.setProgress("Case started");
+        this.treatmentProgressUpdateDao.createTreatmentProgress(treatmentProgressUpdate,false);
     }
 
     @SneakyThrows
