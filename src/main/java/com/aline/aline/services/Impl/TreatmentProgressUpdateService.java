@@ -3,6 +3,7 @@ package com.aline.aline.services.Impl;
 import com.aline.aline.dao.ITreatmentProgressUpdateDao;
 import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.payload.TreatmentProgress.TreatmentProgressDto;
+import com.aline.aline.payload.TreatmentProgress.TreatmentProgressListDto;
 import com.aline.aline.payload.TreatmentProgress.TreatmentProgressUpdateDto;
 import com.aline.aline.services.ITreatmentProgressUpdateService;
 import com.aline.aline.services.helpers.PatientHelperService;
@@ -37,7 +38,7 @@ public class TreatmentProgressUpdateService implements ITreatmentProgressUpdateS
     }
 
     @Override
-    public List<TreatmentProgressDto> getAllTreatmentProgress(String patientID) {
+    public List<TreatmentProgressListDto> getAllTreatmentProgress(String patientID) {
         this.patientHelperService.checkLoggedInUserPermissionForPatientID(patientID);
         return this.treatmentProgressUpdateDao.getAllTreatmentProgress(patientID);
     }

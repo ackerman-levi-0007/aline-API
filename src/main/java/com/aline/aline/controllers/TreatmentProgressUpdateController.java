@@ -3,6 +3,7 @@ package com.aline.aline.controllers;
 import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.payload.APIResponse;
 import com.aline.aline.payload.TreatmentProgress.TreatmentProgressDto;
+import com.aline.aline.payload.TreatmentProgress.TreatmentProgressListDto;
 import com.aline.aline.payload.TreatmentProgress.TreatmentProgressUpdateDto;
 import com.aline.aline.services.ITreatmentProgressUpdateService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,10 +33,10 @@ public class TreatmentProgressUpdateController {
     }
 
     @GetMapping("/getAllProgress/{patientID}")
-    public ResponseEntity<List<TreatmentProgressDto>> getAllProgress(
+    public ResponseEntity<List<TreatmentProgressListDto>> getAllProgress(
             @PathVariable String patientID
     ){
-        List<TreatmentProgressDto> treatmentProgressUpdateList =
+        List<TreatmentProgressListDto> treatmentProgressUpdateList =
                 this.treatmentProgressUpdateService.getAllTreatmentProgress(patientID);
         return new ResponseEntity<>(treatmentProgressUpdateList, HttpStatus.OK);
     }
