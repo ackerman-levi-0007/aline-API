@@ -19,10 +19,9 @@ public class TreatmentProgressUpdateDto {
     private String id;
     private int slug;
     private String patientID;
-    private String progress;
+    private Date date;
     private VisitType visitType;
     private AlignerTracking alignerTracking;
     private String notes;
     private List<S3ImageObject> photos;
-    private Date createdOn;
 }
