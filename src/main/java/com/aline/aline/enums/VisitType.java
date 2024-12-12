@@ -9,5 +9,6 @@ public enum VisitType {
     debonding,
     caseStarted,
     caseRebooted,
+    superImposition,
     other
 }
