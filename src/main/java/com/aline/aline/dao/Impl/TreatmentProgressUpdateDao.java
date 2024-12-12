@@ -33,13 +33,13 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
     public void updateTreatmentProgress(TreatmentProgressUpdateDto treatmentProgressUpdate) {
         TreatmentProgressUpdate savedProgress = getTreatmentProgressByID(treatmentProgressUpdate.getId());
 
-        savedProgress.setProgress(treatmentProgressUpdate.getProgress());
         savedProgress.setVisitType(treatmentProgressUpdate.getVisitType());
         savedProgress.setAlignerTracking(treatmentProgressUpdate.getAlignerTracking());
         savedProgress.setNotes(treatmentProgressUpdate.getNotes());
         savedProgress.setPhotos(
                 CommonUtils.getUpdateListForS3Images(savedProgress.getPhotos(), treatmentProgressUpdate.getPhotos())
         );
+        savedProgress.setDate(treatmentProgressUpdate.getDate());
 
         this.treatmentProgressUpdateRepo.save(savedProgress);
     }
@@ -100,7 +100,7 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
                     .map(TreatmentProgressUpdate::getSlug)
                     .max(Integer::compare);
 
-            return maxSlug.isPresent() ? maxSlug.get() : 0;
+            return maxSlug.orElse(0);
         }
     }
 

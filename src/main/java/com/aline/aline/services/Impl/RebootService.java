@@ -6,6 +6,7 @@ import com.aline.aline.dao.IDentalDetailsMappingDao;
 import com.aline.aline.dao.ITreatmentProgressUpdateDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.TreatmentProgressUpdate;
+import com.aline.aline.enums.VisitType;
 import com.aline.aline.exceptionHandler.ResourceNotFoundException;
 import com.aline.aline.payload.PatientDentalDetails.PatientDentalDetail;
 import com.aline.aline.services.IRebootService;
@@ -59,7 +60,7 @@ public class RebootService implements IRebootService {
         this.dentalDetailsMappingDao.saveMapping(newMapping);
         TreatmentProgressUpdate treatmentProgressUpdate = new TreatmentProgressUpdate();
         treatmentProgressUpdate.setPatientID(patientID);
-        treatmentProgressUpdate.setProgress("Case rebooted");
+        treatmentProgressUpdate.setVisitType(VisitType.caseRebooted);
         this.treatmentProgressUpdateDao.createTreatmentProgress(treatmentProgressUpdate,false);
     }
 }

@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,15 +31,18 @@ public class TreatmentProgressUpdate {
 
     private int slug;
     private String patientID;
-    private String progress;
-    private VisitType visitType = VisitType.none;
-    private AlignerTracking alignerTracking = AlignerTracking.none;
+
+    private Date date = DateTime.now().toDate();
+
+    private VisitType visitType = VisitType.other;
+    private AlignerTracking alignerTracking = AlignerTracking.na;
     @JsonIgnore
     private boolean clickable = false;
     private String notes;
     private List<S3ImageObject> photos;
 
     @CreatedDate
+    @JsonIgnore
     private Date createdOn;
 
     @LastModifiedDate

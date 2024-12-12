@@ -4,5 +4,5 @@ public enum AlignerTracking {
     good,
     average,
     poor,
-    none
+    na
 }

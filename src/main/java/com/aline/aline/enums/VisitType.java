@@ -7,5 +7,8 @@ public enum VisitType {
     ipr,
     rebootScan,
     debonding,
-    none
+    caseStarted,
+    caseRebooted,
+    superImposition,
+    other
 }

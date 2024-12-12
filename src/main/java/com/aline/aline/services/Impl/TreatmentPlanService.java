@@ -13,6 +13,7 @@ import com.aline.aline.entities.User;
 import com.aline.aline.enums.TreatmentPlanStatus;
 import com.aline.aline.enums.TreatmentPlanType;
 import com.aline.aline.enums.UserRole;
+import com.aline.aline.enums.VisitType;
 import com.aline.aline.exceptionHandler.ForbiddenException;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.services.ITreatmentPlanService;
@@ -112,7 +113,7 @@ public class TreatmentPlanService implements ITreatmentPlanService {
 
         TreatmentProgressUpdate treatmentProgressUpdate = new TreatmentProgressUpdate();
         treatmentProgressUpdate.setPatientID(patientID);
-        treatmentProgressUpdate.setProgress("Case started");
+        treatmentProgressUpdate.setVisitType(VisitType.caseStarted);
         this.treatmentProgressUpdateDao.createTreatmentProgress(treatmentProgressUpdate,false);
     }
 

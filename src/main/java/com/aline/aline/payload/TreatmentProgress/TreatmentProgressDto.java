@@ -19,11 +19,10 @@ public class TreatmentProgressDto {
     private String id;
     private int slug;
     private String patientID;
-    private String progress;
+    private Date date;
     private VisitType visitType;
     private AlignerTracking alignerTracking;
     private boolean clickable;
     private String notes;
     private List<String> photos;
-    private Date createdOn;
 }

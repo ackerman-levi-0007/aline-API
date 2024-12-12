@@ -12,13 +12,12 @@ public class TreatmentProgressMapper {
         treatmentProgressDto.setId(treatmentProgressUpdate.getId().toString());
         treatmentProgressDto.setSlug(treatmentProgressUpdate.getSlug());
         treatmentProgressDto.setPatientID(treatmentProgressUpdate.getPatientID());
-        treatmentProgressDto.setProgress(treatmentProgressUpdate.getProgress());
         treatmentProgressDto.setVisitType(treatmentProgressUpdate.getVisitType());
         treatmentProgressDto.setAlignerTracking(treatmentProgressUpdate.getAlignerTracking());
         treatmentProgressDto.setClickable(treatmentProgressUpdate.isClickable());
         treatmentProgressDto.setNotes(treatmentProgressUpdate.getNotes());
         if(treatmentProgressUpdate.getPhotos()!=null) treatmentProgressDto.setPhotos(treatmentProgressUpdate.getPhotos().stream().map(S3ImageObject::getURL).toList());
-        treatmentProgressDto.setCreatedOn(treatmentProgressUpdate.getCreatedOn());
+        treatmentProgressDto.setDate(treatmentProgressUpdate.getDate());
 
         return treatmentProgressDto;
     }
@@ -29,9 +28,9 @@ public class TreatmentProgressMapper {
         treatmentProgressListDto.setId(treatmentProgressUpdate.getId().toString());
         treatmentProgressListDto.setSlug(treatmentProgressUpdate.getSlug());
         treatmentProgressListDto.setPatientID(treatmentProgressUpdate.getPatientID());
-        treatmentProgressListDto.setProgress(treatmentProgressUpdate.getProgress());
+        treatmentProgressListDto.setVisitType(treatmentProgressUpdate.getVisitType());
         treatmentProgressListDto.setClickable(treatmentProgressUpdate.isClickable());
-        treatmentProgressListDto.setCreatedOn(treatmentProgressUpdate.getCreatedOn());
+        treatmentProgressListDto.setDate(treatmentProgressUpdate.getDate());
 
         return treatmentProgressListDto;
     }
