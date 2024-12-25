@@ -42,6 +42,9 @@ public class Patient {
 
     private String nationality;
 
+    @JsonIgnore
+    private String profilePhoto;
+
     @CreatedDate
     @JsonIgnore
     private Date createdOn;

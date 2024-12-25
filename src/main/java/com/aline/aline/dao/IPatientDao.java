@@ -1,5 +1,6 @@
 package com.aline.aline.dao;
 
+import com.aline.aline.commonEntitiesObjects.S3ImageObject;
 import com.aline.aline.entities.Patient;
 import com.aline.aline.payload.Patient.FilterPatientDto;
 import com.aline.aline.payload.Patient.GetPatientDto;
@@ -17,4 +18,5 @@ public interface IPatientDao {
     void updatePatientStatus(UpdatePatientStatusDto patientStatus);
     void deletePatient(String patientID);
     void changeDoctorAllocationForPatient(String patientID, String doctorID);
+    void updatePatientProfilePhoto(String patientID, S3ImageObject profilePhoto);
 }

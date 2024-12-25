@@ -1,6 +1,7 @@
 package com.aline.aline.payload.Patient;
 
 import com.aline.aline.enums.PatientStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,7 @@ public class GetPatientDto {
     private String nationality;
     private Date createdOn;
     private Date updatedOn;
+
+    @JsonIgnore
+    private String profilePhoto;
 }

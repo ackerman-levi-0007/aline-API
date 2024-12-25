@@ -3,6 +3,7 @@ package com.aline.aline.services.Impl;
 import com.aline.aline.commonEntitiesObjects.TreatmentPlanObject;
 import com.aline.aline.customMapper.PatientTreatmentPlanMapper;
 import com.aline.aline.dao.IDentalDetailsMappingDao;
+import com.aline.aline.dao.IPatientDao;
 import com.aline.aline.dao.ITreatmentPlanDao;
 import com.aline.aline.dao.ITreatmentProgressUpdateDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
@@ -10,11 +11,9 @@ import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlan;
 import com.aline.aline.entities.PatientTreatmentPlan.PatientTreatmentPlanDraft;
 import com.aline.aline.entities.TreatmentProgressUpdate;
 import com.aline.aline.entities.User;
-import com.aline.aline.enums.TreatmentPlanStatus;
-import com.aline.aline.enums.TreatmentPlanType;
-import com.aline.aline.enums.UserRole;
-import com.aline.aline.enums.VisitType;
+import com.aline.aline.enums.*;
 import com.aline.aline.exceptionHandler.ForbiddenException;
+import com.aline.aline.payload.Patient.UpdatePatientStatusDto;
 import com.aline.aline.payload.PatientTreatmentPlan.PatientTreatmentPlanDto;
 import com.aline.aline.services.ITreatmentPlanService;
 import com.aline.aline.services.helpers.PatientHelperService;
@@ -38,6 +37,7 @@ public class TreatmentPlanService implements ITreatmentPlanService {
     private final PatientTreatmentPlanMapper patientTreatmentPlanMapper;
     private final ModelMapper modelMapper;
     private final ITreatmentProgressUpdateDao treatmentProgressUpdateDao;
+    private final IPatientDao patientDao;
 
     @Override
     public PatientTreatmentPlanDto getTreatmentPlan(String patientID, int rebootID, String planID, TreatmentPlanType treatmentPlanType) throws BadRequestException {
@@ -103,6 +103,11 @@ public class TreatmentPlanService implements ITreatmentPlanService {
     public void sendPlanModification(String patientID, int rebootID, String draftID) {
         this.patientHelperService.checkLoggedInUserPermission(patientID, rebootID);
         this.patientTreatmentPlanDao.savePlan(patientID, rebootID , draftID);
+
+        UpdatePatientStatusDto updatePatientStatusDto = new UpdatePatientStatusDto();
+        updatePatientStatusDto.setPatientID(patientID);
+        updatePatientStatusDto.setStatus(PatientStatus.planShared);
+        this.patientDao.updatePatientStatus(updatePatientStatusDto);
     }
 
     @SneakyThrows
@@ -110,11 +115,18 @@ public class TreatmentPlanService implements ITreatmentPlanService {
     public void approvePlan(String patientID, int rebootID, String planID) {
         validatePlanStatusChangeRequest(patientID, rebootID, planID);
         this.patientDentalDetailsMappingDao.approvePlan(patientID, rebootID, planID);
+        
+        if(rebootID == 0){
+            TreatmentProgressUpdate treatmentProgressUpdate = new TreatmentProgressUpdate();
+            treatmentProgressUpdate.setPatientID(patientID);
+            treatmentProgressUpdate.setVisitType(VisitType.caseStarted);
+            this.treatmentProgressUpdateDao.createTreatmentProgress(treatmentProgressUpdate,false);
+        }
 
-        TreatmentProgressUpdate treatmentProgressUpdate = new TreatmentProgressUpdate();
-        treatmentProgressUpdate.setPatientID(patientID);
-        treatmentProgressUpdate.setVisitType(VisitType.caseStarted);
-        this.treatmentProgressUpdateDao.createTreatmentProgress(treatmentProgressUpdate,false);
+        UpdatePatientStatusDto updatePatientStatusDto = new UpdatePatientStatusDto();
+        updatePatientStatusDto.setPatientID(patientID);
+        updatePatientStatusDto.setStatus(PatientStatus.confirmed);
+        this.patientDao.updatePatientStatus(updatePatientStatusDto);
     }
 
     @SneakyThrows
@@ -122,6 +134,11 @@ public class TreatmentPlanService implements ITreatmentPlanService {
     public void planRequestModification(String patientID, int rebootID, String planID) {
         validatePlanStatusChangeRequest(patientID, rebootID, planID);
         this.patientDentalDetailsMappingDao.planRequestModification(patientID, rebootID, planID);
+
+        UpdatePatientStatusDto updatePatientStatusDto = new UpdatePatientStatusDto();
+        updatePatientStatusDto.setPatientID(patientID);
+        updatePatientStatusDto.setStatus(PatientStatus.modificationRequested);
+        this.patientDao.updatePatientStatus(updatePatientStatusDto);
     }
 
     /*****************************************************************************************

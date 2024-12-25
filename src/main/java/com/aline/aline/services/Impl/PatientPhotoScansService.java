@@ -1,6 +1,7 @@
 package com.aline.aline.services.Impl;
 
 import com.aline.aline.customMapper.GetPatientPhotoScansDtoMapper;
+import com.aline.aline.dao.IPatientDao;
 import com.aline.aline.dao.IPhotoScansDao;
 import com.aline.aline.entities.PatientDentalDetailsMapping;
 import com.aline.aline.entities.PatientPhotoScans;
@@ -21,11 +22,16 @@ public class PatientPhotoScansService implements IPatientPhotoScansService {
     private final IPhotoScansDao patientPhotoScansDao;
     private final PatientHelperService patientHelperService;
     private final GetPatientPhotoScansDtoMapper getPatientPhotoScansDtoMapper;
+    private final IPatientDao patientDao;
 
     @Override
     public GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID) {
         patientHelperService.checkLoggedInUserPermission(patientPhotoScans.getPatientID(), rebootID);
-        return this.patientPhotoScansDao.updatePatientPhotoScans(patientPhotoScans, rebootID);
+        GetPatientPhotoScansDto updatedPatientPhotoScans =
+                this.patientPhotoScansDao.updatePatientPhotoScans(patientPhotoScans, rebootID);
+        this.patientDao.updatePatientProfilePhoto(
+                patientPhotoScans.getPatientID(), CommonUtils.getFirstOrNull(patientPhotoScans.getProfilePhoto()));
+        return updatedPatientPhotoScans;
     }
 
     @Override
@@ -44,6 +50,8 @@ public class PatientPhotoScansService implements IPatientPhotoScansService {
     public GetPatientPhotoScansDto savePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID) {
         patientHelperService.checkLoggedInUserPermissionForPatientID(patientPhotoScans.getPatientID());
         PatientPhotoScans savedPatientPhotoScans = this.patientPhotoScansDao.savePatientPhotoScans(patientPhotoScans, rebootID);
+        this.patientDao.updatePatientProfilePhoto(
+                patientPhotoScans.getPatientID(), CommonUtils.getFirstOrNull(patientPhotoScans.getProfilePhoto()));
         return this.getPatientPhotoScansDtoMapper.apply(savedPatientPhotoScans);
     }
 }

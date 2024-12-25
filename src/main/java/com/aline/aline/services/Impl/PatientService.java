@@ -52,10 +52,7 @@ public class PatientService implements IPatientService {
 
         List<PatientListDto> patientListDtos = patientDtos.stream().map(
                 patientDto ->{
-                    String  profilePhoto = this.patientPhotoScansDao.getPatientProfilePhotoByPatientID(patientDto.getId());
-
                     PatientListDto patientListDto = this.modelMapper.map(patientDto, PatientListDto.class);
-                    patientListDto.setProfilePhoto(profilePhoto);
 
                     Reboot reboot = this.patientDentalDetailsMappingDao.getReboot(patientDto.getId());
                     patientListDto.setReboot(reboot);
@@ -100,7 +97,6 @@ public class PatientService implements IPatientService {
     @Override
     public GetUserDetailsForPatientDto getUserDetailsForPatientID(String patientID) {
         GetPatientDto getPatientDto = getPatientByID(patientID);
-        String patientProfilePhoto = this.patientPhotoScansDao.getPatientProfilePhotoByPatientID(patientID);
 
         UserDto clinicDto = this.userDao.getUserByID(getPatientDto.getClinicID());
         UserDto doctorDto = this.userDao.getUserByID(getPatientDto.getDoctorID());
@@ -113,7 +109,7 @@ public class PatientService implements IPatientService {
         getUserDetailsForPatientDto.setDoctor(new UserIdAndNameDto(doctorDto.getId(), doctorDto.getName()));
         getUserDetailsForPatientDto.setClinic(new UserIdAndNameDto(clinicDto.getId(), clinicDto.getName()));
         getUserDetailsForPatientDto.setPatientStatus(getUserDetailsForPatientDto.getPatientStatus());
-        getUserDetailsForPatientDto.setPatientProfilePhoto(patientProfilePhoto);
+        getUserDetailsForPatientDto.setPatientProfilePhoto(getPatientDto.getProfilePhoto());
         getUserDetailsForPatientDto.setPatientDentalDetailsMapping(patientDentalDetailsMapping);
 
         return getUserDetailsForPatientDto;

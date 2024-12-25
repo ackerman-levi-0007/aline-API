@@ -89,15 +89,4 @@ public class PhotoScansDao implements IPhotoScansDao {
         );
         return savedPhotoScans;
     }
-
-    @Override
-    public String getPatientProfilePhotoByPatientID(String patientID) {
-        try{
-            GetPatientPhotoScansDto patientPhotoScansDto = getPatientPhotoScans("");
-            return patientPhotoScansDto.getProfilePhoto().stream().findFirst().orElse(null);
-        }
-        catch (ResourceNotFoundException ex){
-            return null;
-        }
-    }
 }
