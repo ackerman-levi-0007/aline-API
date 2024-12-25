@@ -1,5 +1,6 @@
 package com.aline.aline.dao.Impl;
 
+import com.aline.aline.commonEntitiesObjects.S3ImageObject;
 import com.aline.aline.dao.IPatientDao;
 import com.aline.aline.entities.Patient;
 import com.aline.aline.entities.User;
@@ -126,6 +127,18 @@ public class PatientDao implements IPatientDao {
     public void changeDoctorAllocationForPatient(String patientID, String doctorID) {
         Patient patient = getPatient(patientID);
         patient.setDoctorID(doctorID);
+        this.patientRepo.save(patient);
+    }
+
+    @Override
+    public void updatePatientProfilePhoto(String patientID, S3ImageObject profilePhoto) {
+        String profilePhotoURL = null;
+        if(profilePhoto != null && !CommonUtils.isNullOrEmpty(profilePhoto.getURL())){
+            profilePhotoURL = profilePhoto.getURL();
+        }
+
+        Patient patient = getPatient(patientID);
+        patient.setProfilePhoto(profilePhotoURL);
         this.patientRepo.save(patient);
     }
 

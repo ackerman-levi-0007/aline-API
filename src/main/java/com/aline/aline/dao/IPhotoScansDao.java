@@ -9,5 +9,4 @@ public interface IPhotoScansDao {
     GetPatientPhotoScansDto updatePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID);
     GetPatientPhotoScansDto getPatientPhotoScans(String photoScansId);
     PatientPhotoScans savePatientPhotoScans(PatientPhotoScans patientPhotoScans, int rebootID);
-    String getPatientProfilePhotoByPatientID(String patientID);
 }
