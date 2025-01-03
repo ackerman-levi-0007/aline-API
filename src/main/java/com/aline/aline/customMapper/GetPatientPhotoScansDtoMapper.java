@@ -24,7 +24,8 @@ public class GetPatientPhotoScansDtoMapper implements Function<PatientPhotoScans
                     patientPhotoScans.getIntMandible().stream().map(S3ImageObject::getURL).toList(),
                     patientPhotoScans.getOpg().stream().map(S3ImageObject::getURL).toList(),
                     patientPhotoScans.getCep().stream().map(S3ImageObject::getURL).toList(),
-                    patientPhotoScans.getScans().stream().map(S3ImageObject::getURL).toList()
+                    patientPhotoScans.getScans().stream().map(S3ImageObject::getURL).toList(),
+                    patientPhotoScans.getScanURL()
         );
     }
 }

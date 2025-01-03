@@ -35,6 +35,7 @@ public class TreatmentProgressUpdateDao implements ITreatmentProgressUpdateDao {
 
         savedProgress.setVisitType(treatmentProgressUpdate.getVisitType());
         savedProgress.setAlignerTracking(treatmentProgressUpdate.getAlignerTracking());
+        savedProgress.setScanURL(treatmentProgressUpdate.getScanURL());
         savedProgress.setNotes(treatmentProgressUpdate.getNotes());
         savedProgress.setPhotos(
                 CommonUtils.getUpdateListForS3Images(savedProgress.getPhotos(), treatmentProgressUpdate.getPhotos())
