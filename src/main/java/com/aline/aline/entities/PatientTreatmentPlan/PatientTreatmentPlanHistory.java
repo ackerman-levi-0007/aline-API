@@ -37,7 +37,7 @@ public class PatientTreatmentPlanHistory {
     private TreatmentPlanCategory treatmentPlanCategory;
     private Price price;
     private List<S3ImageObject> iprAndAttachmentReports;
-    private List<S3ImageObject> treatmentSimulationsURL;
+    private List<String> treatmentSimulationsURL;
     private List<S3ImageObject> treatmentSimulationsAttachments;
 
     private Date originalCreatedOn;
