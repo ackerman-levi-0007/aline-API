@@ -6,13 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="588a6160-bb4a-48e8-bebe-29cc2a438a1e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/GetPatientPhotoScansDtoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/GetPatientPhotoScansDtoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PhotoScansDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/PhotoScansDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TreatmentProgressUpdateDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/dao/Impl/TreatmentProgressUpdateDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPhotoScans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/PatientPhotoScans.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/TreatmentProgressUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/entities/TreatmentProgressUpdate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientPhotoScans/GetPatientPhotoScansDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/PatientPhotoScans/GetPatientPhotoScansDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/TreatmentProgress/TreatmentProgressUpdateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/TreatmentProgress/TreatmentProgressUpdateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/TreatmentProgressMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/customMapper/TreatmentProgressMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/TreatmentProgress/TreatmentProgressDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/aline/aline/payload/TreatmentProgress/TreatmentProgressDto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
