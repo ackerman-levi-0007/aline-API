@@ -36,6 +36,9 @@ public class TreatmentProgressUpdate {
 
     private VisitType visitType = VisitType.other;
     private AlignerTracking alignerTracking = AlignerTracking.na;
+
+    private String scanURL;
+
     @JsonIgnore
     private boolean clickable = false;
     private String notes;

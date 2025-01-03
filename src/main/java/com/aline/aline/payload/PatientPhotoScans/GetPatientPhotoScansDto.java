@@ -23,4 +23,5 @@ public class GetPatientPhotoScansDto {
     private List<String> opg;
     private List<String> cep;
     private List<String> scans;
+    private String scanURL;
 }

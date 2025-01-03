@@ -58,6 +58,7 @@ public class PhotoScansDao implements IPhotoScansDao {
                     fetchedPatientPhotoScans.getCep(),patientPhotoScans.getCep()));
             fetchedPatientPhotoScans.setScans(CommonUtils.getUpdateListForS3Images(
                     fetchedPatientPhotoScans.getScans(),patientPhotoScans.getScans()));
+            fetchedPatientPhotoScans.setScanURL(patientPhotoScans.getScanURL());
 
             PatientPhotoScans savedPatientPhotoScans =
                     this.patientPhotoScansRepo.save(fetchedPatientPhotoScans);
