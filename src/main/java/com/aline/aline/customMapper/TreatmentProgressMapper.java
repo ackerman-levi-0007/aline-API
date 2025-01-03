@@ -13,6 +13,7 @@ public class TreatmentProgressMapper {
         treatmentProgressDto.setSlug(treatmentProgressUpdate.getSlug());
         treatmentProgressDto.setPatientID(treatmentProgressUpdate.getPatientID());
         treatmentProgressDto.setVisitType(treatmentProgressUpdate.getVisitType());
+        treatmentProgressDto.setScanURL(treatmentProgressUpdate.getScanURL());
         treatmentProgressDto.setAlignerTracking(treatmentProgressUpdate.getAlignerTracking());
         treatmentProgressDto.setClickable(treatmentProgressUpdate.isClickable());
         treatmentProgressDto.setNotes(treatmentProgressUpdate.getNotes());
