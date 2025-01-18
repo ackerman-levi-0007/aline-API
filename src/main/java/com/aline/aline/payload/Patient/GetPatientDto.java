@@ -13,6 +13,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class GetPatientDto {
     private String id;
+    private String filePatientID;
+    private String labPatientID;
     private String name;
     private String clinicID;
     private String doctorID;

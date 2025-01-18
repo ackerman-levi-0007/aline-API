@@ -96,6 +96,8 @@ public class PatientDao implements IPatientDao {
 
         Patient patient = getPatient(updatedPatient.getId());
 
+        patient.setFilePatientID(updatedPatient.getFilePatientID());
+        patient.setLabPatientID(updatedPatient.getLabPatientID());
         patient.setClinicID(updatedPatient.getClinicID());
         patient.setDoctorID(updatedPatient.getDoctorID());
         patient.setName(updatedPatient.getName());

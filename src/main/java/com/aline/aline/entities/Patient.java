@@ -23,6 +23,9 @@ public class Patient {
     @JsonIgnore
     private String id;
 
+    private String filePatientID;
+    private String labPatientID;
+
     @NonNull
     private String name;
 
